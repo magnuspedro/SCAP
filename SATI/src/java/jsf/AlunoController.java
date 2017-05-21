@@ -8,8 +8,8 @@ import jpa.AlunoFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("alunoController")
+@ManagedBean(name = "alunoController")
 @SessionScoped
 public class AlunoController implements Serializable {
 
@@ -70,13 +70,13 @@ public class AlunoController implements Serializable {
     public String prepareView() {
         current = (Aluno) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "Create_1";
     }
 
     public String prepareCreate() {
         current = new Aluno();
         selectedItemIndex = -1;
-        return "Create";
+        return "Create_1";
     }
 
     public String create() {
@@ -93,7 +93,7 @@ public class AlunoController implements Serializable {
     public String prepareEdit() {
         current = (Aluno) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "Create_1";
     }
 
     public String update() {
@@ -113,7 +113,8 @@ public class AlunoController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List";
+        prepareCreate();
+        return "Create_1";
     }
 
     public String destroyAndView() {
@@ -171,13 +172,13 @@ public class AlunoController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "List";
+        return "Create";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "List";
+        return "Create";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -202,7 +203,7 @@ public class AlunoController implements Serializable {
             }
             AlunoController controller = (AlunoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "alunoController");
-            return controller.getAluno(getKey(value));
+            return controller.ejbFacade.find(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
