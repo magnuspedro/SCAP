@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                    <p:panel header="Cadastro de Chamadas">
+                        <p:messages />
+                        <p:panelGrid class="createGrid" columns="2">
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_hora}" for="hora" />
+                            <p:inputText id="hora" value="#{chamadaController.selected.hora}" title="#{bundle.CreateChamadaTitle_hora}" >
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </p:inputText>
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_situacao}" for="situacao" />
+                            <p:inputText id="situacao" value="#{chamadaController.selected.situacao}" title="#{bundle.CreateChamadaTitle_situacao}" />
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_idaluno}" for="idaluno" />
+                            <p:selectOneMenu id="idaluno" value="#{chamadaController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_idaluno}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{alunoController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_iddataEvento}" for="iddataEvento" />
+                            <p:selectOneMenu id="iddataEvento" value="#{chamadaController.selected.iddataEvento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu></p:panelGrid>
+                    </p:panel>
+                    <br />
+                    <p:commandButton ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>
+                </h:form>
+            </div>
+            <h:form>
+                <p:outputLabel escape="false" value="#{bundle.ListChamadaEmpty}" rendered="#{chamadaController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
+                    <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{alunoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_idchamada}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.idchamada}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_hora}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.hora}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </p:outputLabel>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_situacao}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.situacao}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_idaluno}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.idaluno}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_iddataEvento}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.iddataEvento}"/>
+                        </p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Opções"/>
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton ajax="false" action="#{alunoController.prepareEdit}" image="ui-icon-pencil"/>
+                            <p:outputLabel value=" "/>
+                            <p:commandButton ajax="false" action="#{alunoController.destroy}" image="ui-icon-trash"/>
+                            <p:outputLabel value=" "/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

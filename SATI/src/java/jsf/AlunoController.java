@@ -64,7 +64,7 @@ public class AlunoController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "List";
+        return "Create_1";
     }
 
     public String prepareView() {
@@ -76,6 +76,7 @@ public class AlunoController implements Serializable {
     public String prepareCreate() {
         current = new Aluno();
         selectedItemIndex = -1;
+        recreateModel();
         return "Create_1";
     }
 
@@ -100,7 +101,7 @@ public class AlunoController implements Serializable {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AlunoUpdated"));
-            return "View";
+            return "Create_1";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -122,11 +123,11 @@ public class AlunoController implements Serializable {
         recreateModel();
         updateCurrentItem();
         if (selectedItemIndex >= 0) {
-            return "View";
+            return "Create_1";
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "List";
+            return "Create_1";
         }
     }
 
@@ -172,13 +173,13 @@ public class AlunoController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "Create";
+        return "Create_1";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "Create";
+        return "Create_1";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {

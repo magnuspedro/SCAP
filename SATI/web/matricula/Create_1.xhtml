@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                     <p:growl id="msgs" showDetail="true" />
+                    <p:panel header="Cadastro de Alunos:">
+                        <p:messages />
+                        <p:panelGrid class="createGrid" columns="2">
+                            <p:outputLabel value="#{bundle.CreateMatriculaLabel_pago}" for="pago" />
+                            <p:selectOneMenu id="pago" value="#{dropdownView.option}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_pago}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{dropdownView.option}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton value="Submit" update="msgs" actionListener="#{dropdownView.selected}" icon="ui-icon-check" />
+                            <p:outputLabel value="#{bundle.CreateMatriculaLabel_idaluno}" for="idaluno" />
+                            <p:selectOneMenu id="idaluno" value="#{matriculaController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_idaluno}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{alunoController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="#{bundle.CreateMatriculaLabel_idevento}" for="idevento" />
+                            <p:selectOneMenu id="idevento" value="#{matriculaController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_idevento}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:panel>
+                    <br />
+                    <p:commandButton ajax="false" action="#{matriculaController.create}" value="#{bundle.CreateMatriculaSaveLink}"/>
+                </h:form>
+            </div>
+            <h:form>
+                <h:outputText escape="false" value="#{bundle.ListMatriculaEmpty}" rendered="#{matriculaController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{matriculaController.items.rowCount > 0}">
+                    <h:outputText value="#{matriculaController.pagination.pageFirstItem + 1}..#{matriculaController.pagination.pageLastItem + 1}/#{matriculaController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{matriculaController.previous}" value="#{bundle.Previous} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{matriculaController.next}" value="#{bundle.Next} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{matriculaController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
+                        <p:column headerText="#{bundle.ListMatriculaTitle_pago}">
+                            <p:outputLabel value="#{item.pago}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListMatriculaTitle_idaluno}">
+                            <p:outputLabel value="#{item.idaluno}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListMatriculaTitle_idevento}">
+                            <p:outputLabel value="#{item.idevento}"/>
+                        </p:column>
+                        <p:column headerText="Opções">
+                            <p:commandButton ajax="false" action="#{alunoController.prepareEdit}" image="ui-icon-pencil"/>
+                            <p:outputLabel value=" "/>
+                            <p:commandButton ajax="false" action="#{alunoController.destroy}" image="ui-icon-trash"/>
+                            <p:outputLabel value=" "/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

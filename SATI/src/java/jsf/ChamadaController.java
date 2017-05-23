@@ -8,8 +8,8 @@ import jpa.ChamadaFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("chamadaController")
+@ManagedBean(name = "chamadaController")
 @SessionScoped
 public class ChamadaController implements Serializable {
 
@@ -70,13 +70,14 @@ public class ChamadaController implements Serializable {
     public String prepareView() {
         current = (Chamada) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "Create_1";
     }
 
     public String prepareCreate() {
         current = new Chamada();
         selectedItemIndex = -1;
-        return "Create";
+        recreateModel();
+        return "Create_1";
     }
 
     public String create() {
@@ -93,7 +94,7 @@ public class ChamadaController implements Serializable {
     public String prepareEdit() {
         current = (Chamada) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "Create_1";
     }
 
     public String update() {
@@ -113,7 +114,8 @@ public class ChamadaController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List";
+        prepareCreate();
+        return "Create_1";
     }
 
     public String destroyAndView() {

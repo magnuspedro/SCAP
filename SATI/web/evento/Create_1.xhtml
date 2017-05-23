@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                    <p:panel header="Cadastro de Alunos:">
+                        <p:messages />
+                        <p:panelGrid class="createGrid" columns="2">
+                            <p:outputLabel value="#{bundle.CreateEventoLabel_nome}" for="nome" />
+                            <p:inputText id="nome" value="#{eventoController.selected.nome}" title="#{bundle.CreateEventoTitle_nome}" />
+                            <p:outputLabel value="#{bundle.CreateEventoLabel_tipo}" for="tipo" />
+                            <p:inputText id="tipo" value="#{eventoController.selected.tipo}" title="#{bundle.CreateEventoTitle_tipo}" />
+                            <p:outputLabel value="#{bundle.CreateEventoLabel_descricao}" for="descricao" />
+                            <p:inputTextarea rows="4" cols="30" id="descricao" value="#{eventoController.selected.descricao}" title="#{bundle.CreateEventoTitle_descricao}" />
+                            <p:outputLabel value="#{bundle.CreateEventoLabel_vagasTotais}" for="vagasTotais" />
+                            <p:inputText id="vagasTotais" value="#{eventoController.selected.vagasTotais}" title="#{bundle.CreateEventoTitle_vagasTotais}" />
+                            <p:outputLabel value="#{bundle.CreateEventoLabel_horaInicio}" for="horaInicio" />
+                            <p:inputText id="horaInicio" value="#{eventoController.selected.horaInicio}" title="#{bundle.CreateEventoTitle_horaInicio}" >
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </p:inputText>
+                            <p:outputLabel value="#{bundle.CreateEventoLabel_horaTermino}" for="horaTermino" />
+                            <p:inputText id="horaTermino" value="#{eventoController.selected.horaTermino}" title="#{bundle.CreateEventoTitle_horaTermino}" >
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </p:inputText>
+                        </p:panelGrid>
+                    </p:panel>
+                    <br />
+                    <p:commandButton ajax="false" action="#{eventoController.create}" value="#{bundle.CreateEventoSaveLink}"/>
+                </h:form>
+            </div>
+            <h:form>
+                <h:outputText escape="false" value="#{bundle.ListEventoEmpty}" rendered="#{eventoController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{eventoController.items.rowCount > 0}">
+                    <h:outputText value="#{eventoController.pagination.pageFirstItem + 1}..#{eventoController.pagination.pageLastItem + 1}/#{eventoController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{eventoController.previous}" value="#{bundle.Previous} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{eventoController.next}" value="#{bundle.Next} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{eventoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
+                        <p:column headerText="#{bundle.ListEventoTitle_nome}">
+                            <p:outputLabel value="#{item.nome}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListEventoTitle_tipo}">
+                            <p:outputLabel value="#{item.tipo}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListEventoTitle_descricao}">
+                            <p:outputLabel value="#{item.descricao}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListEventoTitle_vagasTotais}">
+                            <p:outputLabel value="#{item.vagasTotais}"/>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListEventoTitle_horaInicio}">
+                            <p:outputLabel value="#{item.horaInicio}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </p:outputLabel>
+                        </p:column>
+                        <p:column headerText="#{bundle.ListEventoTitle_horaTermino}">
+                            <p:outputLabel value="#{item.horaTermino}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </p:outputLabel>
+                        </p:column>
+                        <p:column headerText="Opções">
+                            <p:commandButton ajax="false" action="#{alunoController.prepareEdit}" image="ui-icon-pencil"/>
+                            <p:outputLabel value=" "/>
+                            <p:commandButton ajax="false" action="#{alunoController.destroy}" image="ui-icon-trash"/>
+                            <p:outputLabel value=" "/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

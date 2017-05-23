@@ -44,68 +44,35 @@ and open the template in the editor.
             <h:form>
                 <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{alunoController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{alunoController.items.rowCount > 0}">
-                    <h:outputText value="#{empresaController.pagination.pageFirstItem + 1}..#{empresaController.pagination.pageLastItem + 1}/#{empresaController.pagination.itemsCount}"/>
+                    <h:outputText value="#{alunoController.pagination.pageFirstItem + 1}..#{alunoController.pagination.pageLastItem + 1}/#{alunoController.pagination.itemsCount}"/>
                     <h:commandLink action="#{alunoController.previous}" value="#{bundle.Previous} #{alunoController.pagination.pageSize}" rendered="#{alunoController.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{alunoController.next}" value="#{bundle.Next} #{alunoController.pagination.pageSize}" rendered="#{alunoController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{alunoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="6">
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_idaluno}"/>
-                            </f:facet>
-                            <p:outputLabel value="#{item.idaluno}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_nome}"/>
-                            </f:facet>
+                    <p:dataTable id="tabela" value="#{alunoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
+                        <p:column headerText="#{bundle.ListAlunoTitle_nome}">
                             <p:outputLabel value="#{item.nome}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_ra}"/>
-                            </f:facet>
+                        <p:column headerText="#{bundle.ListAlunoTitle_ra}">
                             <p:outputLabel value="#{item.ra}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_cpf}"/>
-                            </f:facet>
+                        <p:column headerText="#{bundle.ListAlunoTitle_cpf}">
                             <p:outputLabel value="#{item.cpf}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_rg}"/>
-                            </f:facet>
+                        <p:column headerText="#{bundle.ListAlunoTitle_rg}">
                             <p:outputLabel value="#{item.rg}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_orgaoExpeditor}"/>
-                            </f:facet>
+                        <p:column headerText="#{bundle.ListAlunoTitle_orgaoExpeditor}">
                             <p:outputLabel value="#{item.orgaoExpeditor}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_externo}"/>
-                            </f:facet>
+                        <p:column headerText="#{bundle.ListAlunoTitle_externo}">
                             <p:outputLabel value="#{item.externo}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_curso}"/>
-                            </f:facet>
+                        <p:column headerText="#{bundle.ListAlunoTitle_curso}">
                             <p:outputLabel value="#{item.curso}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListAlunoTitle_instituicao}"/>
-                            </f:facet>
+                        <p:column headerText="#{bundle.ListAlunoTitle_instituicao}">
                             <p:outputLabel value="#{item.instituicao}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="Opções"/>
-                            </f:facet>
+                        <p:column headerText="Opções">
                             <p:commandButton ajax="false" action="#{alunoController.prepareEdit}" image="ui-icon-pencil"/>
                             <p:outputLabel value=" "/>
                             <p:commandButton ajax="false" action="#{alunoController.destroy}" image="ui-icon-trash"/>
