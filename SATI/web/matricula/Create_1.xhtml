@@ -17,15 +17,14 @@ and open the template in the editor.
             <div class="box">
                 <h:form class="createForm">
                      <p:growl id="msgs" showDetail="true" />
-                    <p:panel header="Cadastro de Alunos:">
+                    <p:fieldset legend="Cadastro de Matricula" toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <p:panelGrid class="createGrid" columns="2">
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:outputLabel value="#{bundle.CreateMatriculaLabel_pago}" for="pago" />
                             <p:selectOneMenu id="pago" value="#{dropdownView.option}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_pago}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{dropdownView.option}"/>
                             </p:selectOneMenu>
-                            <p:commandButton value="Submit" update="msgs" actionListener="#{dropdownView.selected}" icon="ui-icon-check" />
                             <p:outputLabel value="#{bundle.CreateMatriculaLabel_idaluno}" for="idaluno" />
                             <p:selectOneMenu id="idaluno" value="#{matriculaController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_idaluno}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
@@ -36,10 +35,9 @@ and open the template in the editor.
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
+                            <p:commandButton ajax="false" action="#{matriculaController.create}" value="#{bundle.CreateMatriculaSaveLink}"/>
                         </p:panelGrid>
-                    </p:panel>
-                    <br />
-                    <p:commandButton ajax="false" action="#{matriculaController.create}" value="#{bundle.CreateMatriculaSaveLink}"/>
+                    </p:fieldset>
                 </h:form>
             </div>
             <h:form>

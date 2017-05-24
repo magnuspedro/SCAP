@@ -15,20 +15,21 @@
     <h:body>
 
         <div id="top">
-            <ui:insert name="title">Top</ui:insert>
+            <div class="title-template">Sati 2017</div>
+            <div class="tema-template">Segurança na Era Digital</div>
         </div>
         <div>
             <div id="left">
                 <h:form>
                     <p:menu>
                         <p:submenu label="Opções">
-                            <p:menuitem outcome="/aluno/Create_1" value="Show All Aluno Items"/>
-                            <p:menuitem outcome="/chamada/List" value="Show All Chamada Items"/>
-                            <p:menuitem outcome="/dataEvento/List" value="Show All DataEvento Items"/>
-                            <p:menuitem outcome="/evento/List" value="Show All Evento Items"/>
-                            <p:menuitem outcome="/eventosInstrutores/List" value="Show All EventosInstrutores Items"/>
-                            <p:menuitem outcome="/instrutor/List" value="Show All Instrutor Items"/>
-                            <p:menuitem outcome="/matricula/List" value="Show All Matricula Items"/>
+                            <p:menuitem outcome="/aluno/Create_1" value="Aluno"/>
+                            <p:menuitem outcome="/chamada/Create_1" value="Chamada"/>
+                            <p:menuitem outcome="/dataEvento/List" value="DataEvento"/>
+                            <p:menuitem outcome="/evento/Create_1" value="Evento"/>
+                            <p:menuitem outcome="/eventosInstrutores/List" value="EventosInstrutores"/>
+                            <p:menuitem outcome="/instrutor/List" value="Instrutor"/>
+                            <p:menuitem outcome="/matricula/Create_1" value="Matricula"/>
                         </p:submenu>
                     </p:menu>
                 </h:form>

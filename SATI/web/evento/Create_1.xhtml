@@ -16,9 +16,9 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:panel header="Cadastro de Alunos:">
+                    <p:fieldset legend="Cadastro de Eventos" toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <p:panelGrid class="createGrid" columns="2">
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:outputLabel value="#{bundle.CreateEventoLabel_nome}" for="nome" />
                             <p:inputText id="nome" value="#{eventoController.selected.nome}" title="#{bundle.CreateEventoTitle_nome}" />
                             <p:outputLabel value="#{bundle.CreateEventoLabel_tipo}" for="tipo" />
@@ -35,10 +35,9 @@ and open the template in the editor.
                             <p:inputText id="horaTermino" value="#{eventoController.selected.horaTermino}" title="#{bundle.CreateEventoTitle_horaTermino}" >
                                 <f:convertDateTime pattern="HH:mm:ss" />
                             </p:inputText>
+                            <p:commandButton ajax="false" action="#{eventoController.create}" value="#{bundle.CreateEventoSaveLink}"/>
                         </p:panelGrid>
-                    </p:panel>
-                    <br />
-                    <p:commandButton ajax="false" action="#{eventoController.create}" value="#{bundle.CreateEventoSaveLink}"/>
+                    </p:fieldset>
                 </h:form>
             </div>
             <h:form>

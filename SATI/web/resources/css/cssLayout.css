@@ -1,16 +1,24 @@
 
 #top {
     position: relative;
+    top: -10px;
+    left: -10px;
+    width: 100%;
     background-color: #036fab;
     color: white;
     padding: 5px;
+    padding-right: 14px;
     margin: 0px 0px 10px 0px;
 }
 
 #bottom {
     position: relative;
+    top:50px;
+    left: -10px;
+    width: 100%;
     background-color: #c2dfef;
     padding: 5px;
+    padding-right: 14px;
     margin: 10px 0px 0px 0px;
 }
 
@@ -56,4 +64,17 @@
   color: black;
   font-weight : bold;
   text-decoration : underline;
+}
+
+.borderNone tr, .borderNone td {
+    border: none !important;
+}
+.title-template{
+    font-size: 33px;
+    text-align: center;
+}
+
+.tema-template{
+    font-size: 23px;
+    text-align: center; 
 }

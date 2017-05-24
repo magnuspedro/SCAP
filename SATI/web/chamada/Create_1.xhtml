@@ -16,9 +16,9 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:panel header="Cadastro de Chamadas">
+                    <p:fieldset legend="Cadastro de Chamadas" toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <p:panelGrid class="createGrid" columns="2">
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:outputLabel value="#{bundle.CreateChamadaLabel_hora}" for="hora" />
                             <p:inputText id="hora" value="#{chamadaController.selected.hora}" title="#{bundle.CreateChamadaTitle_hora}" >
                                 <f:convertDateTime pattern="HH:mm:ss" />
@@ -34,10 +34,13 @@ and open the template in the editor.
                             <p:selectOneMenu id="iddataEvento" value="#{chamadaController.selected.iddataEvento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu></p:panelGrid>
-                    </p:panel>
-                    <br />
-                    <p:commandButton ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>
+                        </p:panelGrid>
+
+                    </p:fieldset>
+
+
                 </h:form>
             </div>
             <h:form>

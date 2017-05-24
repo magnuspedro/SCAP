@@ -16,9 +16,9 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:panel header="Cadastro de Alunos:">
+                    <p:fieldset legend="Cadastro de Alunos" toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <p:panelGrid class="createGrid" columns="2">
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_nome}" for="nome" />
                             <p:inputText id="nome" value="#{alunoController.selected.nome}" title="#{bundle.CreateAlunoTitle_nome}" />
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_ra}" for="ra" />
@@ -35,10 +35,10 @@ and open the template in the editor.
                             <p:inputText id="curso" value="#{alunoController.selected.curso}" title="#{bundle.CreateAlunoTitle_curso}" />
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_instituicao}" for="instituicao" />
                             <p:inputText id="instituicao" value="#{alunoController.selected.instituicao}" title="#{bundle.CreateAlunoTitle_instituicao}" />
+                            <p:commandButton ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>        
                         </p:panelGrid>
-                    </p:panel>
-                    <br />
-                    <p:commandButton ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>
+                    </p:fieldset>
+                    
                 </h:form>
             </div>
             <h:form>
