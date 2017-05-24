@@ -18,9 +18,9 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:fieldset legend =" Data do Evento">
+                    <p:fieldset legend =" Data do Evento" toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <h:panelGrid class="createGrid" columns="2">
+                        <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <h:outputLabel value="#{bundle.CreateDataEventoLabel_iddataEvento}" for="iddataEvento" />
                             <p:inputText id="iddataEvento" value="#{dataEventoController.selected.iddataEvento}" title="#{bundle.CreateDataEventoTitle_iddataEvento}" required="true" requiredMessage="#{bundle.CreateDataEventoRequiredMessage_iddataEvento}"/>
                             <h:outputLabel value="#{bundle.CreateDataEventoLabel_data}" for="data" />
@@ -42,11 +42,9 @@ and open the template in the editor.
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
+                            <p:commandButton ajax="false"   action="#{dataEventoController.create}" value="Salvar"/>
                         </h:panelGrid>
                     </p:fieldset>
-                    <br />  
-                    <p:commandButton ajax="false"   action="#{dataEventoController.create}" value="Salvar"/>
-
                 </h:form>
             </div>
             <div class="table">

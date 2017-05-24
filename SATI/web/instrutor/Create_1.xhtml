@@ -18,9 +18,9 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:fieldset legend ="Cadastro de Instrutores ">
+                    <p:fieldset legend ="Cadastro de Instrutores " toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <h:panelGrid class="createGrid" columns="2">
+                        <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <h:outputLabel value="#{bundle.CreateInstrutorLabel_nome}" for="nome" />
                             <p:inputText id="nome" value="#{instrutorController.selected.nome}" title="#{bundle.CreateInstrutorTitle_nome}" />
                             <h:outputLabel value="#{bundle.CreateInstrutorLabel_tipo}" for="tipo" />
@@ -35,11 +35,9 @@ and open the template in the editor.
                             <p:password id="senha" value="#{instrutorController.selected.senha}" title="#{bundle.CreateInstrutorTitle_senha}" feedback="true"/>
                             <h:outputLabel value="#{bundle.CreateInstrutorLabel_administrador}" for="administrador" />
                             <p:inputText id="administrador" value="#{instrutorController.selected.administrador}" title="#{bundle.CreateInstrutorTitle_administrador}" />
+                            <p:commandButton ajax="false"   action="#{instrutorController.create}" value="Salvar"/>
                         </h:panelGrid>
                     </p:fieldset>
-                    <br />  
-                    <p:commandButton ajax="false"   action="#{instrutorController.create}" value="Salvar"/>
-
                 </h:form>
             </div>
             <div class="table">
