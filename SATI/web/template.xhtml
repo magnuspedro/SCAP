@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -18,9 +19,21 @@
         </div>
         <div>
             <div id="left">
-                <ui:insert name="left">Left</ui:insert>
+                <h:form>
+                    <p:menu>
+                        <p:submenu label="Opções">
+                            <p:menuitem outcome="/aluno/Create_1" value="Show All Aluno Items"/>
+                            <p:menuitem outcome="/chamada/List" value="Show All Chamada Items"/>
+                            <p:menuitem outcome="/dataEvento/List" value="Show All DataEvento Items"/>
+                            <p:menuitem outcome="/evento/List" value="Show All Evento Items"/>
+                            <p:menuitem outcome="/eventosInstrutores/List" value="Show All EventosInstrutores Items"/>
+                            <p:menuitem outcome="/instrutor/List" value="Show All Instrutor Items"/>
+                            <p:menuitem outcome="/matricula/List" value="Show All Matricula Items"/>
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
             </div>
-            <div id="body" class="left_content">
+            <div id="content" class="left_content">
                 <ui:insert name="body">Content</ui:insert>
             </div>
         </div>
