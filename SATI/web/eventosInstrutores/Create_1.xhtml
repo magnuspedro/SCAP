@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateeventosInstrutoresTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                    <p:fieldset legend =" Evento Instrutores">
+                        <p:messages />
+                        <h:panelGrid class="createGrid" columns="2">                     
+                            <h:outputLabel value="#{bundle.CreateEventosInstrutoresLabel_idevento}" for="idEvento" />
+                            <p:selectOneMenu id="idevento" value="#{eventosInstrutoresController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateEventosInstrutoresRequiredMessage_idevento}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel value="#{bundle.CreateEventosInstrutoresLabel_idinstrutor}" for="idinstrutor" />
+                            <p:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" required="true" requiredMessage="#{bundle.CreateEventosInstrutoresRequiredMessage_idinstrutor}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{instrutorController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                    </p:fieldset>
+                    <br />  
+                    <p:commandButton ajax="false"   action="#{dataEventosInstrutoresController.create}" value="Salvar"/>
+
+                </h:form>
+            </div>
+            <div class="table">
+                <h:form>
+                    <h:outputText escape="false" value="#{bundle.ListDataEventosInstrutoresEmpty}" rendered="#{dataEventosInstrutoresController.items.rowCount == 0}"/>
+                    <h:panelGroup rendered="#{dataEventosInstrutoresController.items.rowCount > 0}">
+                        <h:outputText value="#{dataEventosInstrutoresController.pagination.pageFirstItem + 1}..#{dataEventosInstrutoresController.pagination.pageLastItem + 1}/#{dataEventosInstrutoresController.pagination.itemsCount}"/>
+                        <h:commandLink action="#{dataEventosInstrutoresController.previous}" value="#{bundle.Previous} #{dataEventosInstrutoresController.pagination.pageSize}" rendered="#{dataEventosInstrutoresController.pagination.hasPreviousPage}"/>
+                        <p:dataTable id="tabela" value="#{dataEventosInstrutoresController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="5,10,15"   lazy="true">                           
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="#{bundle.ListDataEventosInstrutoresTitle_idevento}"/>
+                                </f:facet>
+                                <p:outputLabel value="#{item.idevento}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="#{bundle.ListDataEventosInstrutoresTitle_idinstrutor}"/>
+                                </f:facet>
+                                <p:outputLabel value="#{item.idinstrutor}"/>
+                            </p:column>                                                                                                         
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Opções"/>
+                                </f:facet>
+                                <p:commandButton ajax="false" action="#{dataEventosInstrutoresController.prepareEdit}" image="ui-icon-pencil"/>
+                                <p:outputLabel value=" "/>
+                                <p:commandButton ajax="false" action="#{dataEventosInstrutoresController.destroy}" image="ui-icon-trash"/>
+                                <p:outputLabel value=" "/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
