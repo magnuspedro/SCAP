@@ -8,8 +8,8 @@ import jpa.InstrutorFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("instrutorController")
+@ManagedBean(name = "instrutorController")
 @SessionScoped
 public class InstrutorController implements Serializable {
 
@@ -70,13 +70,14 @@ public class InstrutorController implements Serializable {
     public String prepareView() {
         current = (Instrutor) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        return "Create_1";
     }
 
     public String prepareCreate() {
         current = new Instrutor();
         selectedItemIndex = -1;
-        return "Create";
+        recreateModel();
+        return "Create_1";
     }
 
     public String create() {
@@ -93,7 +94,7 @@ public class InstrutorController implements Serializable {
     public String prepareEdit() {
         current = (Instrutor) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
+        return "Create_1";
     }
 
     public String update() {
@@ -113,7 +114,7 @@ public class InstrutorController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List";
+        return "Create_1";
     }
 
     public String destroyAndView() {
@@ -171,13 +172,13 @@ public class InstrutorController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "List";
+        return "Create_1";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "List";
+        return "Create_1";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
