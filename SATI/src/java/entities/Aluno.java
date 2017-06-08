@@ -49,7 +49,7 @@ public class Aluno implements Serializable {
     @Column(name = "idaluno")
     private Integer idaluno;
     @Size(max = 100)
-    @Column(name = "nome")
+    @Column(name = " nome")
     private String nome;
     @Size(max = 20)
     @Column(name = "ra")
@@ -195,7 +195,7 @@ public class Aluno implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Aluno[ idaluno=" + idaluno + " ]";
+        return nome;
     }
     
 }

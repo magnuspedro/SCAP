@@ -21,11 +21,9 @@ and open the template in the editor.
                     <p:fieldset legend =" Data do Evento" toggleable="true" toggleSpeed="500">
                         <p:messages />
                         <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">
-                            <h:outputLabel value="#{bundle.CreateDataEventoLabel_iddataEvento}" for="iddataEvento" />
-                            <p:inputText id="iddataEvento" value="#{dataEventoController.selected.iddataEvento}" title="#{bundle.CreateDataEventoTitle_iddataEvento}" required="true" requiredMessage="#{bundle.CreateDataEventoRequiredMessage_iddataEvento}"/>
                             <h:outputLabel value="#{bundle.CreateDataEventoLabel_data}" for="data" />
                             <p:calendar id="data" value="#{dataEventoController.selected.data}" title="#{bundle.CreateDataEventoTitle_data}" effect="fold">
-                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                                <f:convertDateTime pattern="MM/dd/yyyy"/>
                             </p:calendar>
                             <h:outputLabel value="#{bundle.CreateDataEventoLabel_aberto}" for="aberto" />
                             <p:inputText id="aberto" value="#{dataEventoController.selected.aberto}" title="#{bundle.CreateDataEventoTitle_aberto}" />
@@ -59,7 +57,9 @@ and open the template in the editor.
                                 <f:facet name="header">
                                     <p:outputLabel value="#{bundle.ListDataEventoTitle_data}"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.data}"/>
+                                <p:outputLabel value="#{item.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
@@ -69,21 +69,25 @@ and open the template in the editor.
                             </p:column>                            
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListDataEventoTitle_HoraAberto}"/>
+                                    <p:outputLabel value="Abertura:"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.HoraAberto}"/>
+                                <p:outputLabel value="#{item.horaAberto}">
+                                    <f:convertDateTime pattern="HH:mm:ss"/>
+                                </p:outputLabel>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListDataEventoTitle_HoraFechamento}"/>
+                                    <p:outputLabel value="Fechamento"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.HoraFechamento}"/>
+                                <p:outputLabel value="#{item.horaFechamento}">
+                                    <f:convertDateTime pattern="HH:mm:ss"/>
+                                </p:outputLabel>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListDataEventoTitle_Idevento}"/>
+                                    <p:outputLabel value="Evento:"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.Idevento}"/>
+                                <p:outputLabel value="#{item.idevento}"/>
                             </p:column>                                                 
                             <p:column>
                                 <f:facet name="header">

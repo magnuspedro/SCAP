@@ -35,7 +35,7 @@ public class EventosInstrutores implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ideventos_instrutor")
+    @Column(name = "ideventosinstrutor")
     private Integer ideventosInstrutor;
     @JoinColumn(name = "idevento", referencedColumnName = "idevento")
     @ManyToOne(optional = false)

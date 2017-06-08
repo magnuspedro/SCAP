@@ -20,8 +20,8 @@ and open the template in the editor.
                 <h:form class="createForm">
                     <p:fieldset legend =" Evento Instrutores" toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">                     
-                            <h:outputLabel value="#{bundle.CreateEventosInstrutoresLabel_idevento}" for="idEvento" />
+                        <h:panelGrid class="createGrid" columns="2" styleClass="borderNone"> 
+                            <p:outputLabel value="ID:"/>
                             <p:selectOneMenu id="idevento" value="#{eventosInstrutoresController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateEventosInstrutoresRequiredMessage_idevento}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
@@ -32,8 +32,7 @@ and open the template in the editor.
                                 <f:selectItems value="#{instrutorController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
                         </h:panelGrid>
-                        <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                        <p:commandButton ajax="false"   action="#{dataEventosInstrutoresController.create}" value="Salvar"/>
+                        <p:commandButton ajax="false"   action="#{eventosInstrutoresController.create}" value="Salvar"/>
                     </p:fieldset>
                 </h:form>
             </div>

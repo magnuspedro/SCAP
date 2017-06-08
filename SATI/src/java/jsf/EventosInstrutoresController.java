@@ -1,11 +1,13 @@
 package jsf;
 
+import entities.Evento;
 import entities.EventosInstrutores;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.EventosInstrutoresFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;

@@ -6,6 +6,7 @@
 package jpa;
 
 import entities.DataEvento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,4 +30,8 @@ public class DataEventoFacade extends AbstractFacade<DataEvento> {
         super(DataEvento.class);
     }
     
+    public List<DataEvento> listName() {
+        return (List<DataEvento>) em.createNamedQuery("DataEvento.listName");
+    }
+
 }

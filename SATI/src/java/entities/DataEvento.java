@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
  *
  * @author matheus
  */
-@Entity
+@Entity/*SELECT e FROM Evento e INNER JOIN DataEvento de ON de.idevento = e.idevento*/
 @Table(name = "data_evento")
 @XmlRootElement
 @NamedQueries({
@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "DataEvento.findByData", query = "SELECT d FROM DataEvento d WHERE d.data = :data")
     , @NamedQuery(name = "DataEvento.findByAberto", query = "SELECT d FROM DataEvento d WHERE d.aberto = :aberto")
     , @NamedQuery(name = "DataEvento.findByHoraAberto", query = "SELECT d FROM DataEvento d WHERE d.horaAberto = :horaAberto")
-    , @NamedQuery(name = "DataEvento.findByHoraFechamento", query = "SELECT d FROM DataEvento d WHERE d.horaFechamento = :horaFechamento")})
+    , @NamedQuery(name = "DataEvento.findByHoraFechamento", query = "SELECT d FROM DataEvento d WHERE d.horaFechamento = :horaFechamento")
+    , @NamedQuery(name = "DataEvento.listName", query = "SELECT d FROM DataEvento d")})
 public class DataEvento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -128,6 +129,11 @@ public class DataEvento implements Serializable {
     public void setIdevento(Evento idevento) {
         this.idevento = idevento;
     }
+    
+    public String getNomeEvento(){
+        return this.idevento.getNome();
+    }
+    
 
     @Override
     public int hashCode() {
@@ -143,15 +149,12 @@ public class DataEvento implements Serializable {
             return false;
         }
         DataEvento other = (DataEvento) object;
-        if ((this.iddataEvento == null && other.iddataEvento != null) || (this.iddataEvento != null && !this.iddataEvento.equals(other.iddataEvento))) {
-            return false;
-        }
-        return true;
+        return !((this.iddataEvento == null && other.iddataEvento != null) || (this.iddataEvento != null && !this.iddataEvento.equals(other.iddataEvento)));
     }
 
     @Override
     public String toString() {
-        return "entities.DataEvento[ iddataEvento=" + iddataEvento + " ]";
+        return idevento.getNome();
     }
     
 }

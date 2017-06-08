@@ -192,6 +192,10 @@ public class DataEventoController implements Serializable {
     public DataEvento getDataEvento(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
+    
+    public SelectItem[] listNames(){
+        return JsfUtil.getSelectItems(ejbFacade.listName(), true);
+    }
 
     @FacesConverter(forClass = DataEvento.class)
     public static class DataEventoControllerConverter implements Converter {
