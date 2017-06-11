@@ -89,15 +89,11 @@ public class EventosInstrutores implements Serializable {
             return false;
         }
         EventosInstrutores other = (EventosInstrutores) object;
-        if ((this.ideventosInstrutor == null && other.ideventosInstrutor != null) || (this.ideventosInstrutor != null && !this.ideventosInstrutor.equals(other.ideventosInstrutor))) {
-            return false;
-        }
-        return true;
+        return !((this.ideventosInstrutor == null && other.ideventosInstrutor != null) || (this.ideventosInstrutor != null && !this.ideventosInstrutor.equals(other.ideventosInstrutor)));
     }
 
     @Override
     public String toString() {
         return "entities.EventosInstrutores[ ideventosInstrutor=" + ideventosInstrutor + " ]";
-    }
-    
+    } 
 }

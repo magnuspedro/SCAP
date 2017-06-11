@@ -5,7 +5,7 @@
  */
 package jpa;
 
-import entities.DataEvento;
+import entities.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author matheus
  */
 @Stateless
-public class DataEventoFacade extends AbstractFacade<DataEvento> {
+public class LocalFacade extends AbstractFacade<Local> {
 
     @PersistenceContext(unitName = "SATIPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class DataEventoFacade extends AbstractFacade<DataEvento> {
         return em;
     }
 
-    public DataEventoFacade() {
-        super(DataEvento.class);
+    public LocalFacade() {
+        super(Local.class);
     }
     
 }

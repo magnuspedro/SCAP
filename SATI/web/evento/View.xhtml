@@ -33,6 +33,8 @@
                     <h:outputText value="#{eventoController.selected.horaTermino}" title="#{bundle.ViewEventoTitle_horaTermino}">
                         <f:convertDateTime pattern="HH:mm:ss" />
                     </h:outputText>
+                    <h:outputText value="#{bundle.ViewEventoLabel_idlocal}"/>
+                    <h:outputText value="#{eventoController.selected.idlocal}" title="#{bundle.ViewEventoTitle_idlocal}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{eventoController.destroyAndView}" value="#{bundle.ViewEventoDestroyLink}"/>

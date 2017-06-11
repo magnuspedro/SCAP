@@ -27,24 +27,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author matheus
  */
 @Entity
-@Table(name = "chamada")
+@Table(name = "chamada_evento")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Chamada.findAll", query = "SELECT c FROM Chamada c")
-    , @NamedQuery(name = "Chamada.findByIdchamada", query = "SELECT c FROM Chamada c WHERE c.idchamada = :idchamada")
-    , @NamedQuery(name = "Chamada.findByHora", query = "SELECT c FROM Chamada c WHERE c.hora = :hora")
-    , @NamedQuery(name = "Chamada.findBySituacao", query = "SELECT c FROM Chamada c WHERE c.situacao = :situacao")
-    , @NamedQuery(name = "Chamada.nomeAluno", query = "SELECT a.nome FROM Aluno a "
-            + "INNER JOIN Chamada c ON c.idaluno = a.idaluno "
-            + "WHERE c.iddataEvento = :iddataevento")
-    , @NamedQuery(name = "Chamada.nomeEvento", query = "SELECT e.nome FROM Evento e "
-            + "INNER JOIN DataEvento de ON de.idevento = e.idevento "
-            + "INNER JOIN Chamada c ON c.iddataEvento = de.iddataEvento "
-            + "WHERE c.iddataEvento = :iddataevento")})
-public class Chamada implements Serializable {
-
-    @Column(name = "faltas")
-    private Integer faltas;
+    @NamedQuery(name = "ChamadaEvento.findAll", query = "SELECT c FROM ChamadaEvento c")
+    , @NamedQuery(name = "ChamadaEvento.findByIdchamada", query = "SELECT c FROM ChamadaEvento c WHERE c.idchamada = :idchamada")
+    , @NamedQuery(name = "ChamadaEvento.findByHora", query = "SELECT c FROM ChamadaEvento c WHERE c.hora = :hora")
+    , @NamedQuery(name = "ChamadaEvento.findBySituacao", query = "SELECT c FROM ChamadaEvento c WHERE c.situacao = :situacao")})
+public class ChamadaEvento implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -64,14 +54,10 @@ public class Chamada implements Serializable {
     @ManyToOne(optional = false)
     private DataEvento iddataEvento;
 
-    /*@JoinColumn(name = "")
-    private String nomeAluno;
-    private String nomeEvento;*/
-
-    public Chamada() {
+    public ChamadaEvento() {
     }
 
-    public Chamada(Integer idchamada) {
+    public ChamadaEvento(Integer idchamada) {
         this.idchamada = idchamada;
     }
 
@@ -125,10 +111,10 @@ public class Chamada implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Chamada)) {
+        if (!(object instanceof ChamadaEvento)) {
             return false;
         }
-        Chamada other = (Chamada) object;
+        ChamadaEvento other = (ChamadaEvento) object;
         if ((this.idchamada == null && other.idchamada != null) || (this.idchamada != null && !this.idchamada.equals(other.idchamada))) {
             return false;
         }
@@ -137,29 +123,7 @@ public class Chamada implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Chamada[ idchamada=" + idchamada + " ]";
+        return "entities.ChamadaEvento[ idchamada=" + idchamada + " ]";
     }
-
-    /**
-     * @return the nomeAluno
-     */
-    public String getNomeAluno() {
-        return this.idaluno.getNome();
-    }
-
-    /**
-     * @return the nomeEvento
-     */
-    public String getNomeEvento() {
-        return this.iddataEvento.getIdevento().getNome();
-    }
-
-    public Integer getFaltas() {
-        return faltas;
-    }
-
-    public void setFaltas(Integer faltas) {
-        this.faltas = faltas;
-    }
-
+    
 }

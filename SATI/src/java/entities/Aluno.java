@@ -51,6 +51,7 @@ public class Aluno implements Serializable {
     @Size(max = 100)
     @Column(name = " nome")
     private String nome;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 20)
     @Column(name = "ra")
     private String ra;
@@ -71,6 +72,12 @@ public class Aluno implements Serializable {
     @Size(max = 70)
     @Column(name = "instituicao")
     private String instituicao;
+    @Size(max = 45)
+    @Column(name = "email")
+    private String email;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaluno")
+    private Collection<ChamadaEvento> chamadaEventoCollection;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaluno")
     private Collection<Chamada> chamadaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaluno")
@@ -155,6 +162,23 @@ public class Aluno implements Serializable {
         this.instituicao = instituicao;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @XmlTransient
+    public Collection<ChamadaEvento> getChamadaEventoCollection() {
+        return chamadaEventoCollection;
+    }
+
+    public void setChamadaEventoCollection(Collection<ChamadaEvento> chamadaEventoCollection) {
+        this.chamadaEventoCollection = chamadaEventoCollection;
+    }
+
     @XmlTransient
     public Collection<Chamada> getChamadaCollection() {
         return chamadaCollection;
@@ -187,15 +211,11 @@ public class Aluno implements Serializable {
             return false;
         }
         Aluno other = (Aluno) object;
-        if ((this.idaluno == null && other.idaluno != null) || (this.idaluno != null && !this.idaluno.equals(other.idaluno))) {
-            return false;
-        }
-        return true;
+        return !((this.idaluno == null && other.idaluno != null) || (this.idaluno != null && !this.idaluno.equals(other.idaluno)));
     }
 
     @Override
     public String toString() {
         return nome;
     }
-    
 }

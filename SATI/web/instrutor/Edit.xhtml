@@ -31,6 +31,8 @@
                     <h:inputText id="senha" value="#{instrutorController.selected.senha}" title="#{bundle.EditInstrutorTitle_senha}" />
                     <h:outputLabel value="#{bundle.EditInstrutorLabel_administrador}" for="administrador" />
                     <h:inputText id="administrador" value="#{instrutorController.selected.administrador}" title="#{bundle.EditInstrutorTitle_administrador}" />
+                    <h:outputLabel value="#{bundle.EditInstrutorLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{instrutorController.selected.email}" title="#{bundle.EditInstrutorTitle_email}" />
                 </h:panelGrid>
                 <h:commandLink action="#{instrutorController.update}" value="#{bundle.EditInstrutorSaveLink}"/>
                 <br />

@@ -8,8 +8,8 @@ import jpa.DataEventoFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "dataEventoController")
+@Named("dataEventoController")
 @SessionScoped
 public class DataEventoController implements Serializable {
 
@@ -70,23 +70,22 @@ public class DataEventoController implements Serializable {
     public String prepareView() {
         current = (DataEvento) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Create_1";
+        return "View";
     }
 
     public String prepareCreate() {
         current = new DataEvento();
         selectedItemIndex = -1;
-        recreateModel();
-        return "Create_1";
+        return "Create";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("DataEventoCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("DataEventoCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -94,16 +93,16 @@ public class DataEventoController implements Serializable {
     public String prepareEdit() {
         current = (DataEvento) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Create_1";
+        return "Edit";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("DataEventoUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("DataEventoUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -114,7 +113,7 @@ public class DataEventoController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public String destroyAndView() {
@@ -133,9 +132,9 @@ public class DataEventoController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("DataEventoDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("DataEventoDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -172,13 +171,13 @@ public class DataEventoController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -191,10 +190,6 @@ public class DataEventoController implements Serializable {
 
     public DataEvento getDataEvento(java.lang.Integer id) {
         return ejbFacade.find(id);
-    }
-    
-    public SelectItem[] listNames(){
-        return JsfUtil.getSelectItems(ejbFacade.listName(), true);
     }
 
     @FacesConverter(forClass = DataEvento.class)

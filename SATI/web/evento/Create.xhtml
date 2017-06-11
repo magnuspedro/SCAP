@@ -33,6 +33,10 @@
                     <h:inputText id="horaTermino" value="#{eventoController.selected.horaTermino}" title="#{bundle.CreateEventoTitle_horaTermino}" >
                         <f:convertDateTime pattern="HH:mm:ss" />
                     </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateEventoLabel_idlocal}" for="idlocal" />
+                    <h:selectOneMenu id="idlocal" value="#{eventoController.selected.idlocal}" title="#{bundle.CreateEventoTitle_idlocal}" required="true" requiredMessage="#{bundle.CreateEventoRequiredMessage_idlocal}">
+                        <f:selectItems value="#{localController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{eventoController.create}" value="#{bundle.CreateEventoSaveLink}" />

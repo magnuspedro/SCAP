@@ -27,6 +27,8 @@ and open the template in the editor.
                             <p:inputText id="cpf" value="#{alunoController.selected.cpf}" title="#{bundle.CreateAlunoTitle_cpf}" />
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_rg}" for="rg" />
                             <p:inputText id="rg" value="#{alunoController.selected.rg}" title="#{bundle.CreateAlunoTitle_rg}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_email}" for="email" />
+                            <p:inputText id="email" value="#{alunoController.selected.email}" title="#{bundle.CreateAlunoTitle_email}" />
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_orgaoExpeditor}" for="orgaoExpeditor" />
                             <p:inputText id="orgaoExpeditor" value="#{alunoController.selected.orgaoExpeditor}" title="#{bundle.CreateAlunoTitle_orgaoExpeditor}" />
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_externo}" for="externo" />
@@ -38,7 +40,7 @@ and open the template in the editor.
                             <p:commandButton ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>        
                         </p:panelGrid>
                     </p:fieldset>
-                    
+
                 </h:form>
             </div>
             <h:form>

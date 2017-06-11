@@ -1,9 +1,9 @@
 package jsf;
 
-import entities.Instrutor;
+import entities.ChamadaEvento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
-import jpa.InstrutorFacade;
+import jpa.ChamadaEventoFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("instrutorController")
+@Named("chamadaEventoController")
 @SessionScoped
-public class InstrutorController implements Serializable {
+public class ChamadaEventoController implements Serializable {
 
-    private Instrutor current;
+    private ChamadaEvento current;
     private DataModel items = null;
     @EJB
-    private jpa.InstrutorFacade ejbFacade;
+    private jpa.ChamadaEventoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public InstrutorController() {
+    public ChamadaEventoController() {
     }
 
-    public Instrutor getSelected() {
+    public ChamadaEvento getSelected() {
         if (current == null) {
-            current = new Instrutor();
+            current = new ChamadaEvento();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private InstrutorFacade getFacade() {
+    private ChamadaEventoFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class InstrutorController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Instrutor) getItems().getRowData();
+        current = (ChamadaEvento) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Instrutor();
+        current = new ChamadaEvento();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class InstrutorController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("InstrutorCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("ChamadaEventoCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class InstrutorController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Instrutor) getItems().getRowData();
+        current = (ChamadaEvento) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class InstrutorController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("InstrutorUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("ChamadaEventoUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class InstrutorController implements Serializable {
     }
 
     public String destroy() {
-        current = (Instrutor) getItems().getRowData();
+        current = (ChamadaEvento) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class InstrutorController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("InstrutorDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("ChamadaEventoDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,21 +188,21 @@ public class InstrutorController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Instrutor getInstrutor(java.lang.Integer id) {
+    public ChamadaEvento getChamadaEvento(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Instrutor.class)
-    public static class InstrutorControllerConverter implements Converter {
+    @FacesConverter(forClass = ChamadaEvento.class)
+    public static class ChamadaEventoControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            InstrutorController controller = (InstrutorController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "instrutorController");
-            return controller.getInstrutor(getKey(value));
+            ChamadaEventoController controller = (ChamadaEventoController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "chamadaEventoController");
+            return controller.getChamadaEvento(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -222,11 +222,11 @@ public class InstrutorController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Instrutor) {
-                Instrutor o = (Instrutor) object;
-                return getStringKey(o.getIdinstrutor());
+            if (object instanceof ChamadaEvento) {
+                ChamadaEvento o = (ChamadaEvento) object;
+                return getStringKey(o.getIdchamada());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Instrutor.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ChamadaEvento.class.getName());
             }
         }
 

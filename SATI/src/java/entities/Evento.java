@@ -15,7 +15,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -42,6 +44,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByHoraInicio", query = "SELECT e FROM Evento e WHERE e.horaInicio = :horaInicio")
     , @NamedQuery(name = "Evento.findByHoraTermino", query = "SELECT e FROM Evento e WHERE e.horaTermino = :horaTermino")})
 public class Evento implements Serializable {
+
+    @JoinColumn(name = "idlocal", referencedColumnName = "idlocal")
+    @ManyToOne(optional = false)
+    private Local idlocal;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -187,6 +193,14 @@ public class Evento implements Serializable {
     @Override
     public String toString() {
         return nome;
+    }
+
+    public Local getIdlocal() {
+        return idlocal;
+    }
+
+    public void setIdlocal(Local idlocal) {
+        this.idlocal = idlocal;
     }
     
 }

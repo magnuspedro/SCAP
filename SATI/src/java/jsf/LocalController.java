@@ -1,9 +1,9 @@
 package jsf;
 
-import entities.Instrutor;
+import entities.Local;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
-import jpa.InstrutorFacade;
+import jpa.LocalFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("instrutorController")
+@Named("localController")
 @SessionScoped
-public class InstrutorController implements Serializable {
+public class LocalController implements Serializable {
 
-    private Instrutor current;
+    private Local current;
     private DataModel items = null;
     @EJB
-    private jpa.InstrutorFacade ejbFacade;
+    private jpa.LocalFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
-    public InstrutorController() {
+    public LocalController() {
     }
 
-    public Instrutor getSelected() {
+    public Local getSelected() {
         if (current == null) {
-            current = new Instrutor();
+            current = new Local();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private InstrutorFacade getFacade() {
+    private LocalFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class InstrutorController implements Serializable {
     }
 
     public String prepareView() {
-        current = (Instrutor) getItems().getRowData();
+        current = (Local) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new Instrutor();
+        current = new Local();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class InstrutorController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("InstrutorCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("LocalCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class InstrutorController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (Instrutor) getItems().getRowData();
+        current = (Local) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class InstrutorController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("InstrutorUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("LocalUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class InstrutorController implements Serializable {
     }
 
     public String destroy() {
-        current = (Instrutor) getItems().getRowData();
+        current = (Local) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class InstrutorController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("InstrutorDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("LocalDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,21 +188,21 @@ public class InstrutorController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public Instrutor getInstrutor(java.lang.Integer id) {
+    public Local getLocal(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Instrutor.class)
-    public static class InstrutorControllerConverter implements Converter {
+    @FacesConverter(forClass = Local.class)
+    public static class LocalControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            InstrutorController controller = (InstrutorController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "instrutorController");
-            return controller.getInstrutor(getKey(value));
+            LocalController controller = (LocalController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "localController");
+            return controller.getLocal(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {
@@ -222,11 +222,11 @@ public class InstrutorController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof Instrutor) {
-                Instrutor o = (Instrutor) object;
-                return getStringKey(o.getIdinstrutor());
+            if (object instanceof Local) {
+                Local o = (Local) object;
+                return getStringKey(o.getIdlocal());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Instrutor.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Local.class.getName());
             }
         }
 

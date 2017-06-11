@@ -43,6 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "DataEvento.listName", query = "SELECT d FROM DataEvento d")})
 public class DataEvento implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddataEvento")
+    private Collection<ChamadaEvento> chamadaEventoCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -155,6 +158,15 @@ public class DataEvento implements Serializable {
     @Override
     public String toString() {
         return idevento.getNome();
+    }
+
+    @XmlTransient
+    public Collection<ChamadaEvento> getChamadaEventoCollection() {
+        return chamadaEventoCollection;
+    }
+
+    public void setChamadaEventoCollection(Collection<ChamadaEvento> chamadaEventoCollection) {
+        this.chamadaEventoCollection = chamadaEventoCollection;
     }
     
 }

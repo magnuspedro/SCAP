@@ -31,6 +31,12 @@
                     <h:selectOneMenu id="iddataEvento" value="#{chamadaController.selected.iddataEvento}" title="#{bundle.EditChamadaTitle_iddataEvento}" required="true" requiredMessage="#{bundle.EditChamadaRequiredMessage_iddataEvento}">
                         <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditChamadaLabel_nomeAluno}" for="nomeAluno" />
+                    <h:inputText id="nomeAluno" value="#{chamadaController.selected.nomeAluno}" title="#{bundle.EditChamadaTitle_nomeAluno}" />
+                    <h:outputLabel value="#{bundle.EditChamadaLabel_nomeEvento}" for="nomeEvento" />
+                    <h:inputText id="nomeEvento" value="#{chamadaController.selected.nomeEvento}" title="#{bundle.EditChamadaTitle_nomeEvento}" />
+                    <h:outputLabel value="#{bundle.EditChamadaLabel_faltas}" for="faltas" />
+                    <h:inputText id="faltas" value="#{chamadaController.selected.faltas}" title="#{bundle.EditChamadaTitle_faltas}" />
                 </h:panelGrid>
                 <h:commandLink action="#{chamadaController.update}" value="#{bundle.EditChamadaSaveLink}"/>
                 <br />

@@ -35,6 +35,8 @@
                     <h:selectOneMenu id="idevento" value="#{dataEventoController.selected.idevento}" title="#{bundle.CreateDataEventoTitle_idevento}" required="true" requiredMessage="#{bundle.CreateDataEventoRequiredMessage_idevento}">
                         <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateDataEventoLabel_nomeEvento}" for="nomeEvento" />
+                    <h:inputText id="nomeEvento" value="#{dataEventoController.selected.nomeEvento}" title="#{bundle.CreateDataEventoTitle_nomeEvento}" />
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{dataEventoController.create}" value="#{bundle.CreateDataEventoSaveLink}" />

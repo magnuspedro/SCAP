@@ -33,6 +33,8 @@
                     <h:inputText id="curso" value="#{alunoController.selected.curso}" title="#{bundle.EditAlunoTitle_curso}" />
                     <h:outputLabel value="#{bundle.EditAlunoLabel_instituicao}" for="instituicao" />
                     <h:inputText id="instituicao" value="#{alunoController.selected.instituicao}" title="#{bundle.EditAlunoTitle_instituicao}" />
+                    <h:outputLabel value="#{bundle.EditAlunoLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{alunoController.selected.email}" title="#{bundle.EditAlunoTitle_email}" />
                 </h:panelGrid>
                 <h:commandLink action="#{alunoController.update}" value="#{bundle.EditAlunoSaveLink}"/>
                 <br />

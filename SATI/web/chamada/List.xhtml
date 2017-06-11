@@ -54,6 +54,24 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="#{bundle.ListChamadaTitle_nomeAluno}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomeAluno}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListChamadaTitle_nomeEvento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomeEvento}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListChamadaTitle_faltas}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.faltas}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
                             <h:commandLink action="#{chamadaController.prepareView}" value="#{bundle.ListChamadaViewLink}"/>

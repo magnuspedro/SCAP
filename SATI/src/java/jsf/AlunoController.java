@@ -8,8 +8,8 @@ import jpa.AlunoFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -18,7 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "alunoController")
+@Named("alunoController")
 @SessionScoped
 public class AlunoController implements Serializable {
 
@@ -64,29 +64,28 @@ public class AlunoController implements Serializable {
 
     public String prepareList() {
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public String prepareView() {
         current = (Aluno) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Create_1";
+        return "View";
     }
 
     public String prepareCreate() {
         current = new Aluno();
         selectedItemIndex = -1;
-        recreateModel();
-        return "Create_1";
+        return "Create";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AlunoCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -94,16 +93,16 @@ public class AlunoController implements Serializable {
     public String prepareEdit() {
         current = (Aluno) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Create_1";
+        return "Edit";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AlunoUpdated"));
-            return "Create_1";
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoUpdated"));
+            return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -114,8 +113,7 @@ public class AlunoController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        prepareCreate();
-        return "Create_1";
+        return "List";
     }
 
     public String destroyAndView() {
@@ -123,20 +121,20 @@ public class AlunoController implements Serializable {
         recreateModel();
         updateCurrentItem();
         if (selectedItemIndex >= 0) {
-            return "Create_1";
+            return "View";
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "Create_1";
+            return "List";
         }
     }
 
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AlunoDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -173,13 +171,13 @@ public class AlunoController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {
@@ -204,7 +202,7 @@ public class AlunoController implements Serializable {
             }
             AlunoController controller = (AlunoController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "alunoController");
-            return controller.ejbFacade.find(getKey(value));
+            return controller.getAluno(getKey(value));
         }
 
         java.lang.Integer getKey(String value) {

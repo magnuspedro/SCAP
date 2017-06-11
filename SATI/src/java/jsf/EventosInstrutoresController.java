@@ -1,17 +1,15 @@
 package jsf;
 
-import entities.Evento;
 import entities.EventosInstrutores;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.EventosInstrutoresFacade;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -20,7 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name = "eventosInstrutoresController")
+@Named("eventosInstrutoresController")
 @SessionScoped
 public class EventosInstrutoresController implements Serializable {
 
@@ -72,23 +70,22 @@ public class EventosInstrutoresController implements Serializable {
     public String prepareView() {
         current = (EventosInstrutores) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Create_1";
+        return "View";
     }
 
     public String prepareCreate() {
         current = new EventosInstrutores();
         selectedItemIndex = -1;
-        recreateModel();
-        return "Create_1";
+        return "Create";
     }
 
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("EventosInstrutoresCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("EventosInstrutoresCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -96,16 +93,16 @@ public class EventosInstrutoresController implements Serializable {
     public String prepareEdit() {
         current = (EventosInstrutores) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Create_1";
+        return "Edit";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("EventosInstrutoresUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("EventosInstrutoresUpdated"));
             return "View";
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }
@@ -116,7 +113,7 @@ public class EventosInstrutoresController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public String destroyAndView() {
@@ -135,9 +132,9 @@ public class EventosInstrutoresController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("EventosInstrutoresDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("EventosInstrutoresDeleted"));
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
         }
     }
 
@@ -174,13 +171,13 @@ public class EventosInstrutoresController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "Create_1";
+        return "List";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() {

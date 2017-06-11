@@ -21,19 +21,21 @@ and open the template in the editor.
                     <p:fieldset legend ="Cadastro de Instrutores " toggleable="true" toggleSpeed="500">
                         <p:messages />
                         <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">
-                            <h:outputLabel value="#{bundle.CreateInstrutorLabel_nome}" for="nome" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_nome}" for="nome" />
                             <p:inputText id="nome" value="#{instrutorController.selected.nome}" title="#{bundle.CreateInstrutorTitle_nome}" />
-                            <h:outputLabel value="#{bundle.CreateInstrutorLabel_tipo}" for="tipo" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_tipo}" for="tipo" />
                             <p:inputText id="tipo" value="#{instrutorController.selected.tipo}" title="#{bundle.CreateInstrutorTitle_tipo}" />
-                            <h:outputLabel value="#{bundle.CreateInstrutorLabel_rg}" for="rg" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_rg}" for="rg" />
                             <p:inputText id="rg" value="#{instrutorController.selected.rg}" title="#{bundle.CreateInstrutorTitle_rg}" />
-                            <h:outputLabel value="#{bundle.CreateInstrutorLabel_orgaoExpeditor}" for="orgaoExpeditor" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_orgaoExpeditor}" for="orgaoExpeditor" />
                             <p:inputText id="orgaoExpeditor" value="#{instrutorController.selected.orgaoExpeditor}" title="#{bundle.CreateInstrutorTitle_orgaoExpeditor}" />
-                            <h:outputLabel value="#{bundle.CreateInstrutorLabel_cpf}" for="cpf" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_cpf}" for="cpf" />
                             <p:inputText id="cpf" value="#{instrutorController.selected.cpf}" title="#{bundle.CreateInstrutorTitle_cpf}" />
-                            <h:outputLabel value="#{bundle.CreateInstrutorLabel_senha}" for="senha" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_email}" for="email" />
+                            <p:inputText id="email" value="#{instrutorController.selected.email}" title="#{bundle.CreateInstrutorTitle_email}" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_senha}" for="senha" />
                             <p:password id="senha" value="#{instrutorController.selected.senha}" title="#{bundle.CreateInstrutorTitle_senha}" feedback="true"/>
-                            <h:outputLabel value="#{bundle.CreateInstrutorLabel_administrador}" for="administrador" />
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_administrador}" for="administrador" />
                             <p:inputText id="administrador" value="#{instrutorController.selected.administrador}" title="#{bundle.CreateInstrutorTitle_administrador}" />
                             <p:commandButton ajax="false"   action="#{instrutorController.create}" value="Salvar"/>
                         </h:panelGrid>
