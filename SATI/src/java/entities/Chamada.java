@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -32,8 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Chamada.findAll", query = "SELECT c FROM Chamada c")
     , @NamedQuery(name = "Chamada.findByIdchamada", query = "SELECT c FROM Chamada c WHERE c.idchamada = :idchamada")
-    , @NamedQuery(name = "Chamada.findByHora", query = "SELECT c FROM Chamada c WHERE c.hora = :hora")
-    , @NamedQuery(name = "Chamada.findBySituacao", query = "SELECT c FROM Chamada c WHERE c.situacao = :situacao")
     , @NamedQuery(name = "Chamada.nomeAluno", query = "SELECT a.nome FROM Aluno a "
             + "INNER JOIN Chamada c ON c.idaluno = a.idaluno "
             + "WHERE c.iddataEvento = :iddataevento")
@@ -43,20 +38,14 @@ import javax.xml.bind.annotation.XmlRootElement;
             + "WHERE c.iddataEvento = :iddataevento")})
 public class Chamada implements Serializable {
 
-    @Column(name = "faltas")
-    private Integer faltas;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idchamada")
     private Integer idchamada;
-    @Column(name = "hora")
-    @Temporal(TemporalType.TIME)
-    private Date hora;
-    @Column(name = "situacao")
-    private Boolean situacao;
+    @Column(name = "faltas")
+    private Integer faltas;
     @JoinColumn(name = "idaluno", referencedColumnName = "idaluno")
     @ManyToOne(optional = false)
     private Aluno idaluno;
@@ -67,7 +56,6 @@ public class Chamada implements Serializable {
     /*@JoinColumn(name = "")
     private String nomeAluno;
     private String nomeEvento;*/
-
     public Chamada() {
     }
 
@@ -81,22 +69,6 @@ public class Chamada implements Serializable {
 
     public void setIdchamada(Integer idchamada) {
         this.idchamada = idchamada;
-    }
-
-    public Date getHora() {
-        return hora;
-    }
-
-    public void setHora(Date hora) {
-        this.hora = hora;
-    }
-
-    public Boolean getSituacao() {
-        return situacao;
-    }
-
-    public void setSituacao(Boolean situacao) {
-        this.situacao = situacao;
     }
 
     public Aluno getIdaluno() {
@@ -129,10 +101,7 @@ public class Chamada implements Serializable {
             return false;
         }
         Chamada other = (Chamada) object;
-        if ((this.idchamada == null && other.idchamada != null) || (this.idchamada != null && !this.idchamada.equals(other.idchamada))) {
-            return false;
-        }
-        return true;
+        return !((this.idchamada == null && other.idchamada != null) || (this.idchamada != null && !this.idchamada.equals(other.idchamada)));
     }
 
     @Override

@@ -25,9 +25,9 @@ and open the template in the editor.
                             <p:dataTable id="tabela" value="#{chamadaController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
                                 <p:column>
                                     <f:facet name="header">
-                                        <p:outputLabel value="#{bundle.ListChamadaTitle_idchamada}"/>
+                                        <p:outputLabel value="#{bundle.ListAlunoTitle_ra}"/>
                                     </f:facet>
-                                    <p:outputLabel value="#{item.idchamada}"/>
+                                    <p:outputLabel value="#{item.raAluno}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
@@ -45,7 +45,7 @@ and open the template in the editor.
                                     <f:facet name="header">
                                         <p:outputLabel value="Presença:"/>
                                     </f:facet>
-                                    <p:selectBooleanButton id="situacao" value="#{chamadaController.selected.situacao}" onLabel="Entrada" offLabel="Saída" style="width:150px"/>
+                                    <p:inputNumber id="situacao" value="#{chamadaController.selected.faltas}" style="width:150px"/>
 
                                 </p:column>
                             </p:dataTable>

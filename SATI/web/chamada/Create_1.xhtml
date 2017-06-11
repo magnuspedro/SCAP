@@ -20,22 +20,22 @@ and open the template in the editor.
                         <p:messages />
                         <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:outputLabel value="#{bundle.CreateChamadaLabel_hora}" for="hora" />
-                            <p:inputText id="hora" value="#{chamadaController.selected.hora}" title="#{bundle.CreateChamadaTitle_hora}" >
+                            <p:inputText id="hora" value="#{chamadaEventoController.selected.hora}" title="#{bundle.CreateChamadaTitle_hora}" >
                                 <f:convertDateTime pattern="HH:mm:ss" />
                             </p:inputText>
                             <p:outputLabel value="#{bundle.CreateChamadaLabel_situacao}" for="situacao" />
-                            <p:selectBooleanButton id="situacao" value="#{chamadaController.selected.situacao}" onLabel="Entrada" offLabel="Saída" style="width:150px" />
+                            <p:selectBooleanButton id="situacao" value="#{chamadaEventoController.selected.situacao}" onLabel="Entrada" offLabel="Saída" style="width:150px" />
                             <p:outputLabel value="#{bundle.CreateChamadaLabel_idaluno}" for="idaluno" />
-                            <p:selectOneMenu id="idaluno" value="#{chamadaController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_idaluno}">
+                            <p:selectOneMenu id="idaluno" value="#{chamadaEventoController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_idaluno}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{alunoController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="#{bundle.CreateChamadaLabel_iddataEvento}" for="iddataEvento" />
-                            <p:selectOneMenu id="iddataEvento" value="#{chamadaController.selected.iddataEvento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                            <p:selectOneMenu id="iddataEvento" value="#{chamadaEventoController.selected.iddataEvento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
-                            <p:commandButton ajax="false" action="#{chamadaController.create}" value="#{bundle.CreateChamadaSaveLink}"/>
+                            <p:commandButton ajax="false" action="#{chamadaEventoController.create}" value="#{bundle.CreateChamadaSaveLink}"/>
                         </p:panelGrid>
 
                     </p:fieldset>
@@ -44,12 +44,12 @@ and open the template in the editor.
                 </h:form>
             </div>
             <h:form>
-                <p:outputLabel escape="false" value="#{bundle.ListChamadaEmpty}" rendered="#{chamadaController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
-                    <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
-                    <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
-                    <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{chamadaController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
+                <p:outputLabel escape="false" value="#{bundle.ListChamadaEmpty}" rendered="#{chamadaEventoController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{chamadaEventoController.items.rowCount > 0}">
+                    <h:outputText value="#{chamadaEventoController.pagination.pageFirstItem + 1}..#{chamadaEventoController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{chamadaEventoController.previous}" value="#{bundle.Previous} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{chamadaEventoController.next}" value="#{bundle.Next} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{chamadaEventoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
                         <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="#{bundle.ListChamadaTitle_idchamada}"/>
@@ -86,9 +86,9 @@ and open the template in the editor.
                             <p:outputLabel value="Opções"/>
                         </f:facet>
                         <p:column>
-                            <p:commandButton ajax="false" action="#{chamadaController.prepareEdit}" image="ui-icon-pencil"/>
+                            <p:commandButton ajax="false" action="#{chamadaEventoController.prepareEdit}" image="ui-icon-pencil"/>
                             <p:outputLabel value=" "/>
-                            <p:commandButton ajax="false" action="#{chamadaController.destroy}" image="ui-icon-trash"/>
+                            <p:commandButton ajax="false" action="#{chamadaEventoController.destroy}" image="ui-icon-trash"/>
                             <p:outputLabel value=" "/>
                         </p:column>
                     </p:dataTable>
