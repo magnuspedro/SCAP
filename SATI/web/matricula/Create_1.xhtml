@@ -16,15 +16,12 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                     <p:growl id="msgs" showDetail="true" />
+                    <p:growl id="msgs" showDetail="true" />
                     <p:fieldset legend="Cadastro de Matricula" toggleable="true" toggleSpeed="500">
                         <p:messages />
                         <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:outputLabel value="#{bundle.CreateMatriculaLabel_pago}" for="pago" />
-                            <p:selectOneMenu id="pago" value="#{dropdownView.option}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_pago}">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{dropdownView.option}"/>
-                            </p:selectOneMenu>
+                            <p:selectBooleanButton id="pago" value="#{matriculaController.selected.pago}" onLabel="Pago" offLabel="Não Pago" style="width:150px" />
                             <p:outputLabel value="#{bundle.CreateMatriculaLabel_idaluno}" for="idaluno" />
                             <p:selectOneMenu id="idaluno" value="#{matriculaController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_idaluno}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
@@ -47,19 +44,19 @@ and open the template in the editor.
                     <h:commandLink action="#{matriculaController.previous}" value="#{bundle.Previous} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{matriculaController.next}" value="#{bundle.Next} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasNextPage}"/>
                     <p:dataTable id="tabela" value="#{matriculaController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
-                        <p:column headerText="#{bundle.ListMatriculaTitle_pago}">
-                            <p:outputLabel value="#{item.pago}"/>
+                        <p:column headerText="Aluno:">
+                            <p:outputLabel value="#{item.idaluno.nome}"/>
                         </p:column>
-                        <p:column headerText="#{bundle.ListMatriculaTitle_idaluno}">
-                            <p:outputLabel value="#{item.idaluno}"/>
+                        <p:column headerText="Evento:">
+                            <p:outputLabel value="#{item.idevento.nome}"/>
                         </p:column>
-                        <p:column headerText="#{bundle.ListMatriculaTitle_idevento}">
-                            <p:outputLabel value="#{item.idevento}"/>
+                        <p:column headerText="Pago:">
+                            <p:selectBooleanCheckbox disabled="true" value="#{item.pago}" />
                         </p:column>
                         <p:column headerText="Opções">
-                            <p:commandButton ajax="false" action="#{alunoController.prepareEdit}" image="ui-icon-pencil"/>
+                            <p:commandButton ajax="false" action="#{matriculaController.prepareEdit}" image="ui-icon-pencil"/>
                             <p:outputLabel value=" "/>
-                            <p:commandButton ajax="false" action="#{alunoController.destroy}" image="ui-icon-trash"/>
+                            <p:commandButton ajax="false" action="#{matriculaController.destroy}" image="ui-icon-trash"/>
                             <p:outputLabel value=" "/>
                         </p:column>
                     </p:dataTable>

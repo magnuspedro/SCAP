@@ -5,7 +5,9 @@
  */
 package jpa;
 
+import entities.Evento;
 import entities.EventosInstrutores;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +30,10 @@ public class EventosInstrutoresFacade extends AbstractFacade<EventosInstrutores>
     public EventosInstrutoresFacade() {
         super(EventosInstrutores.class);
     }
-    
+
+    public List<EventosInstrutores> buscaInstrutor(int id) {
+        javax.persistence.Query q = getEntityManager().createNamedQuery("EventosIntrutores.findByIdinstrutor");
+        return q.getResultList();
+    }
+
 }

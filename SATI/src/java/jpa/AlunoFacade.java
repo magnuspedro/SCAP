@@ -28,5 +28,9 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
     public AlunoFacade() {
         super(Aluno.class);
     }
-    
+
+    public Aluno findRA(Object id) {
+        return (Aluno) getEntityManager().createNamedQuery("Aluno.findByRa").getSingleResult();
+    }
+
 }

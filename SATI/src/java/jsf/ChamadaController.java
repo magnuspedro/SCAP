@@ -75,6 +75,7 @@ public class ChamadaController implements Serializable {
 
     public String prepareCreate() {
         current = new Chamada();
+        recreateModel();
         selectedItemIndex = -1;
         return "Create_1";
     }
@@ -94,6 +95,16 @@ public class ChamadaController implements Serializable {
         current = (Chamada) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Create_1";
+    }
+
+    public String Edit() {
+        current = (Chamada) getItems().getRowData();
+        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
+        return null;
+    }
+
+    public int index() {
+        return pagination.getPageFirstItem() + getItems().getRowIndex();
     }
 
     public String update() {

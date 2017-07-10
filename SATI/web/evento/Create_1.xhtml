@@ -22,7 +22,12 @@ and open the template in the editor.
                             <p:outputLabel value="#{bundle.CreateEventoLabel_nome}" for="nome" />
                             <p:inputText id="nome" value="#{eventoController.selected.nome}" title="#{bundle.CreateEventoTitle_nome}" />
                             <p:outputLabel value="#{bundle.CreateEventoLabel_tipo}" for="tipo" />
-                            <p:inputText id="tipo" value="#{eventoController.selected.tipo}" title="#{bundle.CreateEventoTitle_tipo}" />
+                            <p:selectOneMenu id="tipo" value="#{eventoController.selected.tipo}" required="true" requiredMessage="#{bundle.CreateEventoRequiredMessage_tipo}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Minicurso" itemValue="Minicurso" />
+                                <f:selectItem itemLabel="Palestra" itemValue="Palestra" />
+                                <f:selectItem itemLabel="Workshop" itemValue="Workshop" />
+                            </p:selectOneMenu>
                             <p:outputLabel value="#{bundle.CreateEventoLabel_descricao}" for="descricao" />
                             <p:inputTextarea rows="4" cols="30" id="descricao" value="#{eventoController.selected.descricao}" title="#{bundle.CreateEventoTitle_descricao}" />
                             <p:outputLabel value="#{bundle.CreateEventoLabel_vagasTotais}" for="vagasTotais" />
@@ -35,6 +40,11 @@ and open the template in the editor.
                             <p:inputText id="horaTermino" value="#{eventoController.selected.horaTermino}" title="#{bundle.CreateEventoTitle_horaTermino}" >
                                 <f:convertDateTime pattern="HH:mm:ss" />
                             </p:inputText>
+                            <p:outputLabel value="Local:" for="idlocal" />
+                            <p:selectOneMenu id="idlocal" value="#{eventoController.selected.idlocal}" required="true" requiredMessage="#{bundle.CreateEventoRequiredMessage_idlocal}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{localController.itemsAvailableSelectOne}" />
+                            </p:selectOneMenu>
                             <p:commandButton ajax="false" action="#{eventoController.create}" value="#{bundle.CreateEventoSaveLink}"/>
                         </p:panelGrid>
                     </p:fieldset>

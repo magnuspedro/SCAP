@@ -21,17 +21,17 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "eventosInstrutoresController")
 @SessionScoped
 public class EventosInstrutoresController implements Serializable {
-
+    
     private EventosInstrutores current;
     private DataModel items = null;
     @EJB
     private jpa.EventosInstrutoresFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-
+    
     public EventosInstrutoresController() {
     }
-
+    
     public EventosInstrutores getSelected() {
         if (current == null) {
             current = new EventosInstrutores();
@@ -39,20 +39,20 @@ public class EventosInstrutoresController implements Serializable {
         }
         return current;
     }
-
+    
     private EventosInstrutoresFacade getFacade() {
         return ejbFacade;
     }
-
+    
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
-
+                
                 @Override
                 public int getItemsCount() {
                     return getFacade().count();
                 }
-
+                
                 @Override
                 public DataModel createPageDataModel() {
                     return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
@@ -61,25 +61,25 @@ public class EventosInstrutoresController implements Serializable {
         }
         return pagination;
     }
-
+    
     public String prepareList() {
         recreateModel();
         return "Create_1";
     }
-
+    
     public String prepareView() {
         current = (EventosInstrutores) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Create_1";
     }
-
+    
     public String prepareCreate() {
         current = new EventosInstrutores();
         selectedItemIndex = -1;
         recreateModel();
         return "Create_1";
     }
-
+    
     public String create() {
         try {
             getFacade().create(current);
@@ -90,13 +90,13 @@ public class EventosInstrutoresController implements Serializable {
             return null;
         }
     }
-
+    
     public String prepareEdit() {
         current = (EventosInstrutores) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Create_1";
     }
-
+    
     public String update() {
         try {
             getFacade().edit(current);
@@ -107,7 +107,7 @@ public class EventosInstrutoresController implements Serializable {
             return null;
         }
     }
-
+    
     public String destroy() {
         current = (EventosInstrutores) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -116,7 +116,7 @@ public class EventosInstrutoresController implements Serializable {
         recreateModel();
         return "Create_1";
     }
-
+    
     public String destroyAndView() {
         performDestroy();
         recreateModel();
@@ -129,7 +129,7 @@ public class EventosInstrutoresController implements Serializable {
             return "Create_1";
         }
     }
-
+    
     private void performDestroy() {
         try {
             getFacade().remove(current);
@@ -138,7 +138,7 @@ public class EventosInstrutoresController implements Serializable {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
         }
     }
-
+    
     private void updateCurrentItem() {
         int count = getFacade().count();
         if (selectedItemIndex >= count) {
@@ -153,49 +153,49 @@ public class EventosInstrutoresController implements Serializable {
             current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
         }
     }
-
+    
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
         }
         return items;
     }
-
+    
     private void recreateModel() {
         items = null;
     }
-
+    
     private void recreatePagination() {
         pagination = null;
     }
-
+    
     public String next() {
         getPagination().nextPage();
         recreateModel();
         return "Create_1";
     }
-
+    
     public String previous() {
         getPagination().previousPage();
         recreateModel();
         return "Create_1";
     }
-
+    
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
     }
-
+    
     public SelectItem[] getItemsAvailableSelectOne() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
-
+    
     public EventosInstrutores getEventosInstrutores(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
-
+    
     @FacesConverter(forClass = EventosInstrutores.class)
     public static class EventosInstrutoresControllerConverter implements Converter {
-
+        
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
@@ -205,19 +205,19 @@ public class EventosInstrutoresController implements Serializable {
                     getValue(facesContext.getELContext(), null, "eventosInstrutoresController");
             return controller.getEventosInstrutores(getKey(value));
         }
-
+        
         java.lang.Integer getKey(String value) {
             java.lang.Integer key;
             key = Integer.valueOf(value);
             return key;
         }
-
+        
         String getStringKey(java.lang.Integer value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
         }
-
+        
         @Override
         public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
             if (object == null) {
@@ -230,7 +230,13 @@ public class EventosInstrutoresController implements Serializable {
                 throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + EventosInstrutores.class.getName());
             }
         }
-
+        
     }
-
+    
+    public SelectItem[] selecionaEventos() {
+        if (current.getIdinstrutor() != null && current.getIdinstrutor().getIdinstrutor() > 0) {
+            return JsfUtil.getSelectItems(ejbFacade.buscaInstrutor(current.getIdinstrutor().getIdinstrutor()), true);
+        }
+        return JsfUtil.getSelectItems(ejbFacade.buscaInstrutor(0), true);
+    }
 }

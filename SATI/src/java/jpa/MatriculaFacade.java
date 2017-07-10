@@ -28,5 +28,12 @@ public class MatriculaFacade extends AbstractFacade<Matricula> {
     public MatriculaFacade() {
         super(Matricula.class);
     }
-    
+
+    public void edit(MatriculaFacade entity) {
+        for (Object object : super.findAll()) {
+            
+        }
+        getEntityManager().merge(entity);
+    }
+
 }

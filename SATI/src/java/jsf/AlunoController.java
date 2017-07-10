@@ -8,8 +8,8 @@ import jpa.AlunoFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -114,6 +114,7 @@ public class AlunoController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
+        prepareCreate();
         return "Create_1";
     }
 
@@ -192,6 +193,11 @@ public class AlunoController implements Serializable {
     public Aluno getAluno(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
+    
+    public Aluno getRA(){
+        current = ejbFacade.findRA(current.getRa());
+        return current;
+    }
 
     @FacesConverter(forClass = Aluno.class)
     public static class AlunoControllerConverter implements Converter {
@@ -232,5 +238,4 @@ public class AlunoController implements Serializable {
         }
 
     }
-
 }

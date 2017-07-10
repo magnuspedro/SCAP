@@ -113,7 +113,7 @@ public class Local implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Local[ idlocal=" + idlocal + " ]";
+        return nomeLocal;
     }
     
 }

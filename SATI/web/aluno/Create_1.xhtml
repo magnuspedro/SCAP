@@ -37,7 +37,7 @@ and open the template in the editor.
                             <p:inputText id="curso" value="#{alunoController.selected.curso}" title="#{bundle.CreateAlunoTitle_curso}" />
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_instituicao}" for="instituicao" />
                             <p:inputText id="instituicao" value="#{alunoController.selected.instituicao}" title="#{bundle.CreateAlunoTitle_instituicao}" />
-                            <p:commandButton ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>        
+                            <p:commandButton ajax="false" action="#{alunoController.create()}" value="#{bundle.CreateAlunoSaveLink}"/>        
                         </p:panelGrid>
                     </p:fieldset>
 

@@ -18,16 +18,16 @@ and open the template in the editor.
                 <h:form class="createForm">
                     <p:messages />
                     <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
-                        <p:outputLabel value="Intrutor"/>
+                        <p:outputLabel for="idinstrutor" value="Intrutor"/>
                         <p:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
-                            <p:ajax listener="#{instrutorController.itemsAvailableSelectOne}"/>
+                            <p:ajax listener="#{eventosInstrutoresController.selecionaEventos}" update="idevento"/>
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{instrutorController.itemsAvailableSelectOne}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="Eventos:"/>
-                        <p:selectOneMenu id="iddataEvento" value="#{chamadaController.selected.iddataEvento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                        <p:outputLabel for="idevento" value="Eventos:"/>
+                        <p:selectOneMenu id="idevento" value="#{eventosInstrutoresController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
+                            <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Senha: " />
                         <p:password id="nonFeedback" value="#{instrutorController.selected.senha}" />

@@ -13,7 +13,7 @@ and open the template in the editor.
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.CreatedataEventoTitle}"></h:outputText>
+            <h:outputText value="#{bundle.CreateDataEventoTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <div class="box">
@@ -23,7 +23,7 @@ and open the template in the editor.
                         <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <h:outputLabel value="#{bundle.CreateDataEventoLabel_data}" for="data" />
                             <p:calendar id="data" value="#{dataEventoController.selected.data}" title="#{bundle.CreateDataEventoTitle_data}" effect="fold">
-                                <f:convertDateTime pattern="MM/dd/yyyy"/>
+                                <f:convertDateTime pattern="dd/mm/yy"/>
                             </p:calendar>
                             <h:outputLabel value="#{bundle.CreateDataEventoLabel_aberto}" for="aberto" />
                             <p:inputText id="aberto" value="#{dataEventoController.selected.aberto}" title="#{bundle.CreateDataEventoTitle_aberto}" />

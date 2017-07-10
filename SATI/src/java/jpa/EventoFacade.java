@@ -28,5 +28,5 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public EventoFacade() {
         super(Evento.class);
     }
-    
+
 }

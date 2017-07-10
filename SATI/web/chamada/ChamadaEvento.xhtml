@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                    <p:fieldset legend="Cadastro de Chamadas" toggleable="true" toggleSpeed="500">
+                        <p:messages />
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_hora}" for="hora" />
+                            <p:calendar id="hora" value="#{chamadaEventoController.selected.hora}" pattern="HH:mm:ss"
+                                        title="#{bundle.CreateChamadaTitle_hora}" timeOnly="true">
+                            </p:calendar>
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_situacao}" for="situacao" />
+                            <p:selectBooleanButton id="situacao" value="#{chamadaEventoController.selected.situacao}" onLabel="Entrada" offLabel="Saída" style="width:150px" />
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_idaluno}" for="idaluno" />
+                            <p:selectOneMenu id="idaluno" value="#{chamadaEventoController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_idaluno}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{alunoController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel value="#{bundle.CreateChamadaLabel_iddataEvento}" for="iddataEvento" />
+                            <p:selectOneMenu id="iddataEvento" value="#{chamadaEventoController.selected.iddataEvento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
+                            </p:selectOneMenu>
+                            <p:commandButton ajax="false" action="#{chamadaEventoController.create}" value="#{bundle.CreateChamadaSaveLink}"/>
+                        </p:panelGrid>
+
+                    </p:fieldset>
+
+
+                </h:form>
+            </div>
+            <h:form>
+                <p:outputLabel escape="false" value="#{bundle.ListChamadaEmpty}" rendered="#{chamadaEventoController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{chamadaEventoController.items.rowCount > 0}">
+                    <h:outputText value="#{chamadaEventoController.pagination.pageFirstItem + 1}..#{chamadaEventoController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{chamadaEventoController.previous}" value="#{bundle.Previous} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{chamadaEventoController.next}" value="#{bundle.Next} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{chamadaEventoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_idchamada}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.idchamada}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_hora}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.hora}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </p:outputLabel>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListChamadaTitle_situacao}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.situacao}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListAlunoTitle_nome}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.nomeAluno}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="#{bundle.ListEventoTitle_nome}"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.nomeEvento}"/>
+                        </p:column>
+                        <f:facet name="header">
+                            <p:outputLabel value="Opções"/>
+                        </f:facet>
+                        <p:column>
+                            <p:commandButton ajax="false" action="#{chamadaEventoController.prepareEdit}" image="ui-icon-pencil"/>
+                            <p:outputLabel value=" "/>
+                            <p:commandButton ajax="false" action="#{chamadaEventoController.destroy}" image="ui-icon-trash"/>
+                            <p:outputLabel value=" "/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>

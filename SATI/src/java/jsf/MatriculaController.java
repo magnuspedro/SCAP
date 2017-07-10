@@ -1,5 +1,6 @@
 package jsf;
 
+import entities.Chamada;
 import entities.Matricula;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
@@ -8,7 +9,7 @@ import jpa.MatriculaFacade;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -18,7 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name="matriculaController")
+@ManagedBean(name = "matriculaController")
 @SessionScoped
 public class MatriculaController implements Serializable {
 
@@ -76,6 +77,7 @@ public class MatriculaController implements Serializable {
     public String prepareCreate() {
         current = new Matricula();
         selectedItemIndex = -1;
+        recreateModel();
         return "Create_1";
     }
 
@@ -83,6 +85,15 @@ public class MatriculaController implements Serializable {
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("MatriculaCreated"));
+            if(current.getPago()){
+                if(current.getIdevento().getTipo().equalsIgnoreCase("minicurso")){
+                    ChamadaController chamadaController = new ChamadaController();
+                    Chamada c = new Chamada();
+                    c.setFaltas(0);
+                    c.setIdaluno(current.getIdaluno());
+                    chamadaController.prepareCreate();
+                }
+            }
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
@@ -113,6 +124,7 @@ public class MatriculaController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
+        prepareCreate();
         return "Create_1";
     }
 

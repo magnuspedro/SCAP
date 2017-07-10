@@ -28,7 +28,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EventosInstrutores.findAll", query = "SELECT e FROM EventosInstrutores e")
-    , @NamedQuery(name = "EventosInstrutores.findByIdeventosInstrutor", query = "SELECT e FROM EventosInstrutores e WHERE e.ideventosInstrutor = :ideventosInstrutor")})
+    , @NamedQuery(name = "EventosInstrutores.findByIdeventosInstrutor", query = "SELECT e FROM EventosInstrutores e WHERE e.ideventosInstrutor = :ideventosInstrutor")
+    ,@NamedQuery(name = "EventosIntrutores.findByIdinstrutor", query = "SELECT e FROM Evento e"
+            + " INNER JOIN EventosInstrutores c ON c.idevento = e.idevento"
+            + " WHERE c.idinstrutor = :idinstrutor")
+})
 public class EventosInstrutores implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -95,5 +99,5 @@ public class EventosInstrutores implements Serializable {
     @Override
     public String toString() {
         return "entities.EventosInstrutores[ ideventosInstrutor=" + ideventosInstrutor + " ]";
-    } 
+    }
 }
