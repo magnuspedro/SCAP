@@ -40,7 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "DataEvento.findByAberto", query = "SELECT d FROM DataEvento d WHERE d.aberto = :aberto")
     , @NamedQuery(name = "DataEvento.findByHoraAberto", query = "SELECT d FROM DataEvento d WHERE d.horaAberto = :horaAberto")
     , @NamedQuery(name = "DataEvento.findByHoraFechamento", query = "SELECT d FROM DataEvento d WHERE d.horaFechamento = :horaFechamento")
-    , @NamedQuery(name = "DataEvento.listName", query = "SELECT d FROM DataEvento d")})
+    , @NamedQuery(name = "DataEvento.listName", query = "SELECT d FROM DataEvento d")
+    ,@NamedQuery(name = "DataEvento.findByHoraEvento", query ="SELECT d FROM DataEvento d, Evento e, EventosInstrutores ei, Instrutor i WHERE d.idevento = e.idevento AND e.idevento = ei.idevento AND ei.idinstrutor = i.idinstrutor AND i.idinstrutor = :idinstrutor")
+    /*,@NamedQuery(name = "Chamada.findByIddataEvento", query ="SELECT c FROM Chamada c INNER JOIN DataEvento de ON c.iddataEvento = de.idevento WHERE de.idevento = (SELECT de.iddataEvento FROM DataEvento de INNER JOIN Evento e ON de.idevento = e.idevento WHERE e.idevento = :idevento AND de.data = :data ")*/
+})
 public class DataEvento implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "iddataEvento")
@@ -68,6 +71,8 @@ public class DataEvento implements Serializable {
     @JoinColumn(name = "idevento", referencedColumnName = "idevento")
     @ManyToOne(optional = false)
     private Evento idevento;
+
+    private int idinstrutor = 1;
 
     public DataEvento() {
     }
@@ -132,11 +137,10 @@ public class DataEvento implements Serializable {
     public void setIdevento(Evento idevento) {
         this.idevento = idevento;
     }
-    
-    public String getNomeEvento(){
+
+    public String getNomeEvento() {
         return this.idevento.getNome();
     }
-    
 
     @Override
     public int hashCode() {
@@ -168,5 +172,5 @@ public class DataEvento implements Serializable {
     public void setChamadaEventoCollection(Collection<ChamadaEvento> chamadaEventoCollection) {
         this.chamadaEventoCollection = chamadaEventoCollection;
     }
-    
+
 }

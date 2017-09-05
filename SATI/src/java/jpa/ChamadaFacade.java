@@ -6,6 +6,8 @@
 package jpa;
 
 import entities.Chamada;
+import entities.DataEvento;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,5 +30,10 @@ public class ChamadaFacade extends AbstractFacade<Chamada> {
     public ChamadaFacade() {
         super(Chamada.class);
     }
+
     
+    public List<Chamada> findChamadaByEvento(DataEvento dataEvento){
+        return em.createNamedQuery("Chamada.nomeEvento").setParameter("idDataEvento", dataEvento.getIddataEvento()).getResultList();
+    }
+
 }

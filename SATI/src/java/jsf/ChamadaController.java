@@ -14,6 +14,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -203,6 +204,10 @@ public class ChamadaController implements Serializable {
         return ejbFacade.find(id);
     }
 
+    public void getSelectedItems(ValueChangeEvent event){
+        
+    }
+    
     @FacesConverter(forClass = Chamada.class)
     public static class ChamadaControllerConverter implements Converter {
 

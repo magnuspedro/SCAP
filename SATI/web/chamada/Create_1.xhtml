@@ -20,11 +20,17 @@ and open the template in the editor.
                     <p:growl id="growl" showDetail="true" sticky="true" />  
                     <p:fieldset legend="Chamada Padrão" toggleable="true" toggleSpeed="500">
                         <p:messages />
+                        <p:selectOneMenu id="idevento" value="#{eventoController.selected.idevento}"
+                                         required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
+                            <f:ajax event="change" render="tabela"/>
+                        </p:selectOneMenu>
                         <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
                             <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
                             <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
                             <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
-                            <p:dataTable id="tabela" value="#{chamadaController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
+                            <p:dataTable id="tabela" value="#{dataEventoController.chamada}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
                                 <p:column>
                                     <f:facet name="header">
                                         <p:outputLabel value="#{bundle.ListAlunoTitle_nome}"/>

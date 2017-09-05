@@ -101,6 +101,35 @@ and open the template in the editor.
                         </p:dataTable>
                     </h:panelGroup>
                 </h:form>
+                <h:form>
+                    <h:panelGroup>
+                        <p:dataTable id="chamada" value="#{item.chamadaCollection}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="5,10,15"   lazy="true">
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="#{bundle.ListAlunoTitle_nome}"/>
+                                </f:facet>
+                                <p:outputLabel value="#{item.nomeAluno}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="#{bundle.ListEventoTitle_nome}"/>
+                                </f:facet>
+                                <p:outputLabel value="#{item.nomeEvento}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <p:outputLabel value="Presença:"/>
+                                </f:facet>
+                                <p:inputNumber value="#{item.faltas}"
+                                               decimalPlaces="0"  
+                                               onblur="#{chamadaController.create()}"
+                                               onchange="#{chamadaController.create()}"
+                                               onfocus="#{chamadaController.prepareEdit()}" />
+                            </p:column> 
+                        </p:dataTable>
+                    </h:panelGroup>
+                </h:form>
             </div>
         </ui:define>
     </ui:composition>

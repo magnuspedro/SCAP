@@ -29,9 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "EventosInstrutores.findAll", query = "SELECT e FROM EventosInstrutores e")
     , @NamedQuery(name = "EventosInstrutores.findByIdeventosInstrutor", query = "SELECT e FROM EventosInstrutores e WHERE e.ideventosInstrutor = :ideventosInstrutor")
-    ,@NamedQuery(name = "EventosIntrutores.findByIdinstrutor", query = "SELECT e FROM Evento e"
-            + " INNER JOIN EventosInstrutores c ON c.idevento = e.idevento"
-            + " WHERE c.idinstrutor = :idinstrutor")
+    ,@NamedQuery(name = "EventosIntrutores.findByIdinstrutor", query = "SELECT e FROM Evento e INNER JOIN EventosInstrutores c ON c.idevento = e WHERE c.idinstrutor = :idinstrutor")
 })
 public class EventosInstrutores implements Serializable {
 
@@ -39,7 +37,7 @@ public class EventosInstrutores implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "ideventosinstrutor")
+    @Column(name = "ideventos_instrutor")
     private Integer ideventosInstrutor;
     @JoinColumn(name = "idevento", referencedColumnName = "idevento")
     @ManyToOne(optional = false)

@@ -1,11 +1,13 @@
 package jsf;
 
+import entities.Evento;
 import entities.Instrutor;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.InstrutorFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -14,11 +16,12 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@ManagedBean(name="instrutorController")
+@ManagedBean(name = "instrutorController")
 @SessionScoped
 public class InstrutorController implements Serializable {
 
@@ -28,6 +31,7 @@ public class InstrutorController implements Serializable {
     private jpa.InstrutorFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Evento> eventos = null;
 
     public InstrutorController() {
     }
@@ -192,6 +196,12 @@ public class InstrutorController implements Serializable {
         return ejbFacade.find(id);
     }
 
+    public void selectOneMenuListener(ValueChangeEvent event) {
+        current = (Instrutor) event.getNewValue();
+        EventoController eController = new EventoController();
+        setEventos(eController.ListaEventoInstrutor(current));
+    }
+
     @FacesConverter(forClass = Instrutor.class)
     public static class InstrutorControllerConverter implements Converter {
 
@@ -230,6 +240,20 @@ public class InstrutorController implements Serializable {
             }
         }
 
+    }
+
+    /**
+     * @return the eventos
+     */
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    /**
+     * @param eventos the eventos to set
+     */
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
     }
 
 }

@@ -17,6 +17,14 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>primeiraServlet</servlet-name>
+        <servlet-class>servelets.ChamadaMiniCurso</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>primeiraServlet</servlet-name>
+        <url-pattern>/mc</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

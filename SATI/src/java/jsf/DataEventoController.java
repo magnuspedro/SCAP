@@ -1,11 +1,14 @@
 package jsf;
 
+import entities.Chamada;
 import entities.DataEvento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.DataEventoFacade;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -14,6 +17,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -24,12 +28,14 @@ public class DataEventoController implements Serializable {
 
     private DataEvento current;
     private DataModel items = null;
+    private ListDataModel<Chamada> chamada;
     @EJB
     private jpa.DataEventoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
     public DataEventoController() {
+        this.chamada = null;
     }
 
     public DataEvento getSelected() {
@@ -42,6 +48,10 @@ public class DataEventoController implements Serializable {
 
     private DataEventoFacade getFacade() {
         return ejbFacade;
+    }
+    public Date teste(){
+        List<DataEvento> list =ejbFacade.retornaDataEvento();
+        return list.get(0).getData();
     }
 
     public PaginationHelper getPagination() {
@@ -190,6 +200,25 @@ public class DataEventoController implements Serializable {
 
     public DataEvento getDataEvento(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+
+    /**
+     * @return the chamada
+     */
+    public ListDataModel<Chamada> getChamada() {
+        return chamada;
+    }
+
+    /**
+     * @param chamada the chamada to set
+     */
+    public void setChamada(ListDataModel<Chamada> chamada) {
+        this.chamada = chamada;
+    }
+
+    public void selectOneMenuListener(ValueChangeEvent event) {
+        current = (DataEvento) event.getNewValue();
+        setChamada((ListDataModel<Chamada>) ejbFacade.fingByIdEvento(current));
     }
 
     @FacesConverter(forClass = DataEvento.class)

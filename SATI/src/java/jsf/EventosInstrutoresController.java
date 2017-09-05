@@ -1,11 +1,14 @@
 package jsf;
 
+import entities.Evento;
 import entities.EventosInstrutores;
+import entities.Instrutor;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.EventosInstrutoresFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -14,6 +17,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -28,6 +32,7 @@ public class EventosInstrutoresController implements Serializable {
     private jpa.EventosInstrutoresFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Evento> eventos = null;
     
     public EventosInstrutoresController() {
     }
@@ -42,6 +47,10 @@ public class EventosInstrutoresController implements Serializable {
     
     private EventosInstrutoresFacade getFacade() {
         return ejbFacade;
+    }
+    
+    public void test(){
+        System.out.print(""+ejbFacade.teste().get(0).getIdevento().getDataEventoCollection());
     }
     
     public PaginationHelper getPagination() {
@@ -233,10 +242,31 @@ public class EventosInstrutoresController implements Serializable {
         
     }
     
-    public SelectItem[] selecionaEventos() {
+    public SelectItem[] selecionaEventos(ValueChangeEvent event) {
+        //current.setIdinstrutor((Instrutor) event.getNewValue());
+        System.err.println((Instrutor) event.getNewValue());
         if (current.getIdinstrutor() != null && current.getIdinstrutor().getIdinstrutor() > 0) {
             return JsfUtil.getSelectItems(ejbFacade.buscaInstrutor(current.getIdinstrutor().getIdinstrutor()), true);
         }
         return JsfUtil.getSelectItems(ejbFacade.buscaInstrutor(0), true);
+    }
+    
+    public void selectOneMenuListener(ValueChangeEvent event){
+        current.setIdinstrutor((Instrutor) event.getNewValue());
+        setEventos(ejbFacade.findByInstrutor(current.getIdinstrutor()));
+    }
+
+    /**
+     * @return the eventos
+     */
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    /**
+     * @param eventos the eventos to set
+     */
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
     }
 }

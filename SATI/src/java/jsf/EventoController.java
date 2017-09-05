@@ -1,11 +1,13 @@
 package jsf;
 
 import entities.Evento;
+import entities.Instrutor;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.EventoFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -14,6 +16,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -190,6 +193,11 @@ public class EventoController implements Serializable {
 
     public Evento getEvento(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+
+    
+    public List<Evento> ListaEventoInstrutor(Instrutor instrutor) {
+         return ejbFacade.findbyInstrutor(instrutor);
     }
 
     @FacesConverter(forClass = Evento.class)

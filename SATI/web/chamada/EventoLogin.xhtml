@@ -19,15 +19,17 @@ and open the template in the editor.
                     <p:messages />
                     <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                         <p:outputLabel for="idinstrutor" value="Intrutor"/>
-                        <p:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
-                            <p:ajax listener="#{eventosInstrutoresController.selecionaEventos}" update="idevento"/>
+                        <p:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" 
+                                         valueChangeListener="#{eventosInstrutoresController.selectOneMenuListener}"
+                                         required="true" requiredMessage="Selecione um Instrutor" onchange="">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                             <f:selectItems value="#{instrutorController.itemsAvailableSelectOne}"/>
+                            <f:ajax event="change" render="idevento"/>
                         </p:selectOneMenu>
                         <p:outputLabel for="idevento" value="Eventos:"/>
                         <p:selectOneMenu id="idevento" value="#{eventosInstrutoresController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                             <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
+                            <f:selectItems value="#{eventosInstrutoresController.eventos}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Senha: " />
                         <p:password id="nonFeedback" value="#{instrutorController.selected.senha}" />

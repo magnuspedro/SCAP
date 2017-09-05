@@ -36,6 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
             + "INNER JOIN DataEvento de ON de.idevento = e.idevento "
             + "INNER JOIN Chamada c ON c.iddataEvento = de.iddataEvento "
             + "WHERE c.iddataEvento = :iddataevento")
+    , @NamedQuery(name = "Chamada.findByIddataEvento", query = "SELECT e FROM Chamada e INNER JOIN DataEvento de ON de.iddataEvento = e.iddataEvento WHERE de.iddataEvento = :iddataEvento")
 })
 public class Chamada implements Serializable {
 

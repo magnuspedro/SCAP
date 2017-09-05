@@ -6,6 +6,8 @@
 package jpa;
 
 import entities.Evento;
+import entities.Instrutor;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +29,10 @@ public class EventoFacade extends AbstractFacade<Evento> {
 
     public EventoFacade() {
         super(Evento.class);
+    }
+    
+    public List<Evento> findbyInstrutor(Instrutor instrutor){
+        return em.createNamedQuery("Evento.findByInstrutor").setParameter("idinstrutor", 1).getResultList();
     }
 
 }
