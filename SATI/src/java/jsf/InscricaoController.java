@@ -10,10 +10,14 @@ import entities.EventosInstrutores;
 import entities.Matricula;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
+import jpa.EventosInstrutoresFacade;
+import jsf.util.JsfUtil;
 
 /**
  *
@@ -22,13 +26,23 @@ import javax.faces.event.ValueChangeEvent;
 @ManagedBean
 public class InscricaoController implements Serializable {
 
+    @EJB
+    private EventosInstrutoresFacade eventosInstrutoresFacade;
+
     private ArrayList<Matricula> minicursos = null;
     private jpa.MatriculaFacade ejbfacade;
+    private Matricula current;
     private Evento evento;
+    private final Map<Evento, Boolean> minicurso = null;
 
     public InscricaoController() {
+
     }
-    
+
+    public String create() {
+        
+        return "";
+    }
     
 
     /**
@@ -64,10 +78,18 @@ public class InscricaoController implements Serializable {
             getEjbfacade().create(minicurso);
         });
     }
-    
-    public void addMini(ValueChangeEvent event){
+
+    public void addMini(ValueChangeEvent event) {
         EventosInstrutores ei = (EventosInstrutores) event.getNewValue();
         System.err.println(ei.getIdevento().getNome());
+    }
+
+    public void carregaEventoIntrutores() {
+        List<EventosInstrutores> ei = eventosInstrutoresFacade.uniqueMiniCurso();
+        ei.forEach((_item) -> {
+            minicurso.put(evento, Boolean.FALSE);
+        });
+
     }
 
     /**
@@ -82,6 +104,13 @@ public class InscricaoController implements Serializable {
      */
     public void setEvento(Evento evento) {
         this.evento = evento;
+    }
+
+    /**
+     * @return the minicurso
+     */
+    public Map<Evento, Boolean> getMinicurso() {
+        return minicurso;
     }
 
 }

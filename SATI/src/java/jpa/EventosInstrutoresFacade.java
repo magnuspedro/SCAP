@@ -47,4 +47,7 @@ public class EventosInstrutoresFacade extends AbstractFacade<EventosInstrutores>
                 .getResultList();
     }
 
+    public List<EventosInstrutores> uniqueMiniCurso(){        
+        return em.createNamedQuery("EventosIntrutores.unitMiniCurso").getResultList();
+    }
 }

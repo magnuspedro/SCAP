@@ -35,7 +35,7 @@ and open the template in the editor.
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
-                            <p:commandButton ajax="false" action="#{chamadaEventoController.create}" value="#{bundle.CreateChamadaSaveLink}"/>
+                            <p:commandButton ajax="false" action="#{chamadaEventoController.create()}" value="#{bundle.CreateChamadaSaveLink}"/>
                         </p:panelGrid>
 
                     </p:fieldset>

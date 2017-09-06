@@ -1,11 +1,16 @@
 package jsf;
 
 import entities.Aluno;
+import entities.Chamada;
+import entities.Evento;
+import entities.EventosInstrutores;
+import entities.Matricula;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.AlunoFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -28,6 +33,7 @@ public class AlunoController implements Serializable {
     private jpa.AlunoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Evento> eventos = null;
 
     public AlunoController() {
     }
@@ -81,8 +87,17 @@ public class AlunoController implements Serializable {
     }
 
     public String create() {
+        System.out.println(eventos);
         try {
             getFacade().create(current);
+            for (Evento item : eventos) {
+                Matricula m = new Matricula();
+                m.setIdaluno(current);
+                m.setIdevento(item);
+                m.setPago(Boolean.FALSE);
+                current.getMatriculaCollection().add(m);
+            }
+            getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -193,10 +208,21 @@ public class AlunoController implements Serializable {
     public Aluno getAluno(java.lang.Integer id) {
         return ejbFacade.find(id);
     }
-    
-    public Aluno getRA(){
+
+    public Aluno getRA() {
         current = ejbFacade.findRA(current.getRa());
         return current;
+    }
+
+    public void adicionaMiniCurso(Evento event) {
+        Evento evento = (Evento) event;
+        System.err.println(evento);
+        /* Matricula m = new Matricula();
+        m.setIdevento(e);
+        m.setIdaluno(current);
+        m.setPago(false);
+        current.getMatriculaCollection().add(m);**/
+        System.err.println(current.getChamadaEventoCollection());
     }
 
     @FacesConverter(forClass = Aluno.class)
@@ -237,5 +263,19 @@ public class AlunoController implements Serializable {
             }
         }
 
+    }
+
+    /**
+     * @return the eventos
+     */
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    /**
+     * @param eventos the eventos to set
+     */
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
     }
 }

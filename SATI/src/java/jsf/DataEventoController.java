@@ -216,10 +216,10 @@ public class DataEventoController implements Serializable {
         this.chamada = chamada;
     }
 
-    public void selectOneMenuListener(ValueChangeEvent event) {
+   /* public void selectOneMenuListener(ValueChangeEvent event) {
         current = (DataEvento) event.getNewValue();
         setChamada((ListDataModel<Chamada>) ejbFacade.fingByIdEvento(current));
-    }
+    }*/
 
     @FacesConverter(forClass = DataEvento.class)
     public static class DataEventoControllerConverter implements Converter {

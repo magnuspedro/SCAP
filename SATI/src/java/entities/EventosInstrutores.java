@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EventosInstrutores.findAll", query = "SELECT e FROM EventosInstrutores e")
     , @NamedQuery(name = "EventosInstrutores.findByIdeventosInstrutor", query = "SELECT e FROM EventosInstrutores e WHERE e.ideventosInstrutor = :ideventosInstrutor")
     ,@NamedQuery(name = "EventosIntrutores.findByIdinstrutor", query = "SELECT e FROM Evento e INNER JOIN EventosInstrutores c ON c.idevento = e WHERE c.idinstrutor = :idinstrutor")
+    ,@NamedQuery(name = "EventosIntrutores.unitMiniCurso", query = "SELECT ei FROM EventosInstrutores ei INNER JOIN Evento e ON ei.idevento = e WHERE e.tipo = \"MiniCurso\" ")
 })
 public class EventosInstrutores implements Serializable {
 

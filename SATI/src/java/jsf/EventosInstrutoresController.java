@@ -25,6 +25,20 @@ import javax.faces.model.SelectItem;
 @ManagedBean(name = "eventosInstrutoresController")
 @SessionScoped
 public class EventosInstrutoresController implements Serializable {
+
+    /**
+     * @return the eventosinstrutores
+     */
+    public List<EventosInstrutores> getEventosinstrutores() {
+        return eventosinstrutores;
+    }
+
+    /**
+     * @param eventosinstrutores the eventosinstrutores to set
+     */
+    public void setEventosinstrutores(List<EventosInstrutores> eventosinstrutores) {
+        this.eventosinstrutores = eventosinstrutores;
+    }
     
     private EventosInstrutores current;
     private DataModel items = null;
@@ -33,6 +47,7 @@ public class EventosInstrutoresController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<Evento> eventos = null;
+    private List<EventosInstrutores> eventosinstrutores = null;
     
     public EventosInstrutoresController() {
     }
@@ -254,6 +269,10 @@ public class EventosInstrutoresController implements Serializable {
     public void selectOneMenuListener(ValueChangeEvent event){
         current.setIdinstrutor((Instrutor) event.getNewValue());
         setEventos(ejbFacade.findByInstrutor(current.getIdinstrutor()));
+    }
+    
+    public void carregaMiniCursos(){
+        setEventosinstrutores(ejbFacade.uniqueMiniCurso());
     }
 
     /**
