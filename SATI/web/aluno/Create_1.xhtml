@@ -39,41 +39,38 @@ and open the template in the editor.
                             <p:inputText id="instituicao" value="#{alunoController.selected.instituicao}" title="#{bundle.CreateAlunoTitle_instituicao}" />
                         </p:panelGrid>
                     </p:fieldset>
-
+                    <br/>
+                    <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{eventoController.items.rowCount == 0}"/>
+                    <h:panelGroup rendered="#{eventoController.items.rowCount > 0}">
+                        <h:outputText value="#{eventoController.pagination.pageFirstItem + 1}..#{eventoController.pagination.pageLastItem + 1}/#{eventoController.pagination.itemsCount}"/>
+                        <h:commandLink action="#{eventoController.previous}" value="#{bundle.Previous} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasPreviousPage}"/>
+                        <h:commandLink action="#{eventoController.next}" value="#{bundle.Next} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasNextPage}"/>
+                        <p:dataTable id="tabela" value="#{eventoController.items}" var="item" 
+                                     emptyMessage="Nenhum registro incluido." paginator="true" rows="10"
+                                     selection="#{alunoController.eventos}"
+                                     rowKey="#{item.idevento}">
+                            <p:column headerText="Curso">
+                                <p:outputLabel value="#{item.nome}"/>
+                            </p:column>
+                            <p:column headerText="Tipo">
+                                <p:outputLabel value="#{item.tipo}"/>
+                            </p:column>
+                            <p:column headerText="Local">
+                                <p:outputLabel value="#{item.idlocal.sala}"/>
+                            </p:column>
+                            <p:column headerText="Local">
+                                <p:outputLabel value="#{item.horaInicio}"/>
+                            </p:column>
+                            <p:column headerText="Local">
+                                <p:outputLabel value="#{item.horaTermino}"/>
+                            </p:column>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        </p:dataTable>
+                    </h:panelGroup>
+                    <br/>
+                    <p:commandButton  ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>        
                 </h:form>
             </div>
-            <h:form>
-                <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{alunoController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{alunoController.items.rowCount > 0}">
-                    <h:outputText value="#{alunoController.pagination.pageFirstItem + 1}..#{alunoController.pagination.pageLastItem + 1}/#{alunoController.pagination.itemsCount}"/>
-                    <h:commandLink action="#{alunoController.previous}" value="#{bundle.Previous} #{alunoController.pagination.pageSize}" rendered="#{alunoController.pagination.hasPreviousPage}"/>
-                    <h:commandLink action="#{alunoController.next}" value="#{bundle.Next} #{alunoController.pagination.pageSize}" rendered="#{alunoController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{eventoController.items}" var="item" 
-                                 emptyMessage="Nenhum registro incluido." paginator="true" rows="10"
-                                 selection="#{alunoController.eventos}"
-                                 rowKey="#{item.idevento}">
-                        <p:column headerText="Curso">
-                            <p:outputLabel value="#{item.nome}"/>
-                        </p:column>
-                        <p:column headerText="Tipo">
-                            <p:outputLabel value="#{item.tipo}"/>
-                        </p:column>
-                        <p:column headerText="Local">
-                            <p:outputLabel value="#{item.idlocal.sala}"/>
-                        </p:column>
-                        <p:column headerText="Local">
-                            <p:outputLabel value="#{item.horaInicio}"/>
-                        </p:column>
-                        <p:column headerText="Local">
-                            <p:outputLabel value="#{item.horaTermino}"/>
-                        </p:column>
-                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                    </p:dataTable>
-                </h:panelGroup>
-                <br/>
-                <p:commandButton process="tabela" ajax="false" action="#{alunoController.create()}" value="#{bundle.CreateAlunoSaveLink}"/>        
-
-            </h:form>
         </ui:define>
     </ui:composition>
 </html>

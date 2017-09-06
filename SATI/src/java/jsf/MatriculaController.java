@@ -1,6 +1,7 @@
 package jsf;
 
 import entities.Chamada;
+import entities.DataEvento;
 import entities.Matricula;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
@@ -18,6 +19,8 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jpa.ChamadaFacade;
+import jpa.DataEventoFacade;
 
 @ManagedBean(name = "matriculaController")
 @SessionScoped
@@ -84,16 +87,19 @@ public class MatriculaController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("MatriculaCreated"));
-            if(current.getPago()){
-                if(current.getIdevento().getTipo().equalsIgnoreCase("minicurso")){
-                    ChamadaController chamadaController = new ChamadaController();
+            DataEventoController dec = new DataEventoController();
+            if (current.getPago()) {
+                if (current.getIdevento().getTipo().equalsIgnoreCase("Minicurso")) {
                     Chamada c = new Chamada();
                     c.setFaltas(0);
                     c.setIdaluno(current.getIdaluno());
-                    chamadaController.prepareCreate();
+                    System.out.println(current.getIdevento().getIdevento());
+                    System.out.println(dec.uniqueDataEvento(current.getIdevento().getIdevento()));
+                   //c.setIddataEvento(de);
+                    //chamadaFacade.create(c);
                 }
             }
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("MatriculaCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));

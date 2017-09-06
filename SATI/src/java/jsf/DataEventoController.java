@@ -2,6 +2,7 @@ package jsf;
 
 import entities.Chamada;
 import entities.DataEvento;
+import entities.Evento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.DataEventoFacade;
@@ -220,6 +221,16 @@ public class DataEventoController implements Serializable {
         current = (DataEvento) event.getNewValue();
         setChamada((ListDataModel<Chamada>) ejbFacade.fingByIdEvento(current));
     }*/
+    
+    public DataEvento uniqueDataEvento(int id){
+        return ejbFacade.uniqueDataEvento(id);
+    }
+    
+    public void carregaChamada(ValueChangeEvent event){
+        current = (DataEvento) event.getNewValue();
+        System.out.println(ejbFacade.carregaChamada(current));
+        current.getChamadaCollection().addAll(ejbFacade.carregaChamada(current));
+    }
 
     @FacesConverter(forClass = DataEvento.class)
     public static class DataEventoControllerConverter implements Converter {

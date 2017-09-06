@@ -33,7 +33,7 @@ public class AlunoController implements Serializable {
     private jpa.AlunoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private List<Evento> eventos = null;
+    private List<Evento> eventos;
 
     public AlunoController() {
     }
@@ -41,6 +41,7 @@ public class AlunoController implements Serializable {
     public Aluno getSelected() {
         if (current == null) {
             current = new Aluno();
+            eventos = null;
             selectedItemIndex = -1;
         }
         return current;
@@ -87,9 +88,9 @@ public class AlunoController implements Serializable {
     }
 
     public String create() {
-        System.out.println(eventos);
         try {
-            getFacade().create(current);
+            System.out.println("1: "+current);
+            //getFacade().create(current);
             for (Evento item : eventos) {
                 Matricula m = new Matricula();
                 m.setIdaluno(current);
@@ -97,7 +98,8 @@ public class AlunoController implements Serializable {
                 m.setPago(Boolean.FALSE);
                 current.getMatriculaCollection().add(m);
             }
-            getFacade().edit(current);
+            System.out.println("2: "+current);
+            getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoCreated"));
             return prepareCreate();
         } catch (Exception e) {

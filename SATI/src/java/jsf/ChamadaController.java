@@ -1,6 +1,7 @@
 package jsf;
 
 import entities.Chamada;
+import entities.DataEvento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.ChamadaFacade;
@@ -206,6 +207,11 @@ public class ChamadaController implements Serializable {
 
     public void getSelectedItems(ValueChangeEvent event){
         
+    }
+    
+    public void carregaChamada(ValueChangeEvent event){
+        DataEvento dataEvento = (DataEvento) event.getNewValue();
+        items = (DataModel) ejbFacade.findChamadaByEvento(dataEvento); 
     }
     
     @FacesConverter(forClass = Chamada.class)

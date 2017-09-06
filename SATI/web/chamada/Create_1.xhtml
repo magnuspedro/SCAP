@@ -20,46 +20,47 @@ and open the template in the editor.
                     <p:growl id="growl" showDetail="true" sticky="true" />  
                     <p:fieldset legend="Chamada Padrão" toggleable="true" toggleSpeed="500">
                         <p:messages />
-                        <p:selectOneMenu id="idevento" value="#{eventoController.selected.idevento}"
-                                         required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
-                            <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                            <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
-                            <f:ajax event="change" render="tabela"/>
-                        </p:selectOneMenu>
-                        <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
-                            <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
-                            <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
-                            <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
-                            <p:dataTable id="tabela" value="#{dataEventoController.chamada}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="#{bundle.ListAlunoTitle_nome}"/>
-                                    </f:facet>
-                                    <p:outputLabel value="#{item.nomeAluno}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="#{bundle.ListEventoTitle_nome}"/>
-                                    </f:facet>
-                                    <p:outputLabel value="#{item.nomeEvento}"/>
-                                </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <p:outputLabel value="Presença:"/>
-                                    </f:facet>
-                                    <p:inputNumber value="#{item.faltas}"
-                                                   decimalPlaces="0"  
-                                                   onblur="#{chamadaController.create()}"
-                                                   onchange="#{chamadaController.create()}"
-                                                   onfocus="#{chamadaController.prepareEdit()}" />
-                                </p:column>
-                            </p:dataTable>
-                            <br/>
-                            <p:commandButton ajax="false" action="#{chamadaController.create}" value="Salvar"/>
-                        </h:panelGroup>
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
+                            <p:outputLabel for="idinstrutor" value="Intrutor"/>
+                            <p:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" 
+                                             valueChangeListener="#{eventosInstrutoresController.selectOneMenuListener}"
+                                             required="true" requiredMessage="Selecione um Instrutor" onchange="">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{instrutorController.itemsAvailableSelectOne}"/>
+                                <f:ajax event="change" render="iddataEvento"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel for="iddataEvento" value="Eventos:"/>
+                            <p:selectOneMenu id="iddataEvento" value="#{dataEventoController.selected.idevento}"
+                                             valueChangeListener="#{chamadaController.carregaChamada}"
+                                             required="true"
+                                             requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{eventosInstrutoresController.eventos}"/>
+                                <f:ajax event="change" render="tabela"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
                     </p:fieldset>
                 </h:form>
             </div>
+            <h:form>
+                <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{chamadaController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
+                    <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{chamadaController.items}" var="item" 
+                                 emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
+                        <p:column headerText="Aluno">
+                            <p:outputLabel value="#{item.idaluno.nome}"/>
+                        </p:column>
+                        <p:column headerText="Faltas:" >
+                            <p:cellEditor>
+                                <p:inputNumber  value="#{item.faltas}"  style="width:16px;text-align:center"/>
+                            </p:cellEditor>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
         </ui:define>
     </ui:composition>
 </html>
