@@ -6,6 +6,7 @@
 package jpa;
 
 import entities.Instrutor;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -23,6 +24,10 @@ public class InstrutorFacade extends AbstractFacade<Instrutor> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public List<Instrutor> findByCPF(String CPF){
+        return em.createNamedQuery("Instrutor.findByCpf").setParameter("cpf", CPF).getResultList();
     }
 
     public InstrutorFacade() {
