@@ -90,7 +90,7 @@ public class AlunoController implements Serializable {
     public String create() {
         try {
             System.out.println("1: "+current);
-            //getFacade().create(current);
+            getFacade().create(current);
             for (Evento item : eventos) {
                 Matricula m = new Matricula();
                 m.setIdaluno(current);

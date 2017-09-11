@@ -16,33 +16,73 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:fieldset legend="Cadastro de Alunos" toggleable="true" toggleSpeed="500">
-                        <p:messages />
+                    <p:fieldset legend="Cadastrar Participante" toggleable="true" toggleSpeed="500">                        
+                        <p:messages/>
                         <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
+
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_nome}" for="nome" />
-                            <p:inputText id="nome" value="#{alunoController.selected.nome}" title="#{bundle.CreateAlunoTitle_nome}" />
+                            <p:inputText id="nome" value="#{alunoController.selected.nome}" label="#{bundle.CreateAlunoTitle_nome}" required="true">
+                                <p:ajax update="escrevanome" event="keyup" />
+                            </p:inputText>                            
+                            <h:outputText value="#{alunoController.selected.nome}" />
+                            <p:message for="nome" id="escrevanome" />
+
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_ra}" for="ra" />
-                            <p:inputText id="ra" value="#{alunoController.selected.ra}" title="#{bundle.CreateAlunoTitle_ra}" />
+                            <p:inputText id="ra" value="#{alunoController.selected.ra}" title="#{bundle.CreateAlunoTitle_ra}" />                                
+                            <p:message for="ra" />
+                            <h:outputText value="#{alunoController.selected.ra}" />
+
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_cpf}" for="cpf" />
-                            <p:inputText id="cpf" value="#{alunoController.selected.cpf}" title="#{bundle.CreateAlunoTitle_cpf}" />
+                            <p:inputText id="cpf" value="#{alunoController.selected.cpf}" title="#{bundle.CreateAlunoTitle_cpf}" required="true">
+                                <p:ajax update="escrevacpf" event="keyup" />
+                            </p:inputText>                            
+                            <h:outputText value="#{alunoController.selected.cpf}" />
+                            <p:message for="cpf" id="escrevacpf" />
+
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_rg}" for="rg" />
-                            <p:inputText id="rg" value="#{alunoController.selected.rg}" title="#{bundle.CreateAlunoTitle_rg}" />
-                            <p:outputLabel value="#{bundle.CreateAlunoLabel_email}" for="email" />
-                            <p:inputText id="email" value="#{alunoController.selected.email}" title="#{bundle.CreateAlunoTitle_email}" />
+                            <p:inputText id="rg" value="#{alunoController.selected.rg}" title="#{bundle.CreateAlunoTitle_rg}" required="true">
+                                <p:ajax update="escrevarg" event="keyup" />
+                            </p:inputText>                            
+                            <h:outputText value="#{alunoController.selected.rg}" />
+                            <p:message for="rg" id="escrevarg" />
+
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_orgaoExpeditor}" for="orgaoExpeditor" />
-                            <p:inputText id="orgaoExpeditor" value="#{alunoController.selected.orgaoExpeditor}" title="#{bundle.CreateAlunoTitle_orgaoExpeditor}" />
+                            <p:inputText id="orgaoExpeditor" value="#{alunoController.selected.orgaoExpeditor}" title="#{bundle.CreateAlunoTitle_externo}" required="true">
+                            <p:ajax update="escrevaorgao" event="keyup" />
+                            </p:inputText>                            
+                            <h:outputText value="#{alunoController.selected.orgaoExpeditor}" />
+                            <p:message for="orgaoExpeditor" id="escrevaorgao" />
+                            
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_email}" for="email" />
+                            <p:inputText id="email" value="#{alunoController.selected.email}" title="#{bundle.CreateAlunoTitle_email}" required="true">
+                                <p:ajax update="escrevaemail" event="keyup" />
+                            </p:inputText>                            
+                            <h:outputText value="#{alunoController.selected.email}" />
+                            <p:message for="email" id="escrevaemail" />
+
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_externo}" for="externo" />
-                            <p:inputText id="externo" value="#{alunoController.selected.externo}" title="#{bundle.CreateAlunoTitle_externo}" />
+                            <p:selectOneRadio id="externo" value="#{alunoController.selected.externo}" required="true">
+                                <f:selectItem itemLabel="Sim" itemValue="true" />
+                                <f:selectItem itemLabel="Nao" itemValue="false" />
+                                <p:ajax update="escrevaexterno" event="keyup" />
+                            </p:selectOneRadio>
+                            <p:message for="externo" id="escrevaexterno" />
+                            <h:outputText value="#{alunoController.selected.externo}" />
+                            
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_curso}" for="curso" />
                             <p:inputText id="curso" value="#{alunoController.selected.curso}" title="#{bundle.CreateAlunoTitle_curso}" />
+
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_instituicao}" for="instituicao" />
                             <p:inputText id="instituicao" value="#{alunoController.selected.instituicao}" title="#{bundle.CreateAlunoTitle_instituicao}" />
+
                         </p:panelGrid>
                     </p:fieldset>
                     <br/>
                     <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{eventoController.items.rowCount == 0}"/>
+
                     <h:panelGroup rendered="#{eventoController.items.rowCount > 0}">
-                        <h:outputText value="#{eventoController.pagination.pageFirstItem + 1}..#{eventoController.pagination.pageLastItem + 1}/#{eventoController.pagination.itemsCount}"/>
+
+                        
                         <h:commandLink action="#{eventoController.previous}" value="#{bundle.Previous} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasPreviousPage}"/>
                         <h:commandLink action="#{eventoController.next}" value="#{bundle.Next} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasNextPage}"/>
                         <p:dataTable id="tabela" value="#{eventoController.items}" var="item" 
@@ -51,24 +91,23 @@ and open the template in the editor.
                                      rowKey="#{item.idevento}">
                             <p:column headerText="Curso">
                                 <p:outputLabel value="#{item.nome}"/>
-                            </p:column>
-                            <p:column headerText="Tipo">
-                                <p:outputLabel value="#{item.tipo}"/>
-                            </p:column>
+                            </p:column>                            
                             <p:column headerText="Local">
                                 <p:outputLabel value="#{item.idlocal.sala}"/>
                             </p:column>
-                            <p:column headerText="Local">
+                            <p:column headerText="Horário Inicio">
                                 <p:outputLabel value="#{item.horaInicio}"/>
                             </p:column>
-                            <p:column headerText="Local">
+                            <p:column headerText="Horario Termino">
                                 <p:outputLabel value="#{item.horaTermino}"/>
                             </p:column>
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                         </p:dataTable>
                     </h:panelGroup>
                     <br/>
+
                     <p:commandButton  ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>        
+
                 </h:form>
             </div>
         </ui:define>

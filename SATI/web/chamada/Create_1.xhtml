@@ -50,14 +50,13 @@ and open the template in the editor.
                     <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
                     <p:dataTable id="tabela" value="#{chamadaController.items}" var="item" 
                                  emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
-                        <p:column headerText="Aluno">
-                            <p:outputLabel value="#{item.idaluno.nome}"/>
-                        </p:column>
+                        
                         <p:column headerText="Faltas:" >
                             <p:cellEditor>
                                 <p:inputNumber  value="#{item.faltas}"  style="width:16px;text-align:center"/>
                             </p:cellEditor>
                         </p:column>
+      
                     </p:dataTable>
                 </h:panelGroup>
             </h:form>

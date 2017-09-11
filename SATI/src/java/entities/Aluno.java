@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -48,20 +49,25 @@ public class Aluno implements Serializable {
     @Basic(optional = false)
     @Column(name = "idaluno")
     private Integer idaluno;
-    @Size(max = 100)
     @Column(name = " nome")
+    @Size(max=100)
+    @Pattern(regexp= "[a-zA-Z]*")
     private String nome;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 20)
+    @Size(max = 10)
+    @Pattern(regexp= "[0-9]*")
     @Column(name = "ra")
     private String ra;
-    @Size(max = 15)
+    @Size(max = 11)
+    @Pattern(regexp= "\\d{11}")
     @Column(name = "CPF")
     private String cpf;
-    @Size(max = 45)
+    @Size(max = 9)
+    @Pattern(regexp= "\\d{9}")
     @Column(name = "RG")
     private String rg;
     @Size(max = 20)
+    @Pattern(regexp= "[a-zA-z0-9]*")
     @Column(name = "orgao_expeditor")
     private String orgaoExpeditor;
     @Column(name = "externo")

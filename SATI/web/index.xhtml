@@ -8,12 +8,11 @@
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
         <br />
         <h:form>
             <p:menu>
                 <p:submenu label="Opções">
-                    <p:menuitem outcome="/aluno/Create_1" value="Aluno"/>
+                    <p:menuitem outcome="/aluno/Create_1" value="Participante"/>
                     <p:menuitem outcome="/chamada/Create_1" value="Chamada"/>
                     <p:menuitem outcome="/dataEvento/Create_1" value="Data Evento"/>
                     <p:menuitem outcome="/evento/Create_1" value="Evento"/>
@@ -23,13 +22,14 @@
                     <p:menuitem outcome="/chamada/EventoLogin" value="Login Chamada"/>
                     <p:menuitem outcome="/chamada/Create_1" value="Padrao de Chamada"/>
                     <p:menuitem outcome="/inscricao/Create_1" value="Inscrição" />
+                    <p:menuitem outcome="/instrutor/login" value="Login" />
                 </p:submenu>
             </p:menu>
         </h:form>
         
         <br />
         
-        <p value="#{dataEventoController.uniqueDataEvento(1)}" />
+        
     </h:body>
 
 

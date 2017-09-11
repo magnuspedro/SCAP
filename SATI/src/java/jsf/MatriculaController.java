@@ -94,7 +94,7 @@ public class MatriculaController implements Serializable {
                     c.setFaltas(0);
                     c.setIdaluno(current.getIdaluno());
                     System.out.println(current.getIdevento().getIdevento());
-                    System.out.println(dec.uniqueDataEvento(current.getIdevento().getIdevento()));
+                  
                    //c.setIddataEvento(de);
                     //chamadaFacade.create(c);
                 }

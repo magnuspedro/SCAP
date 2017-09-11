@@ -49,27 +49,15 @@ and open the template in the editor.
                     <h:outputText value="#{chamadaEventoController.pagination.pageFirstItem + 1}..#{chamadaEventoController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
                     <h:commandLink action="#{chamadaEventoController.previous}" value="#{bundle.Previous} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{chamadaEventoController.next}" value="#{bundle.Next} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{chamadaEventoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
+                    <p:dataTable id="tabela" value="#{chamadaController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
                         <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="#{bundle.ListChamadaTitle_idchamada}"/>
                             </f:facet>
                             <p:outputLabel value="#{item.idchamada}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListChamadaTitle_hora}"/>
-                            </f:facet>
-                            <p:outputLabel value="#{item.hora}">
-                                <f:convertDateTime pattern="HH:mm:ss" />
-                            </p:outputLabel>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <p:outputLabel value="#{bundle.ListChamadaTitle_situacao}"/>
-                            </f:facet>
-                            <p:outputLabel value="#{item.situacao}"/>
-                        </p:column>
+                        
+                        
                         <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="#{bundle.ListAlunoTitle_nome}"/>
