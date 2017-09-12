@@ -5,7 +5,9 @@
  */
 package jpa;
 
+import entities.Aluno;
 import entities.Matricula;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -36,4 +38,7 @@ public class MatriculaFacade extends AbstractFacade<Matricula> {
         getEntityManager().merge(entity);
     }
 
+    public List<Matricula> findByAluno(Aluno aluno){
+        return em.createNamedQuery("Matricula.findByAluno").setParameter("aluno", aluno).getResultList();
+    }
 }

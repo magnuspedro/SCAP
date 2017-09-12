@@ -3,13 +3,13 @@ package jsf;
 import entities.Aluno;
 import entities.Chamada;
 import entities.Evento;
-import entities.EventosInstrutores;
 import entities.Matricula;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.AlunoFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -34,6 +34,7 @@ public class AlunoController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<Evento> eventos;
+    private List<Aluno> alunos;
 
     public AlunoController() {
     }
@@ -89,7 +90,6 @@ public class AlunoController implements Serializable {
 
     public String create() {
         try {
-            System.out.println("1: "+current);
             getFacade().create(current);
             for (Evento item : eventos) {
                 Matricula m = new Matricula();
@@ -98,7 +98,6 @@ public class AlunoController implements Serializable {
                 m.setPago(Boolean.FALSE);
                 current.getMatriculaCollection().add(m);
             }
-            System.out.println("2: "+current);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoCreated"));
             return prepareCreate();
@@ -216,17 +215,6 @@ public class AlunoController implements Serializable {
         return current;
     }
 
-    public void adicionaMiniCurso(Evento event) {
-        Evento evento = (Evento) event;
-        System.err.println(evento);
-        /* Matricula m = new Matricula();
-        m.setIdevento(e);
-        m.setIdaluno(current);
-        m.setPago(false);
-        current.getMatriculaCollection().add(m);**/
-        System.err.println(current.getChamadaEventoCollection());
-    }
-
     @FacesConverter(forClass = Aluno.class)
     public static class AlunoControllerConverter implements Converter {
 
@@ -279,5 +267,30 @@ public class AlunoController implements Serializable {
      */
     public void setEventos(List<Evento> eventos) {
         this.eventos = eventos;
+    }
+
+    public void carregaMatricula() {
+        System.err.println(ejbFacade.findByAluno(current));
+        //current.getMatriculaCollection().addAll(ejbFacade.findByAluno(current));
+    }
+
+    /**
+     * @return the alunos
+     */
+    public List<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    /**
+     * @param alunos the alunos to set
+     */
+    public void setAlunos(List<Aluno> alunos) {
+        this.alunos = alunos;
+    }
+
+    public List<Aluno> completeNome(String query) {
+        List<Aluno> list = new ArrayList<>();
+        list.add(ejbFacade.findRA(query));
+        return list;
     }
 }

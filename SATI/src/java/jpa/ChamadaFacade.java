@@ -5,6 +5,7 @@
  */
 package jpa;
 
+import entities.Aluno;
 import entities.Chamada;
 import entities.DataEvento;
 import java.util.List;

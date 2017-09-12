@@ -8,7 +8,6 @@ import jpa.InstrutorFacade;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -23,7 +22,6 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
-import org.primefaces.context.RequestContext;
 
 @ManagedBean(name = "instrutorController")
 @SessionScoped
@@ -39,27 +37,31 @@ public class InstrutorController implements Serializable {
 
     public InstrutorController() {
     }
-    
-    
+
     public String autenticar() throws Exception {
+        Instrutor i;
         try {
-            Instrutor i = getInstrutor(getIdByCPF(current.getCpf()));
-            
+            i = getInstrutor(getIdByCPF(current.getCpf()));
+
             if (i == null || (i.getCpf() == null ? current.getCpf() != null : !i.getCpf().equals(current.getCpf()))
-                || (i.getSenha() == null ? current.getSenha() != null : !i.getSenha().equals(current.getSenha()))) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
-            return "Error.xhtml";
+                    || (i.getSenha() == null ? current.getSenha() != null : !i.getSenha().equals(current.getSenha()))) {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
+                return "Error.xhtml";
 
             }
+
         } catch (Exception e) {
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
             return "Error.xhtml";
         }
-        return "Create_1.xhtml";
+        
+        EventoController eController = new EventoController();
+        //System.err.println(eController.ListaEventoInstrutor(i));
+        return "/chamada/Create_1.xhtml";
     }
-    
+
     public String logout() {
         FacesContext fc = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
@@ -68,11 +70,12 @@ public class InstrutorController implements Serializable {
         return "index.xhtml?faces-redirect=true";
 
     }
-    
-    
-    public Integer getIdByCPF(String CPF){
+
+    public Integer getIdByCPF(String CPF) {
         return ejbFacade.findByCPF(CPF).get(0).getIdinstrutor();
-    };
+    }
+
+    ;
     
     
     public Instrutor getSelected() {

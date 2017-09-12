@@ -31,35 +31,45 @@ and open the template in the editor.
                             </p:selectOneMenu>
                             <p:outputLabel for="iddataEvento" value="Eventos:"/>
                             <p:selectOneMenu id="iddataEvento" value="#{dataEventoController.selected.idevento}"
-                                             valueChangeListener="#{chamadaController.carregaChamada}"
                                              required="true"
+                                             valueChangeListener="#{dataEventoController.carregaChamada}"
                                              requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                                <p:ajax event="change" update="tabela"  />
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{eventosInstrutoresController.eventos}"/>
-                                <f:ajax event="change" render="tabela"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
+
+                        <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{chamadaController.items.rowCount == 0}"/>
+                        <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
+                            <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
+                            <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
+                            <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
+                            <p:dataTable id="tabela" value="#{dataEventoController.c}" var="item" 
+                                         emptyMessage="Nenhum registro incluido." 
+                                         editable="true" editMode="cell"
+                                         paginator="true" rows="10">
+
+                                <p:column headerText="Nome" >
+                                    <p:outputLabel value="#{item.idaluno.nome}" />
+                                </p:column>
+
+                                <p:column headerText="Faltas" >
+                                    <p:cellEditor>
+                                        <f:facet name="output">
+                                            <h:outputText value="#{item.faltas}" />
+                                        </f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{item.faltas}" style="width:96%" label="Faltas"/>
+                                        </f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                            </p:dataTable>
+                        </h:panelGroup>
                     </p:fieldset>
                 </h:form>
             </div>
-            <h:form>
-                <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{chamadaController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
-                    <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
-                    <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
-                    <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{chamadaController.items}" var="item" 
-                                 emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
-                        
-                        <p:column headerText="Faltas:" >
-                            <p:cellEditor>
-                                <p:inputNumber  value="#{item.faltas}"  style="width:16px;text-align:center"/>
-                            </p:cellEditor>
-                        </p:column>
-      
-                    </p:dataTable>
-                </h:panelGroup>
-            </h:form>
         </ui:define>
     </ui:composition>
 </html>

@@ -6,6 +6,8 @@
 package jpa;
 
 import entities.Aluno;
+import entities.Matricula;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -31,6 +33,10 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
 
     public Aluno findRA(Object id) {
         return (Aluno) getEntityManager().createNamedQuery("Aluno.findByRa").getSingleResult();
+    }
+
+    public List<Matricula> findByAluno(Aluno aluno) {
+        return em.createNamedQuery("Matricula.findByAluno").setParameter("aluno", aluno).getResultList();
     }
 
 }

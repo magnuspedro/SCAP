@@ -29,11 +29,11 @@ public class DataEventoController implements Serializable {
 
     private DataEvento current;
     private DataModel items = null;
-    private ListDataModel<Chamada> chamada;
     @EJB
     private jpa.DataEventoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Chamada> chamada;
 
     public DataEventoController() {
         this.chamada = null;
@@ -206,14 +206,14 @@ public class DataEventoController implements Serializable {
     /**
      * @return the chamada
      */
-    public ListDataModel<Chamada> getChamada() {
+    public List<Chamada> getChamada() {
         return chamada;
     }
 
     /**
      * @param chamada the chamada to set
      */
-    public void setChamada(ListDataModel<Chamada> chamada) {
+    public void setChamada(List<Chamada> chamada) {
         this.chamada = chamada;
     }
 
@@ -227,9 +227,10 @@ public class DataEventoController implements Serializable {
     }
     
     public void carregaChamada(ValueChangeEvent event){
-        current = (DataEvento) event.getNewValue();
+        Evento e = (Evento) event.getNewValue();
+        System.err.println(e);
         System.out.println(ejbFacade.carregaChamada(current));
-        current.getChamadaCollection().addAll(ejbFacade.carregaChamada(current));
+        setChamada(ejbFacade.carregaChamada(current));
     }
 
     @FacesConverter(forClass = DataEvento.class)

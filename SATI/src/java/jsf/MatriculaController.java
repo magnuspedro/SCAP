@@ -1,13 +1,14 @@
 package jsf;
 
+import entities.Aluno;
 import entities.Chamada;
-import entities.DataEvento;
 import entities.Matricula;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.MatriculaFacade;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.faces.bean.SessionScoped;
@@ -16,11 +17,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
-import jpa.ChamadaFacade;
-import jpa.DataEventoFacade;
 
 @ManagedBean(name = "matriculaController")
 @SessionScoped
@@ -32,6 +32,8 @@ public class MatriculaController implements Serializable {
     private jpa.MatriculaFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Matricula> matricula = null;
+    private List<Matricula> pago = null;
 
     public MatriculaController() {
     }
@@ -94,8 +96,8 @@ public class MatriculaController implements Serializable {
                     c.setFaltas(0);
                     c.setIdaluno(current.getIdaluno());
                     System.out.println(current.getIdevento().getIdevento());
-                  
-                   //c.setIddataEvento(de);
+
+                    //c.setIddataEvento(de);
                     //chamadaFacade.create(c);
                 }
             }
@@ -248,6 +250,39 @@ public class MatriculaController implements Serializable {
             }
         }
 
+    }
+
+    public void carregaMatricula(ValueChangeEvent event) {
+        current.setIdaluno((Aluno) event.getNewValue());
+        matricula = ejbFacade.findByAluno(current.getIdaluno());
+    }
+
+    /**
+     * @return the chamada
+     */
+    public List<Matricula> getMatricula() {
+        return matricula;
+    }
+
+    /**
+     * @param matricula
+     */
+    public void setChamada(List<Matricula> matricula) {
+        this.matricula = matricula;
+    }
+
+    /**
+     * @return the pago
+     */
+    public List<Matricula> getPago() {
+        return pago;
+    }
+
+    /**
+     * @param pago the pago to set
+     */
+    public void setPago(List<Matricula> pago) {
+        this.pago = pago;
     }
 
 }

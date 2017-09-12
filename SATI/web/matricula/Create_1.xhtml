@@ -20,48 +20,35 @@ and open the template in the editor.
                     <p:fieldset legend="Cadastro de Matricula" toggleable="true" toggleSpeed="500">
                         <p:messages />
                         <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">                            
-                            <h:outputText value="#{bundle.CreateMatriculaLabel_pago}" />
-                            <p:selectBooleanCheckbox value="#{matriculaController.selected.pago}" />
-
                             <p:outputLabel value="#{bundle.CreateMatriculaLabel_idaluno}" for="idaluno" />
-                            <p:selectOneMenu id="idaluno" value="#{matriculaController.selected.idaluno}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_idaluno}">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{alunoController.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu>
-                            <p:outputLabel value="#{bundle.CreateMatriculaLabel_idevento}" for="idevento" />
-                            <p:selectOneMenu id="idevento" value="#{matriculaController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateMatriculaRequiredMessage_idevento}">
-                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
-                            </p:selectOneMenu> 
+                            <p:autoComplete id="idaluno" forceSelection="true" value="#{matriculaController.selected.idaluno}" completeMethod="#{alunoController.completeNome}" />
+                           
                             <p:commandButton ajax="false" action="#{matriculaController.update()}" value="#{bundle.CreateMatriculaSaveLink}"/>
                         </p:panelGrid>
                     </p:fieldset>
                 </h:form>
             </div>
-            <h:form>
+            <h:form id="Formtabela">
                 <h:outputText escape="false" value="#{bundle.ListMatriculaEmpty}" rendered="#{matriculaController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{matriculaController.items.rowCount > 0}">
                     <h:outputText value="#{matriculaController.pagination.pageFirstItem + 1}..#{matriculaController.pagination.pageLastItem + 1}/#{matriculaController.pagination.itemsCount}"/>
                     <h:commandLink action="#{matriculaController.previous}" value="#{bundle.Previous} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{matriculaController.next}" value="#{bundle.Next} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{matriculaController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
+                    <p:dataTable id="tabela" value="#{matriculaController.matricula}" 
+                                 var="item" emptyMessage="Nenhum registro incluido."
+                                 selection="#{matriculaController.pago}"
+                                 rowKey="#{item.idmatricula}"
+                                 paginator="true" rows="10">
                         <p:column headerText="Aluno:">
                             <p:outputLabel value="#{item.idaluno.nome}"/>
                         </p:column>
                         <p:column headerText="Evento:">
                             <p:outputLabel value="#{item.idevento.nome}"/>
                         </p:column>
-                        <p:column headerText="Pago:">
-                            <p:selectBooleanCheckbox  value="#{item.pago}" />
-                        </p:column>
-                        <p:column headerText="Opções">
-                            <p:commandButton ajax="false" action="#{matriculaController.prepareEdit}" image="ui-icon-pencil"/>
-                            <p:outputLabel value=" "/>
-                            <p:commandButton ajax="false" action="#{matriculaController.destroy}" image="ui-icon-trash"/>
-                            <p:outputLabel value=" "/>
+                        <p:column selectionMode="multiple" style="width:30px;text-align:center" headerText="Pago:">
                         </p:column>
                     </p:dataTable>
-                    
+
                 </h:panelGroup>
             </h:form>
         </ui:define>
