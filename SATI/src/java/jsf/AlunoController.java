@@ -47,7 +47,7 @@ public class AlunoController implements Serializable {
         }
         return current;
     }
-
+    
     private AlunoFacade getFacade() {
         return ejbFacade;
     }

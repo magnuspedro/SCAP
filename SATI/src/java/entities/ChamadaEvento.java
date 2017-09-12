@@ -5,6 +5,7 @@
  */
 package entities;
 
+import com.sun.tracing.dtrace.Attributes;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -33,6 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ChamadaEvento.findAll", query = "SELECT c FROM ChamadaEvento c")
     , @NamedQuery(name = "ChamadaEvento.findByIdchamada", query = "SELECT c FROM ChamadaEvento c WHERE c.idchamada = :idchamada")
     , @NamedQuery(name = "ChamadaEvento.findByHora", query = "SELECT c FROM ChamadaEvento c WHERE c.hora = :hora")
+    , @NamedQuery(name = "ChamadaEvento.findByIdAluno", query = "SELECT c FROM ChamadaEvento c WHERE c.idaluno.idaluno = :idaluno")
     , @NamedQuery(name = "ChamadaEvento.findBySituacao", query = "SELECT c FROM ChamadaEvento c WHERE c.situacao = :situacao")})
 public class ChamadaEvento implements Serializable {
 
@@ -53,7 +55,7 @@ public class ChamadaEvento implements Serializable {
     @JoinColumn(name = "iddata_evento", referencedColumnName = "iddata_evento")
     @ManyToOne(optional = false)
     private DataEvento iddataEvento;
-
+   
     public ChamadaEvento() {
     }
 

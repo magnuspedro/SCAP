@@ -6,6 +6,7 @@
 package jpa;
 
 import entities.ChamadaEvento;
+import entities.DataEvento;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,10 @@ public class ChamadaEventoFacade extends AbstractFacade<ChamadaEvento> {
 
     public ChamadaEventoFacade() {
         super(ChamadaEvento.class);
+    }
+    
+    public ChamadaEvento findChamadaEventoByRa(int id){
+        return (ChamadaEvento) em.createNamedQuery("ChamadaEvento.findByIdAluno").setParameter("idaluno", id).getSingleResult();
     }
     
 }

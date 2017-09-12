@@ -1,19 +1,28 @@
 package jsf;
 
+import entities.Aluno;
 import entities.ChamadaEvento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.ChamadaEventoFacade;
 
 import java.io.Serializable;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -28,6 +37,8 @@ public class ChamadaEventoController implements Serializable {
     private jpa.ChamadaEventoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    @EJB
+    private jpa.AlunoFacade ejbFacedeAluno;
 
     public ChamadaEventoController() {
     }
@@ -42,8 +53,8 @@ public class ChamadaEventoController implements Serializable {
 
     private ChamadaEventoFacade getFacade() {
         return ejbFacade;
-    }
-
+    } 
+    
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -62,6 +73,17 @@ public class ChamadaEventoController implements Serializable {
         return pagination;
     }
 
+    
+    public void getAlunoByRa(){
+        String RA = "1400001";
+        ChamadaEvento chamadaEvento  = ejbFacade.findChamadaEventoByRa((ejbFacedeAluno.findIdByRa(RA).getIdaluno()));
+        System.out.println(""+chamadaEvento.getSituacao());
+    }
+    
+    public void teste(){
+        
+    }
+    
     public String prepareList() {
         recreateModel();
         return "Create_1";

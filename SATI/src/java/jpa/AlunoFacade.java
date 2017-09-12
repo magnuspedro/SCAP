@@ -34,6 +34,10 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
     public Aluno findRA(Object id) {
         return (Aluno) getEntityManager().createNamedQuery("Aluno.findByRa").getSingleResult();
     }
+    
+    public Aluno findIdByRa(String RA){
+        return (Aluno) em.createNamedQuery("Aluno.findByRa").setParameter("ra", RA).getSingleResult();
+    }
 
     public List<Matricula> findByAluno(Aluno aluno) {
         return em.createNamedQuery("Matricula.findByAluno").setParameter("aluno", aluno).getResultList();
