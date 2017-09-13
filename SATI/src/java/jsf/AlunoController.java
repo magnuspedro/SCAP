@@ -90,14 +90,16 @@ public class AlunoController implements Serializable {
 
     public String create() {
         try {
-            getFacade().create(current);
+            List <Matricula> lm = new ArrayList();
+           // getFacade().edit(current);
             for (Evento item : eventos) {
                 Matricula m = new Matricula();
                 m.setIdaluno(current);
                 m.setIdevento(item);
                 m.setPago(Boolean.FALSE);
-                current.getMatriculaCollection().add(m);
+               lm.add(m);
             }
+            current.setMatriculaCollection(lm);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoCreated"));
             return prepareCreate();

@@ -57,9 +57,9 @@ public class InstrutorController implements Serializable {
             return "Error.xhtml";
         }
         
-        EventoController eController = new EventoController();
-        //System.err.println(eController.ListaEventoInstrutor(i));
-        return "/chamada/Create_1.xhtml";
+        if (i.getAdministrador()){
+                return "/matricula/Create_1.xhtml";}
+            else {return "/chamada/Create_1.xhtml";}
     }
 
     public String logout() {

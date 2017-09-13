@@ -34,9 +34,11 @@ and open the template in the editor.
                             <p:outputLabel value="#{bundle.CreateInstrutorLabel_email}" for="email" />
                             <p:inputText id="email" value="#{instrutorController.selected.email}" title="#{bundle.CreateInstrutorTitle_email}" />
                             <p:outputLabel value="#{bundle.CreateInstrutorLabel_senha}" for="senha" />
-                            <p:password id="senha" value="#{instrutorController.selected.senha}" title="#{bundle.CreateInstrutorTitle_senha}" feedback="true"/>
-                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_administrador}" for="administrador" />
-                            <p:inputText id="administrador" value="#{instrutorController.selected.administrador}" title="#{bundle.CreateInstrutorTitle_administrador}" />
+                            <p:password id="senha" value="#{instrutorController.selected.senha}" title="#{bundle.CreateInstrutorTitle_senha}" feedback="true"/>                                                        
+                           
+                            <h:outputText value="#{bundle.CreateInstrutorLabel_administrador}" />
+                            <p:selectBooleanCheckbox value="#{instrutorController.selected.administrador}" />
+                            
                             <p:commandButton ajax="false"   action="#{instrutorController.create}" value="Salvar"/>
                         </h:panelGrid>
                     </p:fieldset>
@@ -45,8 +47,7 @@ and open the template in the editor.
             <div class="table">
                 <h:form>
                     <h:outputText escape="false" value="#{bundle.ListInstrutorEmpty}" rendered="#{instrutorController.items.rowCount == 0}"/>
-                    <h:panelGroup rendered="#{instrutorController.items.rowCount > 0}">
-                        <h:outputText value="#{instrutorController.pagination.pageFirstItem + 1}..#{instrutorController.pagination.pageLastItem + 1}/#{instrutorController.pagination.itemsCount}"/>
+                    <h:panelGroup rendered="#{instrutorController.items.rowCount > 0}">                        
                         <h:commandLink action="#{instrutorController.previous}" value="#{bundle.Previous} #{instrutorController.pagination.pageSize}" rendered="#{instrutorController.pagination.hasPreviousPage}"/>
                         <p:dataTable id="tabela" value="#{instrutorController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                      rowsPerPageTemplate="5,10,15"   lazy="true">                           
@@ -54,32 +55,14 @@ and open the template in the editor.
                                 <f:facet name="header">
                                     <p:outputLabel value="#{bundle.ListInstrutorTitle_nome}"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.nome}"/>
+                                <p:outputLabel value="#{item.nome}"/>                                
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListInstrutorTitle_tipo}"/>
+                                    <p:outputLabel value="#{bundle.ListInstrutorTitle_email}"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.tipo}"/>
-                            </p:column>                            
-                            <p:column>
-                                <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListInstrutorTitle_rg}"/>
-                                </f:facet>
-                                <p:outputLabel value="#{item.rg}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListInstrutorTitle_orgaoExpeditor}"/>
-                                </f:facet>
-                                <p:outputLabel value="#{item.orgaoExpeditor}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListInstrutorTitle_cpf}"/>
-                                </f:facet>
-                                <p:outputLabel value="#{item.cpf}"/>
-                            </p:column>                                                 
+                                <p:outputLabel value="#{item.email}"/>
+                            </p:column> 
                             <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Opções"/>

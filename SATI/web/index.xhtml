@@ -3,8 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <h:head>
-        <title>Facelet Title</title>
+    <h:head>        
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
@@ -13,39 +12,18 @@
             <p:menu>
                 <p:submenu label="Opções">
                     <p:menuitem outcome="/aluno/Create_1" value="Participante"/>
-                    <p:menuitem outcome="/chamada/Create_1" value="Chamada"/>
-                    <p:menuitem outcome="/dataEvento/Create_1" value="Data Evento"/>
-                    <p:menuitem outcome="/evento/Create_1" value="Evento"/>
-                    <p:menuitem outcome="/eventosInstrutores/Create_1" value="Eventos Instrutores"/>
                     <p:menuitem outcome="/instrutor/Create_1" value="Instrutor"/>
-                    <p:menuitem outcome="/matricula/Create_1" value="Matricula"/>
-                    <p:menuitem outcome="/chamada/EventoLogin" value="Login Chamada"/>
-                    <p:menuitem outcome="/chamada/Create_1" value="Padrao de Chamada"/>
-                    <p:menuitem outcome="/inscricao/Create_1" value="Inscrição" />
-                    <p:menuitem outcome="/instrutor/login" value="Login" />
+                    <p:menuitem outcome="/local/Create" value="Local de Realização"/>
+                    <p:menuitem outcome="/evento/Create_1" value="Evento"/>
+                    <p:menuitem outcome="/dataEvento/Create_1" value="Data do Evento"/>                   
+                    <p:menuitem outcome="/eventosInstrutores/Create_1" value="Instrutor para Evento"/>                    
+                    <p:menuitem outcome="/matricula/Create_1" value="Matricula"/>                    
+                    <p:menuitem outcome="/chamada/ChamadaEvento" value="Chamada de Evento"/>                                        
+                    <p:menuitem outcome="/chamada/Create_1" value="Chamada Mini Curso"/>
                 </p:submenu>
             </p:menu>
-        </h:form>
-        
+        </h:form>        
         <br />
-        
-        
     </h:body>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </html>
 

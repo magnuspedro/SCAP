@@ -24,18 +24,8 @@ and open the template in the editor.
                             <h:outputLabel value="#{bundle.CreateDataEventoLabel_data}" for="data" />
                             <p:calendar id="data" value="#{dataEventoController.selected.data}" title="#{bundle.CreateDataEventoTitle_data}" effect="fold">
                                 <f:convertDateTime pattern="dd/mm/yy"/>
-                            </p:calendar>
-                            <h:outputLabel value="#{bundle.CreateDataEventoLabel_aberto}" for="aberto" />
-                            <p:inputText id="aberto" value="#{dataEventoController.selected.aberto}" title="#{bundle.CreateDataEventoTitle_aberto}" />
-                            <h:outputLabel value="#{bundle.CreateDataEventoLabel_horaAberto}" for="horaAberto" />
-                            <p:inputText id="horaAberto" value="#{dataEventoController.selected.horaAberto}" title="#{bundle.CreateDataEventoTitle_horaAberto}" >
-                                <f:convertDateTime pattern="HH:mm" />
-                            </p:inputText>
-                            <h:outputLabel value="#{bundle.CreateDataEventoLabel_horaFechamento}" for="horaFechamento" />
-                            <p:inputText id="horaFechamento" value="#{dataEventoController.selected.horaFechamento}" title="#{bundle.CreateDataEventoTitle_horaFechamento}" >
-                                <f:convertDateTime pattern="HH:mm" />
-                            </p:inputText>
-                            <h:outputLabel value="#{bundle.CreateDataEventoLabel_idevento}" for="idevento" />
+                            </p:calendar>                                                        
+                            <h:outputLabel value="#{bundle.CreateDataEventoTitle_nomeEvento}" for="idevento" />
                             <p:selectOneMenu id="idevento" value="#{dataEventoController.selected.idevento}"  required="true" requiredMessage="#{bundle.CreateDataEventoRequiredMessage_idevento}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
@@ -48,8 +38,7 @@ and open the template in the editor.
             <div class="table">
                 <h:form>
                     <h:outputText escape="false" value="#{bundle.ListDataEventoEmpty}" rendered="#{dataEventoController.items.rowCount == 0}"/>
-                    <h:panelGroup rendered="#{dataEventoController.items.rowCount > 0}">
-                        <h:outputText value="#{dataEventoController.pagination.pageFirstItem + 1}..#{dataEventoController.pagination.pageLastItem + 1}/#{dataEventoController.pagination.itemsCount}"/>
+                    <h:panelGroup rendered="#{dataEventoController.items.rowCount > 0}">                        
                         <h:commandLink action="#{dataEventoController.previous}" value="#{bundle.Previous} #{dataEventoController.pagination.pageSize}" rendered="#{dataEventoController.pagination.hasPreviousPage}"/>
                         <p:dataTable id="tabela" value="#{dataEventoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                      rowsPerPageTemplate="5,10,15"   lazy="true">                           
@@ -60,34 +49,12 @@ and open the template in the editor.
                                 <p:outputLabel value="#{item.data}">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:outputLabel>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListDataEventoTitle_aberto}"/>
-                                </f:facet>
-                                <p:outputLabel value="#{item.aberto}"/>
-                            </p:column>                            
-                            <p:column>
-                                <f:facet name="header">
-                                    <p:outputLabel value="Abertura:"/>
-                                </f:facet>
-                                <p:outputLabel value="#{item.horaAberto}">
-                                    <f:convertDateTime pattern="HH:mm:ss"/>
-                                </p:outputLabel>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <p:outputLabel value="Fechamento"/>
-                                </f:facet>
-                                <p:outputLabel value="#{item.horaFechamento}">
-                                    <f:convertDateTime pattern="HH:mm:ss"/>
-                                </p:outputLabel>
-                            </p:column>
+                            </p:column>                                                                                    
                             <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Evento:"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.idevento}"/>
+                                <p:outputLabel value="#{item.nomeEvento}"/>
                             </p:column>                                                 
                             <p:column>
                                 <f:facet name="header">
