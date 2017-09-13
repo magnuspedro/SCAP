@@ -85,7 +85,7 @@ and open the template in the editor.
                         
                         <h:commandLink action="#{eventoController.previous}" value="#{bundle.Previous} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasPreviousPage}"/>
                         <h:commandLink action="#{eventoController.next}" value="#{bundle.Next} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasNextPage}"/>
-                        <p:dataTable id="tabela" value="#{eventoController.items}" var="item" 
+                        <p:dataTable id="tabela" value="#{eventoController.eventos}" var="item" 
                                      emptyMessage="Nenhum registro incluido." paginator="true" rows="10"
                                      selection="#{alunoController.eventos}"
                                      rowKey="#{item.idevento}">
@@ -96,7 +96,7 @@ and open the template in the editor.
                                 <p:outputLabel value="#{item.idlocal.sala}"/>
                             </p:column>
                             <p:column headerText="Horário Inicio">
-                                <p:outputLabel value="#{item.horaInicio}"/>
+                                <p:outputLabel value="#{item.vagasTotais}"/>
                             </p:column>
                             <p:column headerText="Horario Termino">
                                 <p:outputLabel value="#{item.horaTermino}"/>
