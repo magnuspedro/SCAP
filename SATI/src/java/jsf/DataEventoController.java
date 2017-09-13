@@ -50,8 +50,9 @@ public class DataEventoController implements Serializable {
     private DataEventoFacade getFacade() {
         return ejbFacade;
     }
-    public Date teste(){
-        List<DataEvento> list =ejbFacade.retornaDataEvento();
+
+    public Date teste() {
+        List<DataEvento> list = ejbFacade.retornaDataEvento();
         return list.get(0).getData();
     }
 
@@ -217,20 +218,23 @@ public class DataEventoController implements Serializable {
         this.chamada = chamada;
     }
 
-   /* public void selectOneMenuListener(ValueChangeEvent event) {
-        current = (DataEvento) event.getNewValue();
-        setChamada((ListDataModel<Chamada>) ejbFacade.fingByIdEvento(current));
-    }*/
-    
-    public DataEvento uniqueDataEvento(int id){
+    public DataEvento uniqueDataEvento(int id) {
         return ejbFacade.uniqueDataEvento(id);
     }
-    
-    public void carregaChamada(ValueChangeEvent event){
+
+    public void carregaChamada(ValueChangeEvent event) {
         Evento e = (Evento) event.getNewValue();
-        System.err.println(e);
-        System.out.println(ejbFacade.carregaChamada(current));
-        setChamada(ejbFacade.carregaChamada(current));
+        current = ejbFacade.uniqueDataEvento(e.getIdevento());
+        chamada = ejbFacade.carregaChamada(current);
+        System.err.println(chamada);
+    }
+
+    public void salvar() {
+        System.err.println(chamada);
+        for (Chamada item : chamada) {
+            System.err.println(item.getIdaluno().getNome());
+            System.err.println(item.getFaltas());
+        }
     }
 
     @FacesConverter(forClass = DataEvento.class)

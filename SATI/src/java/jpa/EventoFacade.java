@@ -30,9 +30,21 @@ public class EventoFacade extends AbstractFacade<Evento> {
     public EventoFacade() {
         super(Evento.class);
     }
-    
-    public List<Evento> findbyInstrutor(Instrutor instrutor){
+
+    public List<Evento> findbyInstrutor(Instrutor instrutor) {
         return em.createNamedQuery("Evento.findByInstrutor").setParameter("idinstrutor", 1).getResultList();
     }
 
+    public int vagasFechadas(Evento e) {
+        Long valor = (Long) em.createNamedQuery("Matricula.countVagas").setParameter("evento", e).getSingleResult();
+        return valor.intValue();
+    }
+    
+    public List<Evento> findMinicursos(){
+        return em.createNamedQuery("Evento.findByTipo").setParameter("tipo", "Minicurso").getResultList();
+    }
+    
+    public List<Evento> findPalestra(){
+        return em.createNamedQuery("Evento.findByTipo").setParameter("tipo", "Palestra").getResultList();
+    }
 }

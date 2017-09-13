@@ -2,12 +2,15 @@ package jsf;
 
 import entities.Aluno;
 import entities.Chamada;
+import entities.ChamadaEvento;
+import entities.Evento;
 import entities.Matricula;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.MatriculaFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -21,10 +24,26 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jpa.ChamadaEventoFacade;
+import jpa.ChamadaFacade;
+import jpa.DataEventoFacade;
+import jpa.EventoFacade;
 
 @ManagedBean(name = "matriculaController")
 @SessionScoped
 public class MatriculaController implements Serializable {
+
+    @EJB
+    private ChamadaEventoFacade chamadaEventoFacade;
+
+    @EJB
+    private EventoFacade eventoFacade;
+
+    @EJB
+    private DataEventoFacade dataEventoFacade;
+
+    @EJB
+    private ChamadaFacade chamadaFacade;
 
     private Matricula current;
     private DataModel items = null;
@@ -89,7 +108,6 @@ public class MatriculaController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            DataEventoController dec = new DataEventoController();
             if (current.getPago()) {
                 if (current.getIdevento().getTipo().equalsIgnoreCase("Minicurso")) {
                     Chamada c = new Chamada();
@@ -285,4 +303,45 @@ public class MatriculaController implements Serializable {
         this.pago = pago;
     }
 
+    public String pagando() {
+        ArrayList<Chamada> ch = new ArrayList<>();
+        ArrayList<ChamadaEvento> che;
+        che = new ArrayList<>();
+
+        for (Matricula item : pago) {
+            item.setPago(Boolean.TRUE);
+            ejbFacade.edit(item);
+            if (item.getIdevento().getTipo().equalsIgnoreCase("Palestra")) {
+                for (Evento pa : eventoFacade.findPalestra()) {
+                    if (!pa.getNome().equalsIgnoreCase("Palestras")) {
+                        ChamadaEvento ce = new ChamadaEvento();
+                        ce.setIdaluno(item.getIdaluno());
+                        ce.setIddataEvento(dataEventoFacade.uniqueDataEvento(pa.getIdevento()));
+                        ce.setHora(null);
+                        ce.setSituacao(Boolean.FALSE);
+                        che.add(ce);
+                    }
+                }
+            } else {
+                Chamada c = new Chamada();
+                c.setIdaluno(item.getIdaluno());
+                c.setFaltas(0);
+                c.setIddataEvento(dataEventoFacade.uniqueDataEvento(item.getIdevento().getIdevento()));
+                ch.add(c);
+            }
+        }
+
+        for (Chamada chamada : ch) {
+            chamadaFacade.create(chamada);
+        }
+
+        for (ChamadaEvento chevento : che) {
+            chamadaEventoFacade.create(chevento);
+        }
+
+        matricula = null;
+        pago = null;
+        JsfUtil.addSuccessMessage("Matricula atualizada com sucesso");
+        return prepareCreate();
+    }
 }

@@ -16,7 +16,6 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
@@ -31,6 +30,7 @@ public class EventoController implements Serializable {
     private jpa.EventoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Evento> eventos = null;
 
     public EventoController() {
     }
@@ -198,6 +198,30 @@ public class EventoController implements Serializable {
     
     public List<Evento> ListaEventoInstrutor(Instrutor instrutor) {
          return ejbFacade.findbyInstrutor(instrutor);
+    }
+    
+        /**
+     * @return the eventos
+     */
+    public List<Evento> getEventos() {
+        carregaMiniCursos();
+        return eventos;
+    }
+
+    /**
+     * @param eventos the eventos to set
+     */
+    public void setEventos(List<Evento> eventos) {
+        this.eventos = eventos;
+    }
+    
+    public List<Evento> carregaMiniCursos(){
+        eventos = ejbFacade.findMinicursos();
+        for (Evento item : eventos) {
+            int ocupadas = ejbFacade.vagasFechadas(item);
+            item.setVagasTotais(item.getVagasTotais() - ocupadas);
+        }
+        return eventos;
     }
 
     @FacesConverter(forClass = Evento.class)

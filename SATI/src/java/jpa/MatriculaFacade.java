@@ -6,6 +6,7 @@
 package jpa;
 
 import entities.Aluno;
+import entities.Evento;
 import entities.Matricula;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -40,5 +41,9 @@ public class MatriculaFacade extends AbstractFacade<Matricula> {
 
     public List<Matricula> findByAluno(Aluno aluno){
         return em.createNamedQuery("Matricula.findByAluno").setParameter("aluno", aluno).getResultList();
+    }
+    
+    public int vagasFechadas(Evento e){
+        return (int) em.createNamedQuery("Matricula.countVagas").setParameter("evento", e).getSingleResult();
     }
 }

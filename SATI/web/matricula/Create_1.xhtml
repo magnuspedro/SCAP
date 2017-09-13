@@ -21,9 +21,13 @@ and open the template in the editor.
                         <p:messages />
                         <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">                            
                             <p:outputLabel value="#{bundle.CreateMatriculaLabel_idaluno}" for="idaluno" />
-                            <p:autoComplete id="idaluno" forceSelection="true" value="#{matriculaController.selected.idaluno}" completeMethod="#{alunoController.completeNome}" />
-                           
-                            <p:commandButton ajax="false" action="#{matriculaController.update()}" value="#{bundle.CreateMatriculaSaveLink}"/>
+                            <p:selectOneMenu id="idaluno" value="#{matriculaController.selected.idaluno}"
+                                             valueChangeListener="#{matriculaController.carregaMatricula}"
+                                             filter="true">
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{alunoController.itemsAvailableSelectOne}"/>
+                                <f:ajax event="change" render="Formtabela:tabela" />
+                            </p:selectOneMenu>
                         </p:panelGrid>
                     </p:fieldset>
                 </h:form>
@@ -39,17 +43,18 @@ and open the template in the editor.
                                  selection="#{matriculaController.pago}"
                                  rowKey="#{item.idmatricula}"
                                  paginator="true" rows="10">
-                        <p:column headerText="Aluno:">
+                        <p:column headerText="Aluno:" sortBy="asc">
                             <p:outputLabel value="#{item.idaluno.nome}"/>
                         </p:column>
                         <p:column headerText="Evento:">
                             <p:outputLabel value="#{item.idevento.nome}"/>
                         </p:column>
-                        <p:column selectionMode="multiple" style="width:30px;text-align:center" headerText="Pago:">
+                        <p:column selectionMode="multiple" style="width:30px;text-align:center" headerText="Pago:" >
                         </p:column>
                     </p:dataTable>
-
                 </h:panelGroup>
+                <br/>
+                <p:commandButton ajax="false" action="#{matriculaController.pagando()}" value="#{bundle.CreateMatriculaSaveLink}"/>
             </h:form>
         </ui:define>
     </ui:composition>

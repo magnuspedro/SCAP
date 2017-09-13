@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")
     , @NamedQuery(name = "Matricula.findByIdmatricula", query = "SELECT m FROM Matricula m WHERE m.idmatricula = :idmatricula")
     , @NamedQuery(name = "Matricula.findByPago", query = "SELECT m FROM Matricula m WHERE m.pago = :pago")
-    , @NamedQuery(name = "Matricula.findByAluno", query = "SELECT m FROM Matricula m WHERE m.idaluno = :aluno")})
+    , @NamedQuery(name = "Matricula.findByAluno", query = "SELECT m FROM Matricula m WHERE m.idaluno = :aluno AND m.pago = false")
+    , @NamedQuery(name = "Matricula.countVagas", query = "SELECT COUNT(m.idaluno) FROM Matricula m WHERE m.idevento = :evento AND m.pago = true")})
 public class Matricula implements Serializable {
 
     private static final long serialVersionUID = 1L;

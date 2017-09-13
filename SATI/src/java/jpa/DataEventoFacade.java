@@ -52,6 +52,6 @@ public class DataEventoFacade extends AbstractFacade<DataEvento> {
     }
     
     public List<Chamada> carregaChamada(DataEvento dataEvento){
-        return em.createNamedQuery("DataEvento.listChamada").setParameter("iddataEvento", dataEvento).getResultList();
+        return em.createNamedQuery("Chamada.findByIddataEvento").setParameter("iddataEvento", dataEvento).getResultList();
     }
 }
