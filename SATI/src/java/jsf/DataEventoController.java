@@ -1,6 +1,7 @@
 package jsf;
 
 import entities.Chamada;
+import entities.ChamadaEvento;
 import entities.DataEvento;
 import entities.Evento;
 import jsf.util.JsfUtil;
@@ -22,6 +23,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.CellEditEvent;
 
 @ManagedBean(name = "dataEventoController")
 @SessionScoped
@@ -34,6 +36,8 @@ public class DataEventoController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<Chamada> chamada;
+    private List<ChamadaEvento> chamadaPalestra;
+    private List<DataEvento> paletras;
 
     public DataEventoController() {
         this.chamada = null;
@@ -218,6 +222,14 @@ public class DataEventoController implements Serializable {
         this.chamada = chamada;
     }
 
+    public List<DataEvento> getPalestras() {
+        return ejbFacade.carregaPaletras();
+    }
+
+    public void setPalestras(List<DataEvento> palestras) {
+        this.paletras = palestras;
+    }
+
     public DataEvento uniqueDataEvento(int id) {
         return ejbFacade.uniqueDataEvento(id);
     }
@@ -226,7 +238,12 @@ public class DataEventoController implements Serializable {
         Evento e = (Evento) event.getNewValue();
         current = ejbFacade.uniqueDataEvento(e.getIdevento());
         chamada = ejbFacade.carregaChamada(current);
-        System.err.println(chamada);
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+        int wor = event.getRowIndex();
+        int value = (int) event.getNewValue();
+        System.err.println("Linha: " + wor + " Value: " + value);
     }
 
     public void salvar() {
@@ -235,6 +252,20 @@ public class DataEventoController implements Serializable {
             System.err.println(item.getIdaluno().getNome());
             System.err.println(item.getFaltas());
         }
+    }
+
+    /**
+     * @return the chamadaPalestra
+     */
+    public List<ChamadaEvento> getChamadaPalestra() {
+        return chamadaPalestra;
+    }
+
+    /**
+     * @param chamadaPalestra the chamadaPalestra to set
+     */
+    public void setChamadaPalestra(List<ChamadaEvento> chamadaPalestra) {
+        this.chamadaPalestra = chamadaPalestra;
     }
 
     @FacesConverter(forClass = DataEvento.class)

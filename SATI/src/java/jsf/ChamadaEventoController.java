@@ -2,23 +2,21 @@ package jsf;
 
 import entities.Aluno;
 import entities.ChamadaEvento;
+import entities.DataEvento;
+import entities.Evento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.ChamadaEventoFacade;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -26,11 +24,14 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jpa.DataEventoFacade;
 
 @ManagedBean(name = "chamadaEventoController")
 @SessionScoped
 public class ChamadaEventoController implements Serializable {
 
+    @EJB
+    private DataEventoFacade dataEventoFacade;
     private ChamadaEvento current;
     private DataModel items = null;
     @EJB
@@ -39,6 +40,9 @@ public class ChamadaEventoController implements Serializable {
     private int selectedItemIndex;
     @EJB
     private jpa.AlunoFacade ejbFacedeAluno;
+    private List<ChamadaEvento> chamada;
+    private Aluno aluno = new Aluno();
+    private int idDataEvento;
 
     public ChamadaEventoController() {
     }
@@ -46,6 +50,8 @@ public class ChamadaEventoController implements Serializable {
     public ChamadaEvento getSelected() {
         if (current == null) {
             current = new ChamadaEvento();
+            current.setIdaluno(new Aluno());
+            current.setIddataEvento(new DataEvento());
             selectedItemIndex = -1;
         }
         return current;
@@ -53,8 +59,8 @@ public class ChamadaEventoController implements Serializable {
 
     private ChamadaEventoFacade getFacade() {
         return ejbFacade;
-    } 
-    
+    }
+
     public PaginationHelper getPagination() {
         if (pagination == null) {
             pagination = new PaginationHelper(10) {
@@ -73,17 +79,6 @@ public class ChamadaEventoController implements Serializable {
         return pagination;
     }
 
-    
-    public void getAlunoByRa(){
-        String RA = "1400001";
-        ChamadaEvento chamadaEvento  = ejbFacade.findChamadaEventoByRa((ejbFacedeAluno.findIdByRa(RA).getIdaluno()));
-        System.out.println(""+chamadaEvento.getSituacao());
-    }
-    
-    public void teste(){
-        
-    }
-    
     public String prepareList() {
         recreateModel();
         return "Create_1";
@@ -98,12 +93,13 @@ public class ChamadaEventoController implements Serializable {
     public String prepareCreate() {
         current = new ChamadaEvento();
         selectedItemIndex = -1;
+        recreateModel();
         return "Create_1";
     }
 
     public String create() {
         try {
-            getFacade().create(current);
+            getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("ChamadaEventoCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -212,6 +208,47 @@ public class ChamadaEventoController implements Serializable {
 
     public ChamadaEvento getChamadaEvento(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+
+    /**
+     * @return the chamada
+     */
+    public List<ChamadaEvento> getChamada() {
+        return chamada;
+    }
+
+    /**
+     * @param chamada the chamada to set
+     */
+    public void setChamada(List<ChamadaEvento> chamada) {
+        this.chamada = chamada;
+    }
+
+    /**
+     * @return the aluno
+     */
+    public Aluno getAluno() {
+        return aluno;
+    }
+
+    /**
+     * @param aluno the aluno to set
+     */
+    public void setAluno(Aluno aluno) {
+        this.aluno = aluno;
+    }
+
+    public void pegaEvento(ValueChangeEvent event) {
+        current.setIddataEvento((DataEvento) event.getNewValue());
+        setChamada(dataEventoFacade.carregaChamadaPalestra(current.getIddataEvento()));
+    }
+
+    public void findExactRA() {
+        current.setIdaluno(ejbFacedeAluno.findIdByRa(current.getIdaluno().getRa()));
+        Date d = new Date();
+        d.setTime(System.currentTimeMillis());
+        current.setHora(d);
+        ejbFacade.edit(current);
     }
 
     @FacesConverter(forClass = ChamadaEvento.class)

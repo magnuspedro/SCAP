@@ -56,10 +56,12 @@ public class InstrutorController implements Serializable {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
             return "Error.xhtml";
         }
-        
-        if (i.getAdministrador()){
-                return "/matricula/Create_1.xhtml";}
-            else {return "/chamada/Create_1.xhtml";}
+
+        if (i.getAdministrador()) {
+            return "/matricula/Create_1.xhtml";
+        } else {
+            return "/chamada/Create_1.xhtml";
+        }
     }
 
     public String logout() {

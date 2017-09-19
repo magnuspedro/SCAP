@@ -21,6 +21,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import org.primefaces.event.CellEditEvent;
 
 @ManagedBean(name = "chamadaController")
 @SessionScoped
@@ -207,15 +208,15 @@ public class ChamadaController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    public void getSelectedItems(ValueChangeEvent event){
-        
+    public void getSelectedItems(ValueChangeEvent event) {
+
     }
-    
-    public void carregaChamada(ValueChangeEvent event){
+
+    public void carregaChamada(ValueChangeEvent event) {
         DataEvento dataEvento = (DataEvento) event.getNewValue();
-        items = (DataModel) ejbFacade.findChamadaByEvento(dataEvento); 
+        items = (DataModel) ejbFacade.findChamadaByEvento(dataEvento);
     }
-    
+
     @FacesConverter(forClass = Chamada.class)
     public static class ChamadaControllerConverter implements Converter {
 

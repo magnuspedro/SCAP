@@ -29,7 +29,7 @@ and open the template in the editor.
                                              requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                                 <p:ajax event="change" update="Formtabela:tabela"  />
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
+                                <f:selectItems value="#{eventoController.eventos}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </p:fieldset>
@@ -43,8 +43,10 @@ and open the template in the editor.
                         <p:dataTable id="tabela" value="#{dataEventoController.chamada}" var="item" 
                                      emptyMessage="Nenhum registro incluido." 
                                      editable="true" editMode="cell"
+                                     rowIndexVar="row"
+                                     widgetVar="cellItens"
                                      paginator="true" rows="10">
-
+                            <p:ajax event="cellEdit" listener="#{dataEventoController.onCellEdit}"/>
                             <p:column headerText="Nome" >
                                 <p:outputLabel value="#{item.idaluno.nome}" />
                             </p:column>
@@ -55,7 +57,8 @@ and open the template in the editor.
                                         <h:outputText value="#{item.faltas}" />
                                     </f:facet>
                                     <f:facet name="input">
-                                        <p:inputText value="#{item.faltas}" style="width:96%" label="Faltas"/>
+                                        <p:inputText value="#{item.faltas}" style="width:100%" label="Faltas">
+                                            </p:inputText>
                                     </f:facet>
                                 </p:cellEditor>
                             </p:column>

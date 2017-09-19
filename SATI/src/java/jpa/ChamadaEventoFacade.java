@@ -5,6 +5,7 @@
  */
 package jpa;
 
+import entities.Aluno;
 import entities.ChamadaEvento;
 import entities.DataEvento;
 import javax.ejb.Stateless;
@@ -29,9 +30,21 @@ public class ChamadaEventoFacade extends AbstractFacade<ChamadaEvento> {
     public ChamadaEventoFacade() {
         super(ChamadaEvento.class);
     }
-    
-    public ChamadaEvento findChamadaEventoByRa(int id){
+
+    public ChamadaEvento findChamadaEventoByRa(int id) {
         return (ChamadaEvento) em.createNamedQuery("ChamadaEvento.findByIdAluno").setParameter("idaluno", id).getSingleResult();
     }
-    
+
+    public ChamadaEvento findSituacao(ChamadaEvento chamadaEvento) {
+        return (ChamadaEvento) em.createNamedQuery("ChamadaEvento.findByAlunoandDataEvento")
+                .setParameter("aluno", chamadaEvento.getIdaluno())
+                .setParameter("dataEvento", chamadaEvento.getIddataEvento())
+                .getResultList().get(0);
+    }
+
+    public ChamadaEvento findSituacao(Aluno a, DataEvento de) {
+        return (ChamadaEvento) em.createNamedQuery("ChamadaEvento.findByAlunoandDataEvento")
+                .setParameter("aluno", a)
+                .setParameter("dataEvento", de).getSingleResult();
+    }
 }

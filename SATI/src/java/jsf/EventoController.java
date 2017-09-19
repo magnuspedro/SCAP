@@ -195,12 +195,11 @@ public class EventoController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    
     public List<Evento> ListaEventoInstrutor(Instrutor instrutor) {
-         return ejbFacade.findbyInstrutor(instrutor);
+        return ejbFacade.findbyInstrutor(instrutor);
     }
-    
-        /**
+
+    /**
      * @return the eventos
      */
     public List<Evento> getEventos() {
@@ -214,8 +213,8 @@ public class EventoController implements Serializable {
     public void setEventos(List<Evento> eventos) {
         this.eventos = eventos;
     }
-    
-    public List<Evento> carregaMiniCursos(){
+
+    public List<Evento> carregaMiniCursos() {
         eventos = ejbFacade.findMinicursos();
         for (Evento item : eventos) {
             int ocupadas = ejbFacade.vagasFechadas(item);

@@ -35,7 +35,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ChamadaEvento.findByIdchamada", query = "SELECT c FROM ChamadaEvento c WHERE c.idchamada = :idchamada")
     , @NamedQuery(name = "ChamadaEvento.findByHora", query = "SELECT c FROM ChamadaEvento c WHERE c.hora = :hora")
     , @NamedQuery(name = "ChamadaEvento.findByIdAluno", query = "SELECT c FROM ChamadaEvento c WHERE c.idaluno.idaluno = :idaluno")
-    , @NamedQuery(name = "ChamadaEvento.findBySituacao", query = "SELECT c FROM ChamadaEvento c WHERE c.situacao = :situacao")})
+    , @NamedQuery(name = "ChamadaEvento.findBySituacao", query = "SELECT c FROM ChamadaEvento c WHERE c.situacao = :situacao")
+    , @NamedQuery(name = "ChamadaEvento.findByIddataEvento", query = "SELECT c FROM ChamadaEvento c WHERE c.iddataEvento = :iddataEvento")
+    ,@NamedQuery(name = "ChamadaEvento.findByAlunoandDataEvento", query = "SELECT c FROM ChamadaEvento c WHERE c.idaluno = :aluno AND c.iddataEvento = :dataEvento ORDER BY c.idchamada DESC")
+})
 public class ChamadaEvento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,7 +58,7 @@ public class ChamadaEvento implements Serializable {
     @JoinColumn(name = "iddata_evento", referencedColumnName = "iddata_evento")
     @ManyToOne(optional = false)
     private DataEvento iddataEvento;
-   
+
     public ChamadaEvento() {
     }
 
@@ -127,5 +130,5 @@ public class ChamadaEvento implements Serializable {
     public String toString() {
         return "entities.ChamadaEvento[ idchamada=" + idchamada + " ]";
     }
-    
+
 }
