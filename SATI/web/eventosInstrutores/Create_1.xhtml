@@ -18,16 +18,16 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:fieldset legend =" Evento Instrutores" toggleable="true" toggleSpeed="500">
+                    <p:fieldset legend ="Instrutor para Evento" toggleable="true" toggleSpeed="500">
                         <p:messages />
                         <h:panelGrid class="createGrid" columns="2" styleClass="borderNone"> 
                             <p:outputLabel value="Evento:"/>
-                            <p:selectOneMenu id="idevento" value="#{eventosInstrutoresController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateEventosInstrutoresRequiredMessage_idevento}">
+                            <p:selectOneMenu id="idevento" value="#{eventosInstrutoresController.selected.idevento}" required="true" requiredMessage="#{bundle.CreateEventosInstrutoresRequiredMessage_idevento}" filter="true">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>                            
                             <h:outputLabel value="Instrutor:" for="idinstrutor" />
-                            <p:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" required="true" requiredMessage="#{bundle.CreateEventosInstrutoresRequiredMessage_idinstrutor}">
+                            <p:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" required="true" requiredMessage="#{bundle.CreateEventosInstrutoresRequiredMessage_idinstrutor}" filter="true">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{instrutorController.itemsAvailableSelectOne}"/>
                             </p:selectOneMenu>
@@ -38,31 +38,30 @@ and open the template in the editor.
             </div>
             <div class="table">
                 <h:form>
-                    <h:outputText escape="false" value="#{bundle.ListDataEventosInstrutoresEmpty}" rendered="#{dataEventosInstrutoresController.items.rowCount == 0}"/>
-                    <h:panelGroup rendered="#{dataEventosInstrutoresController.items.rowCount > 0}">
-                        <h:outputText value="#{dataEventosInstrutoresController.pagination.pageFirstItem + 1}..#{dataEventosInstrutoresController.pagination.pageLastItem + 1}/#{dataEventosInstrutoresController.pagination.itemsCount}"/>
-                        <h:commandLink action="#{dataEventosInstrutoresController.previous}" value="#{bundle.Previous} #{dataEventosInstrutoresController.pagination.pageSize}" rendered="#{dataEventosInstrutoresController.pagination.hasPreviousPage}"/>
-                        <p:dataTable id="tabela" value="#{dataEventosInstrutoresController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-                                     rowsPerPageTemplate="5,10,15"   lazy="true">                           
+                    <h:outputText escape="false" value="#{bundle.ListEventosInstrutoresEmpty}" rendered="#{eventosInstrutoresController.items.rowCount == 0}"/>
+                    <h:panelGroup rendered="#{eventosInstrutoresController.items.rowCount > 0}">                        
+                        <h:commandLink action="#{eventosInstrutoresController.previous}" value="#{bundle.Previous} #{eventosInstrutoresController.pagination.pageSize}" rendered="#{eventosInstrutoresController.pagination.hasPreviousPage}"/>
+                        <p:dataTable id="tabela" value="#{eventosInstrutoresController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                     rowsPerPageTemplate="5,10,15"   lazy="true">                                                       
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListDataEventosInstrutoresTitle_idevento}"/>
+                                    <p:outputLabel value="Instrutor"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.idevento}"/>
+                                <p:outputLabel value="#{item.idinstrutor.nome}"/>
                             </p:column>
                             <p:column>
                                 <f:facet name="header">
-                                    <p:outputLabel value="#{bundle.ListDataEventosInstrutoresTitle_idinstrutor}"/>
+                                    <p:outputLabel value="Evento"/>
                                 </f:facet>
-                                <p:outputLabel value="#{item.idinstrutor}"/>
-                            </p:column>                                                                                                         
+                                <p:outputLabel value="#{item.idevento.nome}"/>
+                            </p:column>
                             <p:column>
                                 <f:facet name="header">
                                     <p:outputLabel value="Opções"/>
                                 </f:facet>
-                                <p:commandButton ajax="false" action="#{dataEventosInstrutoresController.prepareEdit}" image="ui-icon-pencil"/>
+                                <p:commandButton ajax="false" action="#{EventosInstrutoresController.prepareEdit}" image="ui-icon-pencil"/>
                                 <p:outputLabel value=" "/>
-                                <p:commandButton ajax="false" action="#{dataEventosInstrutoresController.destroy}" image="ui-icon-trash"/>
+                                <p:commandButton ajax="false" action="#{EventosInstrutoresController.destroy}" image="ui-icon-trash"/>
                                 <p:outputLabel value=" "/>
                             </p:column>
                         </p:dataTable>

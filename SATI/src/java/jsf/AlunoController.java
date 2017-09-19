@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -47,7 +48,7 @@ public class AlunoController implements Serializable {
         }
         return current;
     }
-    
+
     private AlunoFacade getFacade() {
         return ejbFacade;
     }
@@ -84,24 +85,30 @@ public class AlunoController implements Serializable {
     public String prepareCreate() {
         current = new Aluno();
         selectedItemIndex = -1;
+        eventos = new ArrayList<>();
         recreateModel();
         return "Create_1";
     }
 
     public String create() {
         try {
-            List <Matricula> lm = new ArrayList();
-           // getFacade().edit(current);
-            for (Evento item : eventos) {
-                Matricula m = new Matricula();
-                m.setIdaluno(current);
-                m.setIdevento(item);
-                m.setPago(Boolean.FALSE);
-               lm.add(m);
+            List<Matricula> lm = new ArrayList();
+            Aluno a = ejbFacade.findByCPF(current.getCpf());
+            if (a != null) {
+                ejbFacade.remove(a);
             }
-            current.setMatriculaCollection(lm);
+            if (!eventos.isEmpty()) {
+                for (Evento item : eventos) {
+                    Matricula m = new Matricula();
+                    m.setIdaluno(current);
+                    m.setIdevento(item);
+                    m.setPago(Boolean.FALSE);
+                    lm.add(m);
+                }
+                current.setMatriculaCollection(lm);
+            }
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("resources/Bundle").getString("AlunoCreated"));
+            JsfUtil.addSuccessMessage("Cadastro de Participante e Minicursos realizado com sucesso.");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
@@ -215,6 +222,10 @@ public class AlunoController implements Serializable {
     public Aluno getRA() {
         current = ejbFacade.findRA(current.getRa());
         return current;
+    }
+
+    public void info() {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Cadastro de Participante e Minicursos com sucesso."));
     }
 
     @FacesConverter(forClass = Aluno.class)

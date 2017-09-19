@@ -17,7 +17,7 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="box">
                 <h:form class="createForm">
-                    <p:fieldset legend =" Data do Evento" toggleable="true" toggleSpeed="500">
+                    <p:fieldset legend =" Cadastrar Local" toggleable="true" toggleSpeed="500">
                         <p:messages />
                         <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             
@@ -30,6 +30,29 @@ and open the template in the editor.
                             <p:commandButton ajax="false"   action="#{localController.create}" value="Salvar"/>
                         </h:panelGrid>
                     </p:fieldset>
+                    <br/>
+                    <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{localController.items.rowCount == 0}"/>
+
+                    <h:panelGroup rendered="#{localController.items.rowCount > 0}">
+
+
+                        <h:commandLink action="#{localController.previous}" value="#{bundle.Previous} #{localController.pagination.pageSize}" rendered="#{localController.pagination.hasPreviousPage}"/>
+                        <h:commandLink action="#{localController.next}" value="#{bundle.Next} #{localController.pagination.pageSize}" rendered="#{localController.pagination.hasNextPage}"/>
+                        <h:commandLink action="#{localController.previous}" value="#{bundle.Previous} #{localController.pagination.pageSize}" rendered="#{localController.pagination.hasPreviousPage}"/>
+                        <h:commandLink action="#{localController.next}" value="#{bundle.Next} #{localController.pagination.pageSize}" rendered="#{localController.pagination.hasNextPage}"/>
+                        <p:dataTable id="tabela" value="#{localController.items}" var="item" 
+                                     emptyMessage="Nenhum registro incluido." paginator="true" rows="10"
+                                     selection="#{localController.items}"
+                                     rowKey="#{item.idlocal}">                            
+                            <p:column headerText="Nome Local">
+                                <p:outputLabel value="#{item.nomeLocal}"/>
+                            </p:column>         
+                            <p:column headerText="Sala">
+                                <p:outputLabel value="#{item.sala}"/>
+                            </p:column>                                                                                                       
+                        </p:dataTable>
+                    </h:panelGroup>
+                    
                 </h:form>
             </div>            
         </ui:define>

@@ -22,6 +22,8 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.Pattern;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -51,23 +53,20 @@ public class Aluno implements Serializable {
     private Integer idaluno;
     @Column(name = " nome")
     @Size(max=100)
-    @Pattern(regexp= "[a-zA-Z]*")
-    private String nome;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 10)
+    @Pattern(regexp= "[a-zA-Z\\s^~´`]*", message="Nome Inválido")
+    private String nome;    
+    @Size(max = 20)
     @Pattern(regexp= "[0-9]*")
     @Column(name = "ra")
-    private String ra;
-    @Size(max = 11)
-    @Pattern(regexp= "\\d{11}")
+    private String ra;    
     @Column(name = "CPF")
+    @CPF
     private String cpf;
-    @Size(max = 9)
-    @Pattern(regexp= "\\d{9}")
+    @Size(max = 20)    
+    @Pattern(regexp= "[a-zA-Z0-9]*", message="Digitar apenas números e letras")
     @Column(name = "RG")
     private String rg;
-    @Size(max = 20)
-    @Pattern(regexp= "[a-zA-z0-9]*")
+    @Size(max = 30)    
     @Column(name = "orgao_expeditor")
     private String orgaoExpeditor;
     @Column(name = "externo")
@@ -78,7 +77,8 @@ public class Aluno implements Serializable {
     @Size(max = 70)
     @Column(name = "instituicao")
     private String instituicao;
-    @Size(max = 45)
+    @Size(max = 100)
+    @Email
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaluno")

@@ -18,6 +18,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -41,7 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Instrutor.findByAdministrador", query = "SELECT i FROM Instrutor i WHERE i.administrador = :administrador")})
 public class Instrutor implements Serializable {
 
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp= "[a-zA-Z0-9_-.]*[@][a-zA-Z0-9_-.]")
     @Size(max = 70)
     @Column(name = "email")
     private String email;
@@ -54,11 +55,13 @@ public class Instrutor implements Serializable {
     private Integer idinstrutor;
     @Size(max = 100)
     @Column(name = "nome")
+    @Pattern(regexp= "[a-zA-Z\\s^~´`]*")
     private String nome;
     @Column(name = "tipo")
     private Boolean tipo;
     @Size(max = 45)
     @Column(name = "RG")
+    @Pattern(regexp= "[a-zA-Z0-9]*")
     private String rg;
     @Size(max = 20)
     @Column(name = "orgao_expeditor")

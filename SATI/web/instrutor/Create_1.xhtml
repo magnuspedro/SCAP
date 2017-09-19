@@ -21,18 +21,22 @@ and open the template in the editor.
                     <p:fieldset legend ="Cadastro de Instrutores " toggleable="true" toggleSpeed="500">
                         <p:messages />
                         <h:panelGrid class="createGrid" columns="2" styleClass="borderNone">
+                            
                             <p:outputLabel value="#{bundle.CreateInstrutorLabel_nome}" for="nome" />
-                            <p:inputText id="nome" value="#{instrutorController.selected.nome}" title="#{bundle.CreateInstrutorTitle_nome}" />
-                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_tipo}" for="tipo" />
-                            <p:inputText id="tipo" value="#{instrutorController.selected.tipo}" title="#{bundle.CreateInstrutorTitle_tipo}" />
+                            <p:inputText id="nome" value="#{instrutorController.selected.nome}" title="#{bundle.CreateInstrutorTitle_nome}" />                                                        
+                            
+                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_cpf}" for="cpf" />
+                            <p:inputMask id="cpf" value="#{instrutorController.selected.cpf}" title="#{bundle.CreateInstrutorTitle_cpf}" mask="999.999.999-99"/>
+                            
                             <p:outputLabel value="#{bundle.CreateInstrutorLabel_rg}" for="rg" />
                             <p:inputText id="rg" value="#{instrutorController.selected.rg}" title="#{bundle.CreateInstrutorTitle_rg}" />
+                            
                             <p:outputLabel value="#{bundle.CreateInstrutorLabel_orgaoExpeditor}" for="orgaoExpeditor" />
-                            <p:inputText id="orgaoExpeditor" value="#{instrutorController.selected.orgaoExpeditor}" title="#{bundle.CreateInstrutorTitle_orgaoExpeditor}" />
-                            <p:outputLabel value="#{bundle.CreateInstrutorLabel_cpf}" for="cpf" />
-                            <p:inputText id="cpf" value="#{instrutorController.selected.cpf}" title="#{bundle.CreateInstrutorTitle_cpf}" />
+                            <p:inputText id="orgaoExpeditor" value="#{instrutorController.selected.orgaoExpeditor}" title="#{bundle.CreateInstrutorTitle_orgaoExpeditor}" />                                                        
+                            
                             <p:outputLabel value="#{bundle.CreateInstrutorLabel_email}" for="email" />
                             <p:inputText id="email" value="#{instrutorController.selected.email}" title="#{bundle.CreateInstrutorTitle_email}" />
+                            
                             <p:outputLabel value="#{bundle.CreateInstrutorLabel_senha}" for="senha" />
                             <p:password id="senha" value="#{instrutorController.selected.senha}" title="#{bundle.CreateInstrutorTitle_senha}" feedback="true"/>                                                        
                            
@@ -49,6 +53,7 @@ and open the template in the editor.
                     <h:outputText escape="false" value="#{bundle.ListInstrutorEmpty}" rendered="#{instrutorController.items.rowCount == 0}"/>
                     <h:panelGroup rendered="#{instrutorController.items.rowCount > 0}">                        
                         <h:commandLink action="#{instrutorController.previous}" value="#{bundle.Previous} #{instrutorController.pagination.pageSize}" rendered="#{instrutorController.pagination.hasPreviousPage}"/>
+                        <h:commandLink action="#{instrutorController.next}" value="#{bundle.Next} #{instrutorController.pagination.pageSize}" rendered="#{instrutorController.pagination.hasNextPage}"/>
                         <p:dataTable id="tabela" value="#{instrutorController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="5" paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                                      rowsPerPageTemplate="5,10,15"   lazy="true">                           
                             <p:column>

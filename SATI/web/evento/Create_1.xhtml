@@ -26,7 +26,7 @@ and open the template in the editor.
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItem itemLabel="Minicurso" itemValue="Minicurso" />
                                 <f:selectItem itemLabel="Palestra" itemValue="Palestra" />
-                                <f:selectItem itemLabel="Workshop" itemValue="Workshop" />
+                                <f:selectItem itemLabel="Maratona de Programação" itemValue="MaratonadeProgramação" />
                             </p:selectOneMenu>
                             <p:outputLabel value="#{bundle.CreateEventoLabel_descricao}" for="descricao" />
                             <p:inputTextarea rows="4" cols="30" id="descricao" value="#{eventoController.selected.descricao}" title="#{bundle.CreateEventoTitle_descricao}" />
@@ -34,14 +34,14 @@ and open the template in the editor.
                             <p:inputText id="vagasTotais" value="#{eventoController.selected.vagasTotais}" title="#{bundle.CreateEventoTitle_vagasTotais}" />
                             <p:outputLabel value="#{bundle.CreateEventoLabel_horaInicio}" for="horaInicio" />
                             <p:inputText id="horaInicio" value="#{eventoController.selected.horaInicio}" title="#{bundle.CreateEventoTitle_horaInicio}" >
-                                <f:convertDateTime pattern="HH:mm:ss" />
+                                <f:convertDateTime pattern="HH:mm" />
                             </p:inputText>
                             <p:outputLabel value="#{bundle.CreateEventoLabel_horaTermino}" for="horaTermino" />
                             <p:inputText id="horaTermino" value="#{eventoController.selected.horaTermino}" title="#{bundle.CreateEventoTitle_horaTermino}" >
-                                <f:convertDateTime pattern="HH:mm:ss" />
+                                <f:convertDateTime pattern="HH:mm" />
                             </p:inputText>
                             <p:outputLabel value="Local:" for="idlocal" />
-                            <p:selectOneMenu id="idlocal" value="#{eventoController.selected.idlocal}" required="true" requiredMessage="#{bundle.CreateEventoRequiredMessage_idlocal}">
+                            <p:selectOneMenu id="idlocal" value="#{eventoController.selected.idlocal}" required="true" requiredMessage="#{bundle.CreateEventoRequiredMessage_idlocal}" filter="true">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{localController.itemsAvailableSelectOne}" />
                             </p:selectOneMenu>
@@ -57,15 +57,12 @@ and open the template in the editor.
                     <h:commandLink action="#{eventoController.previous}" value="#{bundle.Previous} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{eventoController.next}" value="#{bundle.Next} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasNextPage}"/>
                     <p:dataTable id="tabela" value="#{eventoController.items}" var="item" emptyMessage="Nenhum registro incluido." paginator="true" rows="10">
-                        <p:column headerText="#{bundle.ListEventoTitle_nome}">
-                            <p:outputLabel value="#{item.nome}"/>
-                        </p:column>
                         <p:column headerText="#{bundle.ListEventoTitle_tipo}">
                             <p:outputLabel value="#{item.tipo}"/>
                         </p:column>
-                        <p:column headerText="#{bundle.ListEventoTitle_descricao}">
-                            <p:outputLabel value="#{item.descricao}"/>
-                        </p:column>
+                        <p:column headerText="#{bundle.ListEventoTitle_nome}">
+                            <p:outputLabel value="#{item.nome}"/>
+                        </p:column>                                                
                         <p:column headerText="#{bundle.ListEventoTitle_vagasTotais}">
                             <p:outputLabel value="#{item.vagasTotais}"/>
                         </p:column>
