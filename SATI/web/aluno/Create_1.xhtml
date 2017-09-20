@@ -9,8 +9,7 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:stella="http://stella.caelum.com.br/faces2">
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
 
@@ -69,7 +68,11 @@ and open the template in the editor.
                             <h:outputText value="" />
 
                             <p:outputLabel value="#{bundle.CreateAlunoLabel_curso}" for="curso" />
-                            <p:inputText id="curso" value="#{alunoController.selected.curso}" title="#{bundle.CreateAlunoTitle_curso}" />
+                            <p:selectOneRadio value="#{alunoController.selected.curso}" id="curso" required="true">
+                                <f:selectItem itemLabel="Análise de Sistemas" itemValue="Análise de Sistemas" />
+                                <f:selectItem itemLabel="Ciência da Computação" itemValue="Ciência da Computação" />
+                                <f:selectItem itemLabel="Outro" itemValue="Outro" />
+                            </p:selectOneRadio>
                         </p:panelGrid>
                     </p:fieldset>   
                     <br/>
@@ -82,7 +85,7 @@ and open the template in the editor.
                         <h:commandLink action="#{eventoController.next}" value="#{bundle.Next} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasNextPage}"/>
                         <h:commandLink action="#{eventoController.previous}" value="#{bundle.Previous} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasPreviousPage}"/>
                         <h:commandLink action="#{eventoController.next}" value="#{bundle.Next} #{eventoController.pagination.pageSize}" rendered="#{eventoController.pagination.hasNextPage}"/>
-                        <p:dataTable id="tabela" value="#{eventoController.items}" var="item" 
+                        <p:dataTable id="tabela" value="#{eventoController.eventos}" var="item" 
                                      emptyMessage="Nenhum registro incluido." paginator="true" rows="10"
                                      selection="#{alunoController.eventos}"
                                      rowKey="#{item.idevento}">
@@ -90,7 +93,7 @@ and open the template in the editor.
                             <p:column headerText="Tipo">
                                 <p:outputLabel value="#{item.tipo}"/>
                             </p:column>         
-                            <p:column headerText="Curso">
+                            <p:column headerText="Curso" filterBy="#{item.nome}" footerText="contains" filterMatchMode="contains">
                                 <p:outputLabel value="#{item.nome}"/>
                             </p:column>                                               
                             <p:column headerText="Sala">
@@ -104,7 +107,7 @@ and open the template in the editor.
                     </h:panelGroup>
                     <br/>
 
-                    <p:commandButton  ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}"/>        
+                    <p:commandButton  ajax="false" action="#{alunoController.create}" value="#{bundle.CreateAlunoSaveLink}" image="ui-icon-disk"/>        
 
                 </h:form>
             </div>

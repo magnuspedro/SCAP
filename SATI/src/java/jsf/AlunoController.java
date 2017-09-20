@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -23,10 +22,14 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jpa.MatriculaFacade;
 
 @ManagedBean(name = "alunoController")
 @SessionScoped
 public class AlunoController implements Serializable {
+
+    @EJB
+    private MatriculaFacade matriculaFacade;
 
     private Aluno current;
     private DataModel items = null;
@@ -92,21 +95,64 @@ public class AlunoController implements Serializable {
 
     public String create() {
         try {
-            List<Matricula> lm = new ArrayList();
-            Aluno a = ejbFacade.findByCPF(current.getCpf());
-            if (a != null) {
-                ejbFacade.remove(a);
-            }
-            if (!eventos.isEmpty()) {
-                for (Evento item : eventos) {
-                    Matricula m = new Matricula();
-                    m.setIdaluno(current);
-                    m.setIdevento(item);
-                    m.setPago(Boolean.FALSE);
-                    lm.add(m);
+            List<Matricula> lm = new ArrayList(); //Lista a Salvar
+            List<Matricula> excluir = new ArrayList<>();//Lista a excluir
+            Aluno a = ejbFacade.findByCPF(current.getCpf()); //Busca por CPF
+            List<Matricula> atual = ejbFacade.findByAluno(a); //List de matricula do Aluno no banco
+            boolean flag = false;
+            if (a != null) { //Aluno existe no banco
+                current.setIdaluno(a.getIdaluno());
+                if (!eventos.isEmpty()) {//Se existe algum selecionado
+                    //Comparar se já existe ou se devemos adicionar
+                    for (Evento evento : eventos) {
+                        for (Matricula matricula : atual) {
+                            flag = false;
+                            if (evento.getIdevento().equals(matricula.getIdevento().getIdevento())) {
+                                //Caso já existir no banco
+                                lm.add(matricula);
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (!flag) {
+                            Matricula m = new Matricula();
+                            m.setIdaluno(current);
+                            m.setIdevento(evento);
+                            m.setPago(Boolean.FALSE);
+                            lm.add(m);
+                        }
+                    }
+                    for (Matricula matricula : atual) {
+                        flag = false;
+                        for (Evento evento : eventos) {
+                            if (matricula.getIdevento().getIdevento().equals(evento.getIdevento())) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (!flag) {
+                            if (!matricula.getPago()) {
+                                excluir.add(matricula);
+                            }
+                        }
+
+                    }
+                } else {
+                    excluir.addAll(atual);
                 }
-                current.setMatriculaCollection(lm);
+            } else {
+                if (!eventos.isEmpty()) {
+                    for (Evento item : eventos) {
+                        Matricula m = new Matricula();
+                        m.setIdaluno(current);
+                        m.setIdevento(item);
+                        m.setPago(Boolean.FALSE);
+                        lm.add(m);
+                    }
+                }
             }
+            excluir.forEach(matriculaFacade::remove);
+            current.setMatriculaCollection(lm);
             getFacade().create(current);
             JsfUtil.addSuccessMessage("Cadastro de Participante e Minicursos realizado com sucesso.");
             return prepareCreate();
@@ -222,10 +268,7 @@ public class AlunoController implements Serializable {
     public Aluno getRA() {
         current = ejbFacade.findRA(current.getRa());
         return current;
-    }
 
-    public void info() {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Cadastro de Participante e Minicursos com sucesso."));
     }
 
     @FacesConverter(forClass = Aluno.class)
@@ -283,7 +326,7 @@ public class AlunoController implements Serializable {
     }
 
     public void carregaMatricula() {
-        System.err.println(ejbFacade.findByAluno(current));
+        System.err.println(ejbFacade.findByAlunoPago(current));
         //current.getMatriculaCollection().addAll(ejbFacade.findByAluno(current));
     }
 

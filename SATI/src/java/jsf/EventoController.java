@@ -79,6 +79,7 @@ public class EventoController implements Serializable {
     public String prepareCreate() {
         current = new Evento();
         selectedItemIndex = -1;
+        recreateModel();
         return "Create_1";
     }
 
@@ -218,7 +219,12 @@ public class EventoController implements Serializable {
         eventos = ejbFacade.findMinicursos();
         for (Evento item : eventos) {
             int ocupadas = ejbFacade.vagasFechadas(item);
-            item.setVagasTotais(item.getVagasTotais() - ocupadas);
+            if ((item.getVagasTotais() - ocupadas) == 0) {
+                item.setVagasTotais(0);
+            } else {
+                item.setVagasTotais(item.getVagasTotais() - ocupadas);
+
+            }
         }
         return eventos;
     }
