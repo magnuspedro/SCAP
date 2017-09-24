@@ -1,0 +1,73 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>
+
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                    <p:growl id="growl" showDetail="true" sticky="true" />  
+                    <p:fieldset legend="Chamada Padrão" toggleable="true" toggleSpeed="500">
+                        <p:messages />
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
+
+                            <p:outputLabel for="iddataEvento" value="Eventos:"/>
+                            <p:selectOneMenu id="iddataEvento" value="#{dataEventoController.selected.idevento}"
+                                             required="true"
+                                             valueChangeListener="#{dataEventoController.carregaChamada}"
+                                             requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                                <p:ajax event="change" update="Formtabela:tabela"  />
+                                <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
+                                <f:selectItems value="#{eventoController.eventos}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:fieldset>
+                </h:form>
+                <h:form id="Formtabela">
+                    <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{chamadaController.items.rowCount == 0}"/>
+                    <h:panelGroup rendered="#{chamadaController.items.rowCount > 0}">
+                        <h:outputText value="#{chamadaController.pagination.pageFirstItem + 1}..#{chamadaController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
+                        <h:commandLink action="#{chamadaController.previous}" value="#{bundle.Previous} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
+                        <h:commandLink action="#{chamadaController.next}" value="#{bundle.Next} #{chamadaController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
+                        <p:dataTable id="tabela" value="#{dataEventoController.chamada}" var="item" 
+                                     emptyMessage="Nenhum registro incluido." 
+                                     editable="true" editMode="cell"
+                                     rowIndexVar="row"
+                                     widgetVar="cellItens"
+                                     paginator="true" rows="10">
+                            <p:ajax event="cellEdit" listener="#{dataEventoController.onCellEdit}"/>
+                            <p:column headerText="Nome" >
+                                <p:outputLabel value="#{item.idaluno.nome}" />
+                            </p:column>
+
+                            <p:column headerText="Faltas" >
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.faltas}" />
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:inputText value="#{item.faltas}" style="width:100%" label="Faltas">
+                                            </p:inputText>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                        </p:dataTable>
+                        <p:commandButton ajax="false" action="#{dataEventoController.salvar()}" value="#{bundle.CreateMatriculaSaveLink}"/>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>-->

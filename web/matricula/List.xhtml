@@ -1,0 +1,68 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListMatriculaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListMatriculaEmpty}" rendered="#{matriculaController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{matriculaController.items.rowCount > 0}">
+                    <h:outputText value="#{matriculaController.pagination.pageFirstItem + 1}..#{matriculaController.pagination.pageLastItem + 1}/#{matriculaController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{matriculaController.previous}" value="#{bundle.Previous} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{matriculaController.next}" value="#{bundle.Next} #{matriculaController.pagination.pageSize}" rendered="#{matriculaController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{matriculaController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMatriculaTitle_idmatricula}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idmatricula}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMatriculaTitle_pago}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.pago}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMatriculaTitle_idaluno}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idaluno}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListMatriculaTitle_idevento}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.idevento}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{matriculaController.prepareView}" value="#{bundle.ListMatriculaViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{matriculaController.prepareEdit}" value="#{bundle.ListMatriculaEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{matriculaController.destroy}" value="#{bundle.ListMatriculaDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{matriculaController.prepareCreate}" value="#{bundle.ListMatriculaCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListMatriculaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>-->

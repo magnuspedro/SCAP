@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>        
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+        <br />
+        <h:form>
+            <p:menu>
+                <p:submenu label="Opções">
+                    <p:menuitem outcome="/aluno/Create_1" value="Participante"/>
+                    <p:menuitem outcome="/instrutor/Create_1" value="Instrutor"/>
+                    <p:menuitem outcome="/local/Create" value="Local de Realização"/>
+                    <p:menuitem outcome="/evento/Create_1" value="Evento"/>
+                    <p:menuitem outcome="/dataEvento/Create_1" value="Data do Evento"/>                   
+                    <p:menuitem outcome="/eventosInstrutores/Create_1" value="Instrutor para Evento"/>                    
+                    <p:menuitem outcome="/matricula/Create_1" value="Matricula"/>                    
+                    <p:menuitem outcome="/chamada/ChamadaEvento" value="Chamada de Evento"/>                                        
+                    <p:menuitem outcome="/chamada/Create_1" value="Chamada Mini Curso"/>
+                </p:submenu>
+            </p:menu>
+        </h:form>        
+        <br />
+    </h:body>
+</html>
+

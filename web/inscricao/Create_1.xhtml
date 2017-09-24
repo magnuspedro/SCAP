@@ -1,0 +1,79 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>
+
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                    <p:fieldset legend="Cadastro de Alunos" toggleable="true" toggleSpeed="500">
+                        <p:messages />
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_nome}" for="nome" />
+                            <p:inputText id="nome" value="#{alunoController.selected.nome}" title="#{bundle.CreateAlunoTitle_nome}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_ra}" for="ra" />
+                            <p:inputText id="ra" value="#{alunoController.selected.ra}" title="#{bundle.CreateAlunoTitle_ra}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_cpf}" for="cpf" />
+                            <p:inputText id="cpf" value="#{alunoController.selected.cpf}" title="#{bundle.CreateAlunoTitle_cpf}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_rg}" for="rg" />
+                            <p:inputText id="rg" value="#{alunoController.selected.rg}" title="#{bundle.CreateAlunoTitle_rg}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_email}" for="email" />
+                            <p:inputText id="email" value="#{alunoController.selected.email}" title="#{bundle.CreateAlunoTitle_email}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_orgaoExpeditor}" for="orgaoExpeditor" />
+                            <p:inputText id="orgaoExpeditor" value="#{alunoController.selected.orgaoExpeditor}" title="#{bundle.CreateAlunoTitle_orgaoExpeditor}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_externo}" for="externo" />
+                            <p:inputText id="externo" value="#{alunoController.selected.externo}" title="#{bundle.CreateAlunoTitle_externo}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_curso}" for="curso" />
+                            <p:inputText id="curso" value="#{alunoController.selected.curso}" title="#{bundle.CreateAlunoTitle_curso}" />
+                            <p:outputLabel value="#{bundle.CreateAlunoLabel_instituicao}" for="instituicao" />
+                            <p:inputText id="instituicao" value="#{alunoController.selected.instituicao}" title="#{bundle.CreateAlunoTitle_instituicao}" />
+                        </p:panelGrid>
+                    </p:fieldset>
+
+                </h:form>
+            </div>
+            <h:form>
+                <h:outputText escape="false" value="#{bundle.ListAlunoEmpty}" rendered="#{eventosInstrutoresController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{eventosInstrutoresController.items.rowCount > 0}">
+                    <h:outputText value="#{eventosInstrutoresController.pagination.pageFirstItem + 1}..#{eventosInstrutoresController.pagination.pageLastItem + 1}/#{eventosInstrutoresController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{eventosInstrutoresController.previous}" value="#{bundle.Previous} #{eventosInstrutoresController.pagination.pageSize}" rendered="#{eventosInstrutoresController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{eventosInstrutoresController.next}" value="#{bundle.Next} #{eventosInstrutoresController.pagination.pageSize}" rendered="#{eventosInstrutoresController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{eventoController.items}" var="item" 
+                                 emptyMessage="Nenhum registro incluido." paginator="true" rows="10"
+                                 selection="#{alunoController.eventos}"
+                                 rowKey="item.idevento">
+                        <p:column headerText="Curso">
+                            <p:outputLabel value="#{item.nome}"/>
+                        </p:column>
+                        <p:column headerText="Tipo">
+                            <p:outputLabel value="#{item.tipo}"/>
+                        </p:column>
+                        <p:column headerText="Local">
+                            <p:outputLabel value="#{item.idlocal.sala}"/>
+                        </p:column>
+                        <p:column headerText="Local">
+                            <p:outputLabel value="#{item.horaInicio}"/>
+                        </p:column>
+                        <p:column headerText="Local">
+                            <p:outputLabel value="#{item.horaTermino}"/>
+                        </p:column>
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                    </p:dataTable>
+                </h:panelGroup>
+                <br/>
+                <p:commandButton process="tabela" ajax="false" action="#{alunoController.create()}" value="#{bundle.CreateAlunoSaveLink}"/>        
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>-->

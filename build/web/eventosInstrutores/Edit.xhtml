@@ -1,0 +1,42 @@
+<!--<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditEventosInstrutoresTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditEventosInstrutoresLabel_ideventosInstrutor}" for="ideventosInstrutor" />
+                    <h:inputText id="ideventosInstrutor" value="#{eventosInstrutoresController.selected.ideventosInstrutor}" title="#{bundle.EditEventosInstrutoresTitle_ideventosInstrutor}" required="true" requiredMessage="#{bundle.EditEventosInstrutoresRequiredMessage_ideventosInstrutor}"/>
+                    <h:outputLabel value="#{bundle.EditEventosInstrutoresLabel_idevento}" for="idevento" />
+                    <h:selectOneMenu id="idevento" value="#{eventosInstrutoresController.selected.idevento}" title="#{bundle.EditEventosInstrutoresTitle_idevento}" required="true" requiredMessage="#{bundle.EditEventosInstrutoresRequiredMessage_idevento}">
+                        <f:selectItems value="#{eventoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditEventosInstrutoresLabel_idinstrutor}" for="idinstrutor" />
+                    <h:selectOneMenu id="idinstrutor" value="#{eventosInstrutoresController.selected.idinstrutor}" title="#{bundle.EditEventosInstrutoresTitle_idinstrutor}" required="true" requiredMessage="#{bundle.EditEventosInstrutoresRequiredMessage_idinstrutor}">
+                        <f:selectItems value="#{instrutorController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{eventosInstrutoresController.update}" value="#{bundle.EditEventosInstrutoresSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditEventosInstrutoresViewLink}"/>
+                <br />
+                <h:commandLink action="#{eventosInstrutoresController.prepareList}" value="#{bundle.EditEventosInstrutoresShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditEventosInstrutoresIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>-->
