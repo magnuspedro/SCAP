@@ -40,7 +40,7 @@ public class MatriculaFacade extends AbstractFacade<Matricula> {
     }
 
     public List<Matricula> findByAluno(Aluno aluno) {
-        return em.createNamedQuery("Matricula.findByAluno").setParameter("aluno", aluno).getResultList();
+        return em.createNamedQuery("Matricula.findByAlunoPago").setParameter("aluno", aluno).getResultList();
     }
 
     public int vagasFechadas(Evento e) {

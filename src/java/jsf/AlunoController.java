@@ -1,17 +1,13 @@
 package jsf;
 
 import entities.Aluno;
-import entities.Chamada;
 import entities.DataEvento;
-import entities.Evento;
 import entities.Matricula;
-import java.awt.Event;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.AlunoFacade;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,7 +15,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
@@ -28,7 +23,6 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import jpa.MatriculaFacade;
 import org.primefaces.component.export.PDFOptions;
-import org.primefaces.event.CloseEvent;
 
 @ManagedBean(name = "alunoController")
 @SessionScoped

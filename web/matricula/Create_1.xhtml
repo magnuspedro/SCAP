@@ -1,8 +1,9 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
-To change this license header, choose License Headers in Project Properties.
+<!-- To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
+-->
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -39,6 +40,7 @@ and open the template in the editor.
                     <h:outputText escape="false" value="#{bundle.ListMatriculaEmpty}" rendered="#{matriculaController.items.rowCount == 0}"/>
                     <h:panelGroup rendered="#{matriculaController.items.rowCount > 0}">                                            
                         <p:dataTable id="tabela" value="#{matriculaController.matricula}" 
+                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                                      var="item" emptyMessage="Nenhum registro incluido."
                                      selection="#{matriculaController.pago}"
                                      rowKey="#{item.idmatricula}"
@@ -46,7 +48,7 @@ and open the template in the editor.
                             <p:column headerText="Aluno:">
                                 <p:outputLabel value="#{item.idaluno.nome}"/>
                             </p:column>
-                            <p:column headerText="Evento:">
+                            <p:column headerText="Evento:" filterBy="#{item.idevento.nome}" filterMatchMode="contains">
                                 <p:outputLabel value="#{item.idevento.nome}"/>
                             </p:column>
                             <p:column selectionMode="multiple" style="width:30px;text-align:center" headerText="Pago:" >
@@ -59,4 +61,4 @@ and open the template in the editor.
             </div>
         </ui:define>
     </ui:composition>
-</html>-->
+</html>
