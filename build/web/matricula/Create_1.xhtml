@@ -44,12 +44,15 @@ and open the template in the editor.
                                      var="item" emptyMessage="Nenhum registro incluido."
                                      selection="#{matriculaController.pago}"
                                      rowKey="#{item.idmatricula}"
-                                     paginator="true" rows="10">
+                                     paginator="true" rows="20">
                             <p:column headerText="Aluno:">
                                 <p:outputLabel value="#{item.idaluno.nome}"/>
                             </p:column>
                             <p:column headerText="Evento:" filterBy="#{item.idevento.nome}" filterMatchMode="contains">
                                 <p:outputLabel value="#{item.idevento.nome}"/>
+                            </p:column>
+                            <p:column headerText="Tipo:">
+                                <p:outputLabel value="#{item.idevento.tipo}"/>
                             </p:column>
                             <p:column selectionMode="multiple" style="width:30px;text-align:center" headerText="Pago:" >
                             </p:column>

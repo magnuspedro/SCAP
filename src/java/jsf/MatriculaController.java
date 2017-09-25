@@ -313,34 +313,20 @@ public class MatriculaController implements Serializable {
 
     public String pagando() {
         ArrayList<Chamada> ch = new ArrayList<>();
-        ArrayList<ChamadaEvento> che;
-        che = new ArrayList<>();
 
         for (Matricula item : pago) {
             item.setPago(Boolean.TRUE);
             ejbFacade.edit(item);
-            if (item.getIdevento().getTipo().equalsIgnoreCase("Palestra")) {
-                ChamadaEvento ce = new ChamadaEvento();
-                ce.setIdaluno(item.getIdaluno());
-                ce.setIddataEvento(dataEventoFacade.uniqueDataEvento(item.getIdevento().getIdevento()));
-                ce.setHora(null);
-                ce.setSituacao(Boolean.FALSE);
-                che.add(ce);
-            } else {
+           
                 Chamada c = new Chamada();
                 c.setIdaluno(item.getIdaluno());
                 c.setFaltas(0);
                 c.setIddataEvento(dataEventoFacade.uniqueDataEvento(item.getIdevento().getIdevento()));
                 ch.add(c);
             }
-        }
 
         for (Chamada chamada : ch) {
             chamadaFacade.create(chamada);
-        }
-
-        for (ChamadaEvento chevento : che) {
-            chamadaEventoFacade.create(chevento);
         }
 
         matricula = null;
