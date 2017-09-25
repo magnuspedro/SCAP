@@ -1,0 +1,88 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+        <ui:define name="body">
+            <div class="box">
+                <h:form class="createForm">
+                    <p:fieldset legend="Cadastro de Chamadas" toggleable="true" toggleSpeed="500">
+                        <p:messages />
+                        <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
+                            <p:selectOneMenu id="iddataEvento" value="#{chamadaEventoController.selected.iddataEvento}"  valueChangeListener="#{chamadaEventoController.selectOneMenuListener}" required="true" requiredMessage="#{bundle.CreateChamadaEventoRequiredMessage_iddataEvento}" onchange="">
+                                <f:selectItem itemLabel="Selecione"  noSelectionOption="true" />                               
+                                <f:selectItems value="#{dataEventoController.palestras}" itemValue="#{iddataEvento}" var="iddataEvento"/> 
+                                <f:ajax event="change" />
+
+                            </p:selectOneMenu>  
+
+
+                            <p:inputText id="ra"  value="#{chamadaEventoController.aluno.ra}" >
+                                <p:ajax event="blur" listener="#{chamadaEventoController.findExactRA}"/>
+                            </p:inputText>
+                        </p:panelGrid>
+                    </p:fieldset>
+
+
+                </h:form>
+            </div>
+            <h:form id="Formtabela">
+                <p:outputLabel escape="false" value="#{bundle.ListChamadaEmpty}" rendered="#{chamadaEventoController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{chamadaEventoController.items.rowCount > 0}">
+                    <h:outputText value="#{chamadaEventoController.pagination.pageFirstItem + 1}..#{chamadaEventoController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
+                    <h:commandLink action="#{chamadaEventoController.previous}" value="#{bundle.Previous} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
+                    <h:commandLink action="#{chamadaEventoController.next}" value="#{bundle.Next} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
+                    <p:dataTable id="tabela" value="#{chamadaEventoController.chamada}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="RA"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.idaluno.ra}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Nome"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.idaluno.nome}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Palestra"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.iddataEvento.idevento.nome}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Hora"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.hora}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Hora fechamento"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.iddataEvento.horaFechamento}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="Situação"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.situacao?'Entrou':'Saiu'}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+-->
