@@ -57,4 +57,8 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
         return aluno.get(0);
     }
     
+    public List<Aluno> listAllOrdenado(){
+        return em.createNamedQuery("Aluno.listAllOrdenado").getResultList();
+    }
+    
 }

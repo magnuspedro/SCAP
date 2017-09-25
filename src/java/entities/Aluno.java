@@ -42,30 +42,32 @@ import org.hibernate.validator.constraints.br.CPF;
     , @NamedQuery(name = "Aluno.findByOrgaoExpeditor", query = "SELECT a FROM Aluno a WHERE a.orgaoExpeditor = :orgaoExpeditor")
     , @NamedQuery(name = "Aluno.findByExterno", query = "SELECT a FROM Aluno a WHERE a.externo = :externo")
     , @NamedQuery(name = "Aluno.findByCurso", query = "SELECT a FROM Aluno a WHERE a.curso = :curso")
-    , @NamedQuery(name = "Aluno.findByInstituicao", query = "SELECT a FROM Aluno a WHERE a.instituicao = :instituicao")})
+    , @NamedQuery(name = "Aluno.findByInstituicao", query = "SELECT a FROM Aluno a WHERE a.instituicao = :instituicao")
+    , @NamedQuery(name = "Aluno.listAllOrdenado", query = "SELECT a FROM Aluno a ORDER BY a.nome ASC")
+})
 public class Aluno implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idaluno")    
+    @Column(name = "idaluno")
     private Integer idaluno;
     @Column(name = " nome")
-    @Size(max=100)
-    private String nome;    
+    @Size(max = 100)
+    private String nome;
     @Size(max = 20)
-    @Pattern(regexp= "[0-9]*")
+    @Pattern(regexp = "[0-9]*")
     @Column(name = "ra")
-    private String ra;    
+    private String ra;
     @Column(name = "CPF")
     @CPF
     private String cpf;
-    @Size(max = 20)    
-    @Pattern(regexp= "[a-zA-Z0-9]*", message="Digitar apenas números e letras")
+    @Size(max = 20)
+    @Pattern(regexp = "[a-zA-Z0-9]*", message = "Digitar apenas números e letras")
     @Column(name = "RG")
     private String rg;
-    @Size(max = 30)    
+    @Size(max = 30)
     @Column(name = "orgao_expeditor")
     private String orgaoExpeditor;
     @Column(name = "externo")
@@ -77,7 +79,7 @@ public class Aluno implements Serializable {
     @Column(name = "instituicao")
     private String instituicao;
     @Size(max = 100)
-    @Email(message= "Email Invalido")
+    @Email(message = "Email Invalido")
     @Column(name = "email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idaluno")

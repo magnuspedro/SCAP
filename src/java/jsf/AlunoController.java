@@ -39,6 +39,7 @@ public class AlunoController implements Serializable {
     private int selectedItemIndex;
     private List<DataEvento> eventos;
     private List<Aluno> alunos;
+    private List<Aluno> alunosOrdenado;
     private PDFOptions pdfOp;
 
     public AlunoController() {
@@ -158,15 +159,15 @@ public class AlunoController implements Serializable {
                 }
             }
             excluir.forEach(matriculaFacade::remove);
-            current.setMatriculaCollection(lm);            
-            getFacade().create(current);            
-            JsfUtil.addSuccessMessage("Cadastro de Participante e Minicursos realizado com sucesso.");           
+            current.setMatriculaCollection(lm);
+            getFacade().create(current);
+            JsfUtil.addSuccessMessage("Cadastro de Participante e Minicursos realizado com sucesso.");
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("resources/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
-        
+
     }
 
     public String prepareEdit() {
@@ -282,6 +283,21 @@ public class AlunoController implements Serializable {
         current = ejbFacade.findRA(current.getRa());
         return current;
 
+    }
+
+    /**
+     * @return the alunosOrdenado
+     */
+    public List<Aluno> getAlunosOrdenado() {
+        alunosOrdenado = ejbFacade.listAllOrdenado();
+        return alunosOrdenado;
+    }
+
+    /**
+     * @param alunosOrdenado the alunosOrdenado to set
+     */
+    public void setAlunosOrdenado(List<Aluno> alunosOrdenado) {
+        this.alunosOrdenado = alunosOrdenado;
     }
 
     @FacesConverter(forClass = Aluno.class)
