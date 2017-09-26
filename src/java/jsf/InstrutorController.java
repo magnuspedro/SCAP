@@ -40,19 +40,21 @@ public class InstrutorController implements Serializable {
 
     public String autenticar() throws Exception {
         Instrutor i;
+        FacesContext context = FacesContext.getCurrentInstance();
         try {
             i = getInstrutor(getIdByCPF(current.getCpf()));
 
             if (i == null || (i.getCpf() == null ? current.getCpf() != null : !i.getCpf().equals(current.getCpf()))
                     || (i.getSenha() == null ? current.getSenha() != null : !i.getSenha().equals(current.getSenha()))) {
-                FacesContext context = FacesContext.getCurrentInstance();
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
                 return "Error.xhtml";
 
             }
+            
+            context.getExternalContext().getSessionMap().put("IdInstrutor", i.getIdinstrutor());
+            System.out.println(context.getExternalContext().getSessionMap().get("IdInstrutor"));
 
         } catch (Exception e) {
-            FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
             return "Error.xhtml";
         }
@@ -60,7 +62,7 @@ public class InstrutorController implements Serializable {
         if (i.getAdministrador()) {
             return "/matricula/Create_1.xhtml";
         } else {
-            return "/chamada/Create_1.xhtml";
+            return "index.xhtml";
         }
     }
 
