@@ -213,6 +213,34 @@ public class ChamadaEventoController implements Serializable {
         setChamada(ejbDataEventoFacade.carregaChamadaPalestra(dataEvento));
     }
     
+    public String findExactCPF(){
+        if(!aluno.getCpf().isEmpty()){
+            String cpf = aluno.getCpf();
+            aluno = ejbFacadeAluno.findByCPF(cpf);
+            Date d = new Date();
+            d.setTime(System.currentTimeMillis());
+            System.out.println(d);
+            current.setHora(d);
+            //System.out.println(dataEvento.getIddataEvento());
+            current.setIddataEvento(dataEvento);
+            current.setIdaluno(aluno);
+//            System.err.println(ejbFacade.findSituacao(current));
+            if(ejbFacade.findSituacao(current) == null){
+                current.setSituacao(Boolean.TRUE);
+            }else{
+                current.setSituacao(!ejbFacade.findSituacao(current).getSituacao());
+            }
+            
+            create();
+            setChamada(ejbDataEventoFacade.carregaChamadaPalestra(dataEvento));
+            RequestContext.getCurrentInstance().reset("form1:ra");
+            return "ChamadaEvento";
+        }
+        
+        
+        return "";
+    }
+    
     public String findExactRA() {
         if (!aluno.getRa().isEmpty()) { 
             String nRa = aluno.getRa();

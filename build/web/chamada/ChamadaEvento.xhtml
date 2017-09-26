@@ -33,9 +33,14 @@ and open the template in the editor.
                             <br/>
                             <p:outputLabel id="out" value="RA" for="ra" />
                             <br/>
-                            <p:inputText id="ra"  value="#{chamadaEventoController.aluno.ra}" onfocus="this.value = ''">
-                                <p:ajax event="blur" listener="#{chamadaEventoController.findExactRA}" update="Formtabela:tabela" oncomplete="$(function(){PrimeFaces.focus('form1:ra');});"/>
+                            <p:inputText id="ra"  value="#{chamadaEventoController.aluno.ra}" onfocus="this.value=''"  onkeypress="if (event.keyCode == 13) { PrimeFaces.getElementById('ra').trigger('change'); return false; }">
+                                <p:ajax event="change" listener="#{chamadaEventoController.findExactRA}" update="Formtabela:tabela, ra"/>
                             </p:inputText>
+                            <p:outputLabel id="forcpf" value="CPF" for="cpf" />
+                            <br/>
+                            <p:inputMask id="cpf" value="#{chamadaEventoController.aluno.cpf}" mask="999.999.999-99" onfocus="this.value=''">
+                                <p:ajax event="blur" listener="#{chamadaEventoController.findExactCPF}" update="Formtabela:tabela"/>
+                            </p:inputMask>
                         </p:panelGrid>
                     </p:fieldset>
                 </h:form>
@@ -47,14 +52,19 @@ and open the template in the editor.
                     <h:outputText value="#{chamadaEventoController.pagination.pageFirstItem + 1}..#{chamadaEventoController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
                     <h:commandLink action="#{chamadaEventoController.previous}" value="#{bundle.Previous} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{chamadaEventoController.next}" value="#{bundle.Next} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{chamadaEventoController.chamada}" var="item" emptyMessage="Nenhum registro incluido." paginator="false" rows="90">
+                    <p:dataTable id="tabela" value="#{chamadaEventoController.chamada}" var="item" paginator="false" rows="90">
+                         <p:column>
+                            <f:facet name="header">
+                                <p:outputLabel value="CPF"/>
+                            </f:facet>
+                            <p:outputLabel value="#{item.idaluno.cpf}"/>
+                        </p:column>
                         <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="RA"/>
                             </f:facet>
                             <p:outputLabel value="#{item.idaluno.ra}"/>
                         </p:column>
-
                         <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="Nome"/>

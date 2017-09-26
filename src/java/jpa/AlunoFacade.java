@@ -39,7 +39,10 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
         return (Aluno) em.createNamedQuery("Aluno.findByRa").setParameter("ra", RA).getSingleResult();
     }
 
-
+    public Aluno findIdByCPF(String cpf){
+        return (Aluno) em.createNamedQuery("Aluno.findByCpf").setParameter("cpf", cpf).getSingleResult();
+    }
+    
     public List<Matricula> findByAlunoPago(Aluno aluno) {
         return em.createNamedQuery("Matricula.findByAlunoPago").setParameter("aluno", aluno).getResultList();
     }
