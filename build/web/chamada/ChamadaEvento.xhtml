@@ -34,13 +34,13 @@ and open the template in the editor.
                             <p:outputLabel id="out" value="RA" for="ra" />
                             <br/>
                             <p:inputText id="ra"  value="#{chamadaEventoController.aluno.ra}" onfocus="this.value=''"  onkeypress="if (event.keyCode == 13) { PrimeFaces.getElementById('ra').trigger('change'); return false; }">
-                                <p:ajax event="change" listener="#{chamadaEventoController.findExactRA}" update="Formtabela:tabela, ra"/>
+                                <p:ajax event="change" listener="#{chamadaEventoController.findExactRA}" update="Formtabela:tabela ra"/>
                             </p:inputText>
-                            <p:outputLabel id="forcpf" value="CPF" for="cpf" />
+                            <p:outputLabel id="forcpf" value="CPF" for="cpf" style="position: relative; top: -30px;"/>
                             <br/>
-                            <p:inputMask id="cpf" value="#{chamadaEventoController.aluno.cpf}" mask="999.999.999-99" onfocus="this.value=''">
-                                <p:ajax event="blur" listener="#{chamadaEventoController.findExactCPF}" update="Formtabela:tabela"/>
-                            </p:inputMask>
+                            <p:inputMask id="cpf" value="#{chamadaEventoController.aluno.cpf}" mask="999.999.999-99" onfocus="this.value=''" style="position: relative; top: -35px;"/>
+                            <p:outputLabel value="" />
+                            <p:commandButton action="#{chamadaEventoController.findExactCPF}" update="Formtabela:tabela cpf" value="Registrar CPF" style="position: relative; top: -35px;"/>
                         </p:panelGrid>
                     </p:fieldset>
                 </h:form>
