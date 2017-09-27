@@ -10,8 +10,7 @@ and open the template in the editor.
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/templateInscricao.xhtml">
 
@@ -65,6 +64,10 @@ and open the template in the editor.
                             </p:cellEditor>
                         </p:column>
                     </p:dataTable>
+                    <br/>
+                    <h:panelGrid width="100%" style="text-align: center">
+                        <p:commandButton ajax="false" action="#{chamadaController.salvar()}" value="Realizar Chamada"/>
+                    </h:panelGrid>
                 </h:form>
             </div>
         </ui:define>

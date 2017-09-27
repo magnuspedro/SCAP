@@ -221,10 +221,6 @@ public class ChamadaController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    public void getSelectedItems(ValueChangeEvent event) {
-
-    }
-
     public void onCellEdit(CellEditEvent event) {
         int newValue = (int) event.getNewValue();
         current = chamada.get(event.getRowIndex());
@@ -249,6 +245,17 @@ public class ChamadaController implements Serializable {
      */
     public void setChamada(List<Chamada> chamada) {
         this.chamada = chamada;
+    }
+
+    public String salvar() {
+        for (Chamada item : chamada) {
+            current = ejbFacade.find(item.getIdchamada());
+            if (!current.equals(item)) {
+                ejbFacade.edit(item);
+            }
+        }
+        JsfUtil.addSuccessMessage("Chamada realizada com sucesso!");
+        return "Create_1.xhtml";
     }
 
     @FacesConverter(forClass = Chamada.class)
