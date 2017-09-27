@@ -1,4 +1,4 @@
-<!--<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -17,13 +17,7 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.CreateChamadaLabel_idchamada}" for="idchamada" />
                     <h:inputText id="idchamada" value="#{chamadaController.selected.idchamada}" title="#{bundle.CreateChamadaTitle_idchamada}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_idchamada}"/>
-                    <h:outputLabel value="#{bundle.CreateChamadaLabel_hora}" for="hora" />
-                    <h:inputText id="hora" value="#{chamadaController.selected.hora}" title="#{bundle.CreateChamadaTitle_hora}" >
-                        <f:convertDateTime pattern="HH:mm:ss" />
-                    </h:inputText>
-                    <h:outputLabel value="#{bundle.CreateChamadaLabel_situacao}" for="situacao" />
-                    <h:inputText id="situacao" value="#{chamadaController.selected.situacao}" title="#{bundle.CreateChamadaTitle_situacao}" />
-                    <h:outputLabel value="#{bundle.CreateChamadaLabel_idaluno}" for="idaluno" />
+                    <br/>
                     <h:selectOneMenu id="idaluno" value="#{chamadaController.selected.idaluno}" title="#{bundle.CreateChamadaTitle_idaluno}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_idaluno}">
                         <f:selectItems value="#{alunoController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
@@ -31,10 +25,6 @@
                     <h:selectOneMenu id="iddataEvento" value="#{chamadaController.selected.iddataEvento}" title="#{bundle.CreateChamadaTitle_iddataEvento}" required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                         <f:selectItems value="#{dataEventoController.itemsAvailableSelectOne}"/>
                     </h:selectOneMenu>
-                    <h:outputLabel value="#{bundle.CreateChamadaLabel_nomeAluno}" for="nomeAluno" />
-                    <h:inputText id="nomeAluno" value="#{chamadaController.selected.nomeAluno}" title="#{bundle.CreateChamadaTitle_nomeAluno}" />
-                    <h:outputLabel value="#{bundle.CreateChamadaLabel_nomeEvento}" for="nomeEvento" />
-                    <h:inputText id="nomeEvento" value="#{chamadaController.selected.nomeEvento}" title="#{bundle.CreateChamadaTitle_nomeEvento}" />
                     <h:outputLabel value="#{bundle.CreateChamadaLabel_faltas}" for="faltas" />
                     <h:inputText id="faltas" value="#{chamadaController.selected.faltas}" title="#{bundle.CreateChamadaTitle_faltas}" />
                 </h:panelGrid>
@@ -50,4 +40,4 @@
         </ui:define>
     </ui:composition>
 
-</html>-->
+</html>

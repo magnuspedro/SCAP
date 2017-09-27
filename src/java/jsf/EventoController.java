@@ -228,12 +228,9 @@ public class EventoController implements Serializable {
         eventos = ejbFacade.findAll();
         for (Evento item : eventos) {
             int ocupadas = ejbFacade.vagasFechadas(item);
-            System.err.println("Antes "+item.getVagasTotais()+" "+ocupadas);
             if ((item.getVagasTotais() - ocupadas) == 0) {
-                System.err.println("IF "+item.getVagasTotais()+" "+ocupadas);
                 item.setVagasTotais(0);
             } else {
-                System.err.println("Else "+item.getVagasTotais()+" "+ocupadas);
                 item.setVagasTotais(item.getVagasTotais() - ocupadas);
                 
 

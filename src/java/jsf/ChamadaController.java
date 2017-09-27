@@ -2,17 +2,21 @@ package jsf;
 
 import entities.Chamada;
 import entities.DataEvento;
-import entities.Instrutor;
+import entities.Evento;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.ChamadaFacade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -21,11 +25,16 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import jpa.DataEventoFacade;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 @ManagedBean(name = "chamadaController")
-@SessionScoped
+@ViewScoped
 public class ChamadaController implements Serializable {
+
+    @EJB
+    private DataEventoFacade dataEventoFacade;
 
     private Chamada current;
     private DataModel items = null;
@@ -33,13 +42,17 @@ public class ChamadaController implements Serializable {
     private jpa.ChamadaFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Chamada> chamada = new ArrayList<>();
 
     public ChamadaController() {
+
     }
 
     public Chamada getSelected() {
         if (current == null) {
             current = new Chamada();
+            current.setIddataEvento(new DataEvento());
+            current.getIddataEvento().setIdevento(new Evento());
             selectedItemIndex = -1;
         }
         return current;
@@ -51,7 +64,7 @@ public class ChamadaController implements Serializable {
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(10) {
+            pagination = new PaginationHelper(100) {
 
                 @Override
                 public int getItemsCount() {
@@ -212,9 +225,30 @@ public class ChamadaController implements Serializable {
 
     }
 
+    public void onCellEdit(CellEditEvent event) {
+        int newValue = (int) event.getNewValue();
+        current = chamada.get(event.getRowIndex());
+        current.setFaltas(newValue);
+        getFacade().edit(current);
+    }
+
     public void carregaChamada(ValueChangeEvent event) {
-        DataEvento dataEvento = (DataEvento) event.getNewValue();
-        items = (DataModel) ejbFacade.findChamadaByEvento(dataEvento);
+        Evento e = (Evento) event.getNewValue();
+        setChamada(dataEventoFacade.carregaChamada(dataEventoFacade.uniqueDataEvento(e.getIdevento())));
+    }
+
+    /**
+     * @return the chamada
+     */
+    public List<Chamada> getChamada() {
+        return chamada;
+    }
+
+    /**
+     * @param chamada the chamada to set
+     */
+    public void setChamada(List<Chamada> chamada) {
+        this.chamada = chamada;
     }
 
     @FacesConverter(forClass = Chamada.class)

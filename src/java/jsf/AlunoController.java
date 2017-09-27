@@ -40,7 +40,6 @@ public class AlunoController implements Serializable {
     private List<DataEvento> eventos;
     private List<Aluno> alunos;
     private List<Aluno> alunosOrdenado;
-    private PDFOptions pdfOp;
 
     public AlunoController() {
     }

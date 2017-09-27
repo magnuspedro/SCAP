@@ -35,7 +35,7 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
         return (Aluno) getEntityManager().createNamedQuery("Aluno.findByRa").getSingleResult();
     }
 
-    public Aluno findIdByRa(String RA){
+    public Aluno findIdByRa(String RA) {
         return (Aluno) em.createNamedQuery("Aluno.findByRa").setParameter("ra", RA).getSingleResult();
     }
 
@@ -47,11 +47,14 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
         return em.createNamedQuery("Matricula.findByAlunoPago").setParameter("aluno", aluno).getResultList();
     }
 
+    public List<Matricula> findByAlunoNPago(Aluno aluno) {
+        return em.createNamedQuery("Matricula.findByAlunoNPago").setParameter("aluno", aluno).getResultList();
+    }
+
     public List<Matricula> findByAluno(Aluno aluno) {
         return em.createNamedQuery("Matricula.findByAluno").setParameter("aluno", aluno).getResultList();
     }
 
-    
     public Aluno findByCPF(String cpf) {//Exemplo
         List<Aluno> aluno = em.createNamedQuery("Aluno.findByCpf").setParameter("cpf", cpf).getResultList();
         if (aluno.isEmpty()) {
@@ -59,9 +62,9 @@ public class AlunoFacade extends AbstractFacade<Aluno> {
         }
         return aluno.get(0);
     }
-    
-    public List<Aluno> listAllOrdenado(){
+
+    public List<Aluno> listAllOrdenado() {
         return em.createNamedQuery("Aluno.listAllOrdenado").getResultList();
     }
-    
+
 }

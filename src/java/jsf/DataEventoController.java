@@ -10,6 +10,7 @@ import jpa.DataEventoFacade;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,7 +37,7 @@ public class DataEventoController implements Serializable {
     private jpa.DataEventoFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    private List<Chamada> chamada;
+    private List<Chamada> chamada = new ArrayList<>();
     private List<ChamadaEvento> chamadaPalestra;
     private List<DataEvento> all;
 
@@ -226,13 +227,6 @@ public class DataEventoController implements Serializable {
     public void carregaChamada(ValueChangeEvent event) {
         Evento e = (Evento) event.getNewValue();
         current = ejbFacade.uniqueDataEvento(e.getIdevento());
-        chamada = ejbFacade.carregaChamada(current);
-    }
-
-    public void onCellEdit(CellEditEvent event) {
-        int wor = event.getRowIndex();
-        int value = (int) event.getNewValue();
-        System.err.println("Linha: " + wor + " Value: " + value);
     }
 
     public void salvar() {
@@ -268,7 +262,6 @@ public class DataEventoController implements Serializable {
             if ((item.getIdevento().getVagasTotais() - ocupadas) == 0) {
                 item.getIdevento().setVagasTotais(0);
             } else {
-                System.err.println("Else "+item.getIdevento().getNome()+" "+item.getIdevento().getVagasTotais()+" "+ocupadas);
                 item.getIdevento().setVagasTotais(item.getIdevento().getVagasTotais() - ocupadas);
 
             }
@@ -291,10 +284,16 @@ public class DataEventoController implements Serializable {
     }
 
     public boolean isEspera(DataEvento dataEvento) {
-        int ocupadas = ejbFacade.vagasFechadas(dataEvento.getIdevento());
-        System.out.println(dataEvento.getIdevento().getNome()+" "+ocupadas+" "+dataEvento.getIdevento().getVagasTotais());
-        System.out.println(ocupadas <= dataEvento.getIdevento().getVagasTotais());
         return 0 < dataEvento.getIdevento().getVagasTotais();
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+        int row = event.getRowIndex();
+        chamada.get(row).setFaltas(Integer.valueOf(newValue.toString()));
+        System.err.println(oldValue+" "+newValue);
+
     }
 
     @FacesConverter(forClass = DataEvento.class)

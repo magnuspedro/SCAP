@@ -1,4 +1,4 @@
-<!--<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
@@ -28,20 +28,6 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListChamadaTitle_hora}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.hora}">
-                                <f:convertDateTime pattern="HH:mm:ss" />
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListChamadaTitle_situacao}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.situacao}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
                                 <h:outputText value="#{bundle.ListChamadaTitle_idaluno}"/>
                             </f:facet>
                             <h:outputText value="#{item.idaluno}"/>
@@ -51,18 +37,6 @@
                                 <h:outputText value="#{bundle.ListChamadaTitle_iddataEvento}"/>
                             </f:facet>
                             <h:outputText value="#{item.iddataEvento}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListChamadaTitle_nomeAluno}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nomeAluno}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">
-                                <h:outputText value="#{bundle.ListChamadaTitle_nomeEvento}"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nomeEvento}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
@@ -91,4 +65,4 @@
         </ui:define>
     </ui:composition>
 
-</html>-->
+</html>

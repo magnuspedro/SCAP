@@ -28,6 +28,7 @@ import jpa.ChamadaEventoFacade;
 import jpa.ChamadaFacade;
 import jpa.DataEventoFacade;
 import jpa.EventoFacade;
+import org.primefaces.event.CellEditEvent;
 
 @ManagedBean(name = "matriculaController")
 @SessionScoped
@@ -53,6 +54,7 @@ public class MatriculaController implements Serializable {
     private int selectedItemIndex;
     private List<Matricula> matricula = null;
     private List<Matricula> pago = null;
+    private List<Matricula> quitados = null;
 
     public MatriculaController() {
     }
@@ -230,49 +232,10 @@ public class MatriculaController implements Serializable {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = Matricula.class)
-    public static class MatriculaControllerConverter implements Converter {
-
-        @Override
-        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
-            if (value == null || value.length() == 0) {
-                return null;
-            }
-            MatriculaController controller = (MatriculaController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "matriculaController");
-            return controller.getMatricula(getKey(value));
-        }
-
-        java.lang.Integer getKey(String value) {
-            java.lang.Integer key;
-            key = Integer.valueOf(value);
-            return key;
-        }
-
-        String getStringKey(java.lang.Integer value) {
-            StringBuilder sb = new StringBuilder();
-            sb.append(value);
-            return sb.toString();
-        }
-
-        @Override
-        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
-            if (object == null) {
-                return null;
-            }
-            if (object instanceof Matricula) {
-                Matricula o = (Matricula) object;
-                return getStringKey(o.getIdmatricula());
-            } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Matricula.class.getName());
-            }
-        }
-
-    }
-
     public void carregaMatricula(ValueChangeEvent event) {
         current.setIdaluno((Aluno) event.getNewValue());
-        matricula = ejbFacade.findByAluno(current.getIdaluno());
+        matricula = ejbFacade.findByAlunoNPago(current.getIdaluno());
+        quitados = ejbFacade.findByAlunoPago(current.getIdaluno());
         List<Matricula> realoficial = new ArrayList<>();
         for (Matricula item : matricula) {
             int pos = ejbFacade.countPosicao(item).intValue();
@@ -317,13 +280,13 @@ public class MatriculaController implements Serializable {
         for (Matricula item : pago) {
             item.setPago(Boolean.TRUE);
             ejbFacade.edit(item);
-           
-                Chamada c = new Chamada();
-                c.setIdaluno(item.getIdaluno());
-                c.setFaltas(0);
-                c.setIddataEvento(dataEventoFacade.uniqueDataEvento(item.getIdevento().getIdevento()));
-                ch.add(c);
-            }
+
+            Chamada c = new Chamada();
+            c.setIdaluno(item.getIdaluno());
+            c.setFaltas(0);
+            c.setIddataEvento(dataEventoFacade.uniqueDataEvento(item.getIdevento().getIdevento()));
+            ch.add(c);
+        }
 
         for (Chamada chamada : ch) {
             chamadaFacade.create(chamada);
@@ -331,7 +294,66 @@ public class MatriculaController implements Serializable {
 
         matricula = null;
         pago = null;
+        quitados = null;
         JsfUtil.addSuccessMessage("Matricula atualizada com sucesso");
         return prepareCreate();
+    }
+
+    /**
+     * @return the quitados
+     */
+    public List<Matricula> getQuitados() {
+        return quitados;
+    }
+
+    /**
+     * @param quitados the quitados to set
+     */
+    public void setQuitados(List<Matricula> quitados) {
+        this.quitados = quitados;
+    }
+
+    public void editar(Matricula matricula){
+        this.current = matricula;
+    }
+    
+    @FacesConverter(forClass = Matricula.class)
+    public static class MatriculaControllerConverter implements Converter {
+
+        @Override
+        public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
+            if (value == null || value.length() == 0) {
+                return null;
+            }
+            MatriculaController controller = (MatriculaController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "matriculaController");
+            return controller.getMatricula(getKey(value));
+        }
+
+        java.lang.Integer getKey(String value) {
+            java.lang.Integer key;
+            key = Integer.valueOf(value);
+            return key;
+        }
+
+        String getStringKey(java.lang.Integer value) {
+            StringBuilder sb = new StringBuilder();
+            sb.append(value);
+            return sb.toString();
+        }
+
+        @Override
+        public String getAsString(FacesContext facesContext, UIComponent component, Object object) {
+            if (object == null) {
+                return null;
+            }
+            if (object instanceof Matricula) {
+                Matricula o = (Matricula) object;
+                return getStringKey(o.getIdmatricula());
+            } else {
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + Matricula.class.getName());
+            }
+        }
+
     }
 }

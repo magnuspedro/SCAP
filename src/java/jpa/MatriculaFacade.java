@@ -39,7 +39,11 @@ public class MatriculaFacade extends AbstractFacade<Matricula> {
         getEntityManager().merge(entity);
     }
 
-    public List<Matricula> findByAluno(Aluno aluno) {
+    public List<Matricula> findByAlunoNPago(Aluno aluno) {
+        return em.createNamedQuery("Matricula.findByAlunoNPago").setParameter("aluno", aluno).getResultList();
+    }
+
+    public List<Matricula> findByAlunoPago(Aluno aluno) {
         return em.createNamedQuery("Matricula.findByAlunoPago").setParameter("aluno", aluno).getResultList();
     }
 

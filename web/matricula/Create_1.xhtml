@@ -29,40 +29,66 @@ and open the template in the editor.
                                              filter="true" >
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{alunoController.alunosOrdenado}" />
-                                <f:ajax event="change" render="Formtabela:tabela" />
+                                <f:ajax event="change" render="Formtabela:tabela"  />
+                                <f:ajax event="change" render="Formtabela:quitado" />
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </p:fieldset>
                 </h:form>
             </div>
+            <br/>
             <div class="table">
+                <h:panelGrid width="100%" style="text-align: center">
+                    <p:outputLabel value="Eventos há quitar pelo aluno: "/>
+                </h:panelGrid>
                 <h:form id="Formtabela">
-                    <h:outputText escape="false" value="#{bundle.ListMatriculaEmpty}" rendered="#{matriculaController.items.rowCount == 0}"/>
-                    <h:panelGroup rendered="#{matriculaController.items.rowCount > 0}">                                            
-                        <p:dataTable id="tabela" value="#{matriculaController.matricula}" 
-                                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                                     var="item" emptyMessage="Nenhum registro incluido."
-                                     selection="#{matriculaController.pago}"
-                                     rowKey="#{item.idmatricula}"
-                                     paginator="true" rows="20">
-                            <p:column headerText="Aluno:">
-                                <p:outputLabel value="#{item.idaluno.nome}"/>
-                            </p:column>
-                            <p:column headerText="Evento:" filterBy="#{item.idevento.nome}" filterMatchMode="contains">
-                                <p:outputLabel value="#{item.idevento.nome}"/>
-                            </p:column>
-                            <p:column headerText="Tipo:">
-                                <p:outputLabel value="#{item.idevento.tipo}"/>
-                            </p:column>
-                            <p:column selectionMode="multiple" style="width:30px;text-align:center" headerText="Pago:" >
-                            </p:column>
-                        </p:dataTable>
-                    </h:panelGroup>
+                    <p:dataTable id="tabela" value="#{matriculaController.matricula}" 
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 var="item" emptyMessage="Nenhum registro incluido."
+                                 selection="#{matriculaController.pago}"
+                                 rowKey="#{item.idmatricula}"
+                                 paginator="true" rows="50">
+                        <p:column headerText="Aluno:">
+                            <p:outputLabel value="#{item.idaluno.nome}"/>
+                        </p:column>
+                        <p:column headerText="Evento:" filterBy="#{item.idevento.nome}" filterMatchMode="contains">
+                            <p:outputLabel value="#{item.idevento.nome}"/>
+                        </p:column>
+                        <p:column headerText="Tipo:">
+                            <p:outputLabel value="#{item.idevento.tipo}"/>
+                        </p:column>
+                        <p:column selectionMode="multiple" style="width:30px;text-align:center" headerText="Pago:" >
+                        </p:column>
+                    </p:dataTable>
                     <br/>
                     <h:panelGrid width="100%" style="text-align: center">
                         <p:commandButton ajax="false" action="#{matriculaController.pagando()}" value="#{bundle.CreateMatriculaSaveLink}"/>
                     </h:panelGrid>
+
+                    <br/>
+                    <br/>
+
+                    <h:panelGrid width="100%" style="text-align: center">
+                        <p:outputLabel value="Eventos já quitados pelo aluno: " style="color: red;"/>
+                    </h:panelGrid>
+                    <p:dataTable id="quitado" value="#{matriculaController.quitados}" 
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 var="item" emptyMessage="Nenhum registro incluido."
+                                 rowKey="#{item.idmatricula}"
+                                 paginator="true" rows="50">
+                        <p:column headerText="Aluno:">
+                            <p:outputLabel value="#{item.idaluno.nome}"/>
+                        </p:column>
+                        <p:column headerText="Evento:" filterBy="#{item.idevento.nome}" filterMatchMode="contains">
+                            <p:outputLabel value="#{item.idevento.nome}"/>
+                        </p:column>
+                        <p:column headerText="Tipo:">
+                            <p:outputLabel value="#{item.idevento.tipo}"/>
+                        </p:column>
+                    </p:dataTable>
+
                 </h:form>
+                <br/>
             </div>
         </ui:define>
     </ui:composition>
