@@ -23,7 +23,7 @@ and open the template in the editor.
                                              valueChangeListener="#{chamadaEventoController.pegaEvento}"
                                              required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{dataEventoController.palestras}" itemValue="#{iddataEvento}"/>
+                                <f:selectItems value="#{chamadaController.eventosInstrutor}" itemValue="#{iddataEvento}"/>
                                 <f:ajax event="change" render="Formtabela:tabela" />
                             </p:selectOneMenu>
                             <br/>

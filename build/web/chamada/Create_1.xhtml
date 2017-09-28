@@ -28,7 +28,7 @@ and open the template in the editor.
                                              requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
                                 <p:ajax event="change" update="Formtabela:tabela"  />
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{eventoController.eventos}"/>
+                                <f:selectItems value="#{chamadaController.eventosInstrutor}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
                     </p:fieldset>

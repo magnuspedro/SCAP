@@ -28,12 +28,16 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 import jpa.DataEventoFacade;
+import jpa.EventoFacade;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 @ManagedBean(name = "chamadaController")
 @ViewScoped
 public class ChamadaController implements Serializable {
+
+    @EJB
+    private EventoFacade eventoFacade;
 
     @EJB
     private DataEventoFacade dataEventoFacade;
@@ -44,6 +48,7 @@ public class ChamadaController implements Serializable {
     private jpa.ChamadaFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    private List<Evento> eventosInstrutor = new ArrayList<>();
     private List<Chamada> chamada = new ArrayList<>();
     private Instrutor currentIns;
     private jpa.InstrutorFacade ejbFacadeIns;
@@ -70,13 +75,11 @@ public class ChamadaController implements Serializable {
         Instrutor i;
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            System.err.println("chegou");
-            i = getInstrutor(getIdByCPF(currentIns.getCpf()));
+            i = ejbFacade.findByCPF(currentIns.getCpf()).get(0);
             System.err.println(i.getCpf());
-            if (i == null || (i.getCpf() == null ? currentIns.getCpf() != null : !i.getCpf().equals(currentIns.getCpf()))
+            if ((i.getCpf() == null ? currentIns.getCpf() != null : !i.getCpf().equals(currentIns.getCpf()))
                     || (i.getSenha() == null ? currentIns.getSenha() != null : !i.getSenha().equals(currentIns.getSenha()))) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
-                System.err.println("Passou try");
                 return "Error.xhtml";
             }
 
@@ -86,11 +89,14 @@ public class ChamadaController implements Serializable {
             return "Error.xhtml";
         }
 
+        currentIns = i;
+        System.out.println(currentIns.getNome());
         if (i.getAdministrador()) {
-            return "/matricula/Create_1.xhtml";
+            return "/chamada/ChamadaEvento.xhtml";
         } else {
-            return "/matricula/Create_1.xhtml";
+            return "/chamada/Create_1.xhtml";
         }
+
     }
 
     public String logout() {
@@ -302,6 +308,33 @@ public class ChamadaController implements Serializable {
         return "Create_1.xhtml";
     }
 
+    /**
+     * @return the eventosInstrutor
+     */
+    public List<Evento> getEventosInstrutor() {
+        eventosInstrutor = eventoFacade.findbyInstrutor(currentIns);
+        System.out.println(eventosInstrutor);
+        return eventosInstrutor;
+    }
+
+    /**
+     * @param eventosInstrutor the eventosInstrutor to set
+     */
+    public void setEventosInstrutor(List<Evento> eventosInstrutor) {
+        this.eventosInstrutor = eventosInstrutor;
+    }
+
+    public Instrutor getInstrutor(java.lang.Integer id) {
+        return ejbFacadeIns.find(id);
+    }
+
+    public Instrutor getInstrutor() {
+        if (currentIns == null) {
+            currentIns = new Instrutor();
+        }
+        return currentIns;
+    }
+
     @FacesConverter(forClass = Chamada.class)
     public static class ChamadaControllerConverter implements Converter {
 
@@ -340,16 +373,5 @@ public class ChamadaController implements Serializable {
             }
         }
 
-    }
-
-    public Instrutor getInstrutor(java.lang.Integer id) {
-        return ejbFacadeIns.find(id);
-    }
-
-    public Instrutor getInstrutor() {
-        if (currentIns == null) {
-            currentIns = new Instrutor();
-        }
-        return currentIns;
     }
 }
