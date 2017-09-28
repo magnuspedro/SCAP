@@ -35,6 +35,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Matricula.countVagas", query = "SELECT COUNT(m.idaluno) FROM Matricula m WHERE m.idevento = :evento")
     , @NamedQuery(name = "Matricula.findByAluno", query = "SELECT m FROM Matricula m WHERE m.idaluno = :aluno")
     ,@NamedQuery(name = "Matricula.contPosicao", query = "SELECT COUNT(m.idmatricula) FROM Matricula m WHERE m.idmatricula < :idmatricula AND m.idevento = :evento")
+    ,@NamedQuery(name = "Matricula.listEspera", query = "SELECT m FROM Matricula m WHERE m.idevento = :evento and m.pago = false")
+    , @NamedQuery(name = "Matricula.countVagasPagas", query = "SELECT COUNT(m.idaluno) FROM Matricula m WHERE m.idevento = :evento AND m.pago = true")
+
 })
 public class Matricula implements Serializable {
 

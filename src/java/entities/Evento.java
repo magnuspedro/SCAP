@@ -40,7 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Evento.findAll", query = "SELECT e FROM Evento e")
     , @NamedQuery(name = "Evento.findByIdevento", query = "SELECT e FROM Evento e WHERE e.idevento = :idevento")
     , @NamedQuery(name = "Evento.findByNome", query = "SELECT e FROM Evento e WHERE e.nome = :nome")
-    , @NamedQuery(name = "Evento.findByTipo", query = "SELECT e FROM Evento e WHERE e.tipo = :tipo")
+    , @NamedQuery(name = "Evento.findByTipo", query = "SELECT e FROM Evento e WHERE e.tipo = :tipo ORDER BY e.nome ASC")
     , @NamedQuery(name = "Evento.findByVagasTotais", query = "SELECT e FROM Evento e WHERE e.vagasTotais = :vagasTotais")
     , @NamedQuery(name = "Evento.findByHoraInicio", query = "SELECT e FROM Evento e WHERE e.horaInicio = :horaInicio")
     , @NamedQuery(name = "Evento.findByHoraTermino", query = "SELECT e FROM Evento e WHERE e.horaTermino = :horaTermino")

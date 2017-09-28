@@ -55,6 +55,8 @@ public class MatriculaController implements Serializable {
     private List<Matricula> matricula = null;
     private List<Matricula> pago = null;
     private List<Matricula> quitados = null;
+    private List<Matricula> espera = null;
+    private int vagasRestante;
 
     public MatriculaController() {
     }
@@ -246,6 +248,34 @@ public class MatriculaController implements Serializable {
         matricula = realoficial;
     }
 
+    public void listaEspera(ValueChangeEvent event) {
+        Evento e = (Evento) event.getNewValue();
+        espera = ejbFacade.listEspera(e);
+//        List<Matricula> listaEspera = new ArrayList<>();
+        setVagasRestante(e.getVagasTotais() - ejbFacade.vagasFechadasPagas(e).intValue());
+//        if (e.getVagasTotais() <= espera.size()) {
+//            if (e.getNome().equalsIgnoreCase("Eye Tracking")) {
+//                for (int i = 12; i < espera.size(); i++) {
+//                    listaEspera.add(espera.get(i));
+//                }
+//            } else {
+//                for (int i = 25; i < espera.size(); i++) {
+//                    listaEspera.add(espera.get(i));
+//                }
+//            }
+//        }
+//        espera = listaEspera;
+    }
+    
+    public boolean isSelecionado(Matricula m){
+        for (int i = 0; i < vagasRestante; i++) {
+            Matricula get = espera.get(i);
+            if(m.equals(get))
+                return true;
+        }
+        return false;
+    }
+
     /**
      * @return the chamada
      */
@@ -313,8 +343,32 @@ public class MatriculaController implements Serializable {
         this.quitados = quitados;
     }
 
-    public void editar(Matricula matricula){
-        this.current = matricula;
+    /**
+     * @return the espera
+     */
+    public List<Matricula> getEspera() {
+        return espera;
+    }
+
+    /**
+     * @param espera the espera to set
+     */
+    public void setEspera(List<Matricula> espera) {
+        this.espera = espera;
+    }
+
+    /**
+     * @return the vagasRestante
+     */
+    public int getVagasRestante() {
+        return vagasRestante;
+    }
+
+    /**
+     * @param vagasRestante the vagasRestante to set
+     */
+    public void setVagasRestante(int vagasRestante) {
+        this.vagasRestante = vagasRestante;
     }
     
     @FacesConverter(forClass = Matricula.class)

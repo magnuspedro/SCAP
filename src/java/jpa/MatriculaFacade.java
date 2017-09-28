@@ -47,8 +47,12 @@ public class MatriculaFacade extends AbstractFacade<Matricula> {
         return em.createNamedQuery("Matricula.findByAlunoPago").setParameter("aluno", aluno).getResultList();
     }
 
-    public int vagasFechadas(Evento e) {
-        return (int) em.createNamedQuery("Matricula.countVagas").setParameter("evento", e).getSingleResult();
+    public Long vagasFechadas(Evento e) {
+        return (Long) em.createNamedQuery("Matricula.countVagas").setParameter("evento", e).getSingleResult();
+    }
+
+    public Long vagasFechadasPagas(Evento e) {
+        return (Long) em.createNamedQuery("Matricula.countVagasPagas").setParameter("evento", e).getSingleResult();
     }
 
     public Long countPosicao(Matricula matricula) {
@@ -56,5 +60,9 @@ public class MatriculaFacade extends AbstractFacade<Matricula> {
                 .setParameter("idmatricula", matricula.getIdmatricula())
                 .setParameter("evento", matricula.getIdevento())
                 .getSingleResult();
+    }
+
+    public List<Matricula> listEspera(Evento e) {
+        return em.createNamedQuery("Matricula.listEspera").setParameter("evento", e).getResultList();
     }
 }

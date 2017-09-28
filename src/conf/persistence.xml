@@ -3,6 +3,7 @@
   <persistence-unit name="SATIPU" transaction-type="JTA">
     <jta-data-source>java:app/jdbc/mysql-SATI</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties/>
   </persistence-unit>
 </persistence>

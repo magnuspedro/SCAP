@@ -9,6 +9,7 @@ import jpa.EventoFacade;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
@@ -33,7 +34,7 @@ public class EventoController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<Evento> eventos = null;
-  
+    private List<Evento> eventosListaEspera = null;
 
     public EventoController() {
     }
@@ -43,7 +44,7 @@ public class EventoController implements Serializable {
             current = new Evento();
             selectedItemIndex = -1;
         }
-        
+
         return current;
     }
 
@@ -68,11 +69,6 @@ public class EventoController implements Serializable {
         }
         return pagination;
     }
-    
-   
-    
-    
-
 
     public String prepareList() {
         recreateModel();
@@ -232,11 +228,25 @@ public class EventoController implements Serializable {
                 item.setVagasTotais(0);
             } else {
                 item.setVagasTotais(item.getVagasTotais() - ocupadas);
-                
 
             }
         }
         return eventos;
+    }
+
+    /**
+     * @return the eventosListaEspera
+     */
+    public List<Evento> getEventosListaEspera() {
+        eventosListaEspera = ejbFacade.findMinicursos();
+        return eventosListaEspera;
+    }
+
+    /**
+     * @param eventosListaEspera the eventosListaEspera to set
+     */
+    public void setEventosListaEspera(List<Evento> eventosListaEspera) {
+        this.eventosListaEspera = eventosListaEspera;
     }
 
     @FacesConverter(forClass = Evento.class)
