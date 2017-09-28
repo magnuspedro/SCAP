@@ -8,6 +8,7 @@ package jpa;
 import entities.Aluno;
 import entities.Chamada;
 import entities.DataEvento;
+import entities.Instrutor;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,6 +36,10 @@ public class ChamadaFacade extends AbstractFacade<Chamada> {
     
     public List<Chamada> findChamadaByEvento(DataEvento dataEvento){
         return em.createNamedQuery("Chamada.nomeEvento").setParameter("idDataEvento", dataEvento.getIddataEvento()).getResultList();
+    }
+    
+    public List <Instrutor> findByCPF(String CPF){
+        return  em.createNamedQuery("Instrutor.findByCpf").setParameter("cpf", CPF).getResultList();
     }
 
 }

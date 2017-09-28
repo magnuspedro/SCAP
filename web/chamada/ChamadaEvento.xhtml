@@ -17,7 +17,7 @@ and open the template in the editor.
             <div class="box">
                 <h:form id="form1" class="createForm">
                     <p:fieldset legend="Cadastro de Chamadas" toggleable="true" toggleSpeed="500">
-                        <p:messages />
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
                         <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:selectOneMenu id="iddataEvento" value="#{chamadaEventoController.selected.iddataEvento}"
                                              valueChangeListener="#{chamadaEventoController.pegaEvento}"
@@ -33,14 +33,18 @@ and open the template in the editor.
                             <br/>
                             <p:outputLabel id="out" value="RA" for="ra" />
                             <br/>
-                            <p:inputText id="ra"  value="#{chamadaEventoController.aluno.ra}" onfocus="this.value=''"  onkeypress="if (event.keyCode == 13) { PrimeFaces.getElementById('ra').trigger('change'); return false; }">
+                            <p:inputText id="ra"  value="#{chamadaEventoController.aluno.ra}" onfocus="this.value = ''"  onkeypress="if (event.keyCode == 13) {
+                                        
+                                        return false;
+                                    }">
                                 <p:ajax event="change" listener="#{chamadaEventoController.findExactRA}" update="Formtabela:tabela ra"/>
                             </p:inputText>
                             <p:outputLabel id="forcpf" value="CPF" for="cpf" style="position: relative; top: -30px;"/>
                             <br/>
-                            <p:inputMask id="cpf" value="#{chamadaEventoController.aluno.cpf}" mask="999.999.999-99" onfocus="this.value=''" style="position: relative; top: -35px;"/>
+                            <p:inputMask id="cpf" value="#{chamadaEventoController.aluno.cpf}" mask="999.999.999-99" onfocus="this.value = ''" style="position: relative; top: -35px;"/>
                             <p:outputLabel value="" />
-                            <p:commandButton action="#{chamadaEventoController.findExactCPF}" update="Formtabela:tabela cpf" value="Registrar CPF" style="position: relative; top: -35px;"/>
+                            <p:commandButton ajax="true" global="false" action="#{chamadaEventoController.findExactCPF}" update="Formtabela:tabela cpf" value="Registrar CPF" style="position: relative; top: -35px;">
+                            </p:commandButton>
                         </p:panelGrid>
                     </p:fieldset>
                 </h:form>
@@ -53,7 +57,7 @@ and open the template in the editor.
                     <h:commandLink action="#{chamadaEventoController.previous}" value="#{bundle.Previous} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
                     <h:commandLink action="#{chamadaEventoController.next}" value="#{bundle.Next} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
                     <p:dataTable id="tabela" value="#{chamadaEventoController.chamada}" var="item" paginator="false" rows="90">
-                         <p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <p:outputLabel value="CPF"/>
                             </f:facet>

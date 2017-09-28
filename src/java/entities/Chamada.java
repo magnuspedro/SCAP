@@ -36,7 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
             + "INNER JOIN DataEvento de ON de.idevento = e.idevento "
             + "INNER JOIN Chamada c ON c.iddataEvento = de.iddataEvento "
             + "WHERE c.iddataEvento = :iddataevento")
-    , @NamedQuery(name = "Chamada.findByIddataEvento", query = "SELECT c FROM Chamada c INNER JOIN Aluno a ON c.idaluno = a WHERE c.iddataEvento = :iddataEvento ORDER BY a.nome")})
+    , @NamedQuery(name = "Chamada.findByIddataEvento", query = "SELECT c FROM Chamada c INNER JOIN Aluno a ON c.idaluno = a WHERE c.iddataEvento = :iddataEvento ORDER BY a.nome")
+    , @NamedQuery(name = "Chamada.findByCpf", query = "SELECT i FROM Instrutor i WHERE i.cpf = :cpf")})
 public class Chamada implements Serializable {
 
     private static final long serialVersionUID = 1L;

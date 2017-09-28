@@ -3,6 +3,7 @@ package jsf;
 import entities.Chamada;
 import entities.DataEvento;
 import entities.Evento;
+import entities.Instrutor;
 import jsf.util.JsfUtil;
 import jsf.util.PaginationHelper;
 import jpa.ChamadaFacade;
@@ -25,6 +26,7 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
 import jpa.DataEventoFacade;
 import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
@@ -43,6 +45,8 @@ public class ChamadaController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private List<Chamada> chamada = new ArrayList<>();
+    private Instrutor currentIns;
+    private jpa.InstrutorFacade ejbFacadeIns;
 
     public ChamadaController() {
 
@@ -60,6 +64,46 @@ public class ChamadaController implements Serializable {
 
     private ChamadaFacade getFacade() {
         return ejbFacade;
+    }
+
+    public String autenticar() throws Exception {
+        Instrutor i;
+        FacesContext context = FacesContext.getCurrentInstance();
+        try {
+            System.err.println("chegou");
+            i = getInstrutor(getIdByCPF(currentIns.getCpf()));
+            System.err.println(i.getCpf());
+            if (i == null || (i.getCpf() == null ? currentIns.getCpf() != null : !i.getCpf().equals(currentIns.getCpf()))
+                    || (i.getSenha() == null ? currentIns.getSenha() != null : !i.getSenha().equals(currentIns.getSenha()))) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
+                System.err.println("Passou try");
+                return "Error.xhtml";
+            }
+
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
+            System.err.println("Passou catch");
+            return "Error.xhtml";
+        }
+
+        if (i.getAdministrador()) {
+            return "/matricula/Create_1.xhtml";
+        } else {
+            return "/matricula/Create_1.xhtml";
+        }
+    }
+
+    public String logout() {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+        session.invalidate();
+
+        return "index.xhtml?faces-redirect=true";
+
+    }
+
+    public Integer getIdByCPF(String CPF) {
+        return ejbFacade.findByCPF(CPF).get(0).getIdinstrutor();
     }
 
     public PaginationHelper getPagination() {
@@ -298,4 +342,14 @@ public class ChamadaController implements Serializable {
 
     }
 
+    public Instrutor getInstrutor(java.lang.Integer id) {
+        return ejbFacadeIns.find(id);
+    }
+
+    public Instrutor getInstrutor() {
+        if (currentIns == null) {
+            currentIns = new Instrutor();
+        }
+        return currentIns;
+    }
 }

@@ -26,9 +26,9 @@ public class InstrutorFacade extends AbstractFacade<Instrutor> {
         return em;
     }
     
-    public List<Instrutor> findByCPF(String CPF){
-        return em.createNamedQuery("Instrutor.findByCpf").setParameter("cpf", CPF).getResultList();
-    }
+//    public List<Instrutor> findByCPF(String CPF){
+//        return em.createNamedQuery("Instrutor.findByCpf").setParameter("cpf", CPF).getResultList();
+//    }
 
     public InstrutorFacade() {
         super(Instrutor.class);

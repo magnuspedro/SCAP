@@ -7,27 +7,21 @@
     <h:head>
         <title>Login</title>
        
- 
     </h:head>
     <h:body><h:form id="loginForm">          
             <p:growl id="growl" showDetail="true" sticky="true" /> 
             <p:panel header="Login Instrutor" style="width: 360px;position: absolute;top:35%;left:35% ">
-                <p:panelGrid columns="1" rendered="#{instrutorController.selected != null}">
+                <p:panelGrid columns="1" rendered="#{chamadaController.instrutor != null}">
                     <p:outputLabel value="#{bundle.CreateInstrutorLabel_cpf}" for="cpf" />
-                    <p:inputMask id="cpf" value="#{instrutorController.selected.cpf}" title="#{bundle.CreateInstrutorTitle_cpf}" mask="999.999.999-99" required="true" />
+                    <p:inputMask id="cpf" value="#{chamadaController.instrutor.cpf}" title="#{bundle.CreateInstrutorTitle_cpf}" mask="999.999.999-99" required="true" />
                     <p:outputLabel value="#{bundle.CreateInstrutorLabel_senha}" for="senha" />
-                    <p:password id="senha" value="#{instrutorController.selected.senha}" title="#{bundle.CreateInstrutorTitle_senha}" />
-                    <p:commandButton action="#{instrutorController.autenticar()}" value="Login" update="growl"/>
+                    <p:password id="senha" value="#{chamadaController.instrutor.senha}" title="#{bundle.CreateInstrutorTitle_senha}" />
+                    <p:commandButton action="#{chamadaController.autenticar()}" value="Login" update="growl"/>
                 </p:panelGrid>
             </p:panel>
 
         </h:form>
 
     </h:body>
-
-
-
-
-
 </html>
 

@@ -38,46 +38,46 @@ public class InstrutorController implements Serializable {
     public InstrutorController() {
     }
 
-    public String autenticar() throws Exception {
-        Instrutor i;
-        FacesContext context = FacesContext.getCurrentInstance();
-        try {
-            i = getInstrutor(getIdByCPF(current.getCpf()));
+//    public String autenticar() throws Exception {
+//        Instrutor i;
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        try {
+//            i = getInstrutor(getIdByCPF(current.getCpf()));
+//
+//            if (i == null || (i.getCpf() == null ? current.getCpf() != null : !i.getCpf().equals(current.getCpf()))
+//                    || (i.getSenha() == null ? current.getSenha() != null : !i.getSenha().equals(current.getSenha()))) {
+//                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
+//                return "Error.xhtml";
+//
+//            }
+//            
+//            context.getExternalContext().getSessionMap().put("IdInstrutor", i.getIdinstrutor());
+//            System.out.println(context.getExternalContext().getSessionMap().get("IdInstrutor"));
+//
+//        } catch (Exception e) {
+//            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
+//            return "Error.xhtml";
+//        }
+//
+//        if (i.getAdministrador()) {
+//            return "/matricula/Create_1.xhtml";
+//        } else {
+//            return "index.xhtml";
+//        }
+//    }
+//
+//    public String logout() {
+//        FacesContext fc = FacesContext.getCurrentInstance();
+//        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
+//        session.invalidate();
+//
+//        return "index.xhtml?faces-redirect=true";
+//
+//    }
 
-            if (i == null || (i.getCpf() == null ? current.getCpf() != null : !i.getCpf().equals(current.getCpf()))
-                    || (i.getSenha() == null ? current.getSenha() != null : !i.getSenha().equals(current.getSenha()))) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
-                return "Error.xhtml";
-
-            }
-            
-            context.getExternalContext().getSessionMap().put("IdInstrutor", i.getIdinstrutor());
-            System.out.println(context.getExternalContext().getSessionMap().get("IdInstrutor"));
-
-        } catch (Exception e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
-            return "Error.xhtml";
-        }
-
-        if (i.getAdministrador()) {
-            return "/matricula/Create_1.xhtml";
-        } else {
-            return "index.xhtml";
-        }
-    }
-
-    public String logout() {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-        session.invalidate();
-
-        return "index.xhtml?faces-redirect=true";
-
-    }
-
-    public Integer getIdByCPF(String CPF) {
-        return ejbFacade.findByCPF(CPF).get(0).getIdinstrutor();
-    }
+//    public Integer getIdByCPF(String CPF) {
+//        return ejbFacade.findByCPF(CPF).get(0).getIdinstrutor();
+//    }
 
     ;
     
