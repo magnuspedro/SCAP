@@ -21,9 +21,9 @@ and open the template in the editor.
                         <p:panelGrid class="createGrid" columns="2" styleClass="borderNone">
                             <p:selectOneMenu id="iddataEvento" value="#{chamadaEventoController.selected.iddataEvento}"
                                              valueChangeListener="#{chamadaEventoController.pegaEvento}"
-                                             required="true" requiredMessage="#{bundle.CreateChamadaRequiredMessage_iddataEvento}">
+                                             required="true" requiredMessage="Selecione um Evento">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
-                                <f:selectItems value="#{dataEventoController.palestras}" itemValue="#{iddataEvento}"/>
+                                <f:selectItems value="#{dataEventoController.notMinicurso}" itemValue="#{iddataEvento}"/>
                                 <f:ajax event="change" render="Formtabela:tabela" />
                             </p:selectOneMenu>
                             <br/>
@@ -48,21 +48,20 @@ and open the template in the editor.
                     </p:fieldset>
                 </h:form>
             </div>
-
+            <br/>
             <h:form id="Formtabela">
-                <p:outputLabel escape="false" value="#{bundle.ListChamadaEmpty}" rendered="#{chamadaEventoController.items.rowCount == 0}"/>
-                <h:panelGroup rendered="#{chamadaEventoController.items.rowCount > 0}">
-                    <h:outputText value="#{chamadaEventoController.pagination.pageFirstItem + 1}..#{chamadaEventoController.pagination.pageLastItem + 1}/#{chamadaController.pagination.itemsCount}"/>
-                    <h:commandLink action="#{chamadaEventoController.previous}" value="#{bundle.Previous} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasPreviousPage}"/>
-                    <h:commandLink action="#{chamadaEventoController.next}" value="#{bundle.Next} #{chamadaEventoController.pagination.pageSize}" rendered="#{chamadaController.pagination.hasNextPage}"/>
-                    <p:dataTable id="tabela" value="#{chamadaEventoController.chamada}" var="item" paginator="false" rows="90">
-                        <p:column>
-                            <f:facet name="header">
+                    <p:dataTable id="tabela" value="#{chamadaEventoController.chamada}"
+                                 var="item" paginator="false" rows="100"
+                                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 emptyMessage="Sem Registros."
+                                 >
+                        <p:column width="100">
+                            <f:facet name="header" >
                                 <p:outputLabel value="CPF"/>
                             </f:facet>
                             <p:outputLabel value="#{item.idaluno.cpf}"/>
                         </p:column>
-                        <p:column>
+                        <p:column width="50"> 
                             <f:facet name="header">
                                 <p:outputLabel value="RA"/>
                             </f:facet>
@@ -72,17 +71,17 @@ and open the template in the editor.
                             <f:facet name="header">
                                 <p:outputLabel value="Nome"/>
                             </f:facet>
-                            <p:outputLabel value="#{item.idaluno.nome}"/>
+                            <p:outputLabel value="#{item.idaluno.nome}" style="text-transform: uppercase"/>
                         </p:column>
 
                         <p:column>
-                            <f:facet name="header">
+                            <f:facet name="header" >
                                 <p:outputLabel value="Palestra"/>
                             </f:facet>
                             <p:outputLabel value="#{item.iddataEvento.idevento.nome}"/>
                         </p:column>
 
-                        <p:column>
+                        <p:column width="50">
                             <f:facet name="header">
                                 <p:outputLabel value="Hora"/>
                             </f:facet>
@@ -90,14 +89,13 @@ and open the template in the editor.
                                 <f:convertDateTime type="date" pattern="HH:mm:ss" timeZone="GMT-3"  locale="pt_BR"/>
                             </p:outputLabel>
                         </p:column>
-                        <p:column>
+                        <p:column width="70">
                             <f:facet name="header">
                                 <p:outputLabel value="Situação"/>
                             </f:facet>
                             <p:outputLabel value="#{item.situacao?'Entrou':'Saiu'}"/>
                         </p:column>
                     </p:dataTable>
-                </h:panelGroup>
             </h:form>
         </ui:define>
     </ui:composition>

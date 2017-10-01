@@ -40,6 +40,7 @@ public class DataEventoController implements Serializable {
     private List<Chamada> chamada = new ArrayList<>();
     private List<ChamadaEvento> chamadaPalestra;
     private List<DataEvento> all;
+    private List<DataEvento> notMinicurso;
 
     public DataEventoController() {
         this.chamada = null;
@@ -292,8 +293,22 @@ public class DataEventoController implements Serializable {
         Object newValue = event.getNewValue();
         int row = event.getRowIndex();
         chamada.get(row).setFaltas(Integer.valueOf(newValue.toString()));
-        System.err.println(oldValue+" "+newValue);
+        System.err.println(oldValue + " " + newValue);
 
+    }
+
+    /**
+     * @return the notMinicurso
+     */
+    public List<DataEvento> getNotMinicurso() {
+        return ejbFacade.listAllNotMiniCurso();
+    }
+
+    /**
+     * @param notMinicurso the notMinicurso to set
+     */
+    public void setNotMinicurso(List<DataEvento> notMinicurso) {
+        this.notMinicurso = notMinicurso;
     }
 
     @FacesConverter(forClass = DataEvento.class)

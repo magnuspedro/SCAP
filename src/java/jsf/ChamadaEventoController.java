@@ -232,6 +232,7 @@ public class ChamadaEventoController implements Serializable {
             }
             
             create();
+            aluno.setCpf("");
             setChamada(ejbDataEventoFacade.carregaChamadaPalestra(dataEvento));
             RequestContext.getCurrentInstance().reset("form1:ra");
             return "ChamadaEvento";

@@ -96,7 +96,9 @@ and open the template in the editor.
                                      selection="#{alunoController.eventos}"
                                      rowKey="#{item.idevento}"
                                      stickyHeader="true"
-                                     style="margin-bottom:20px">
+                                     style="margin-bottom:20px"
+                                     disabledSelection="#{!dataEventoController.isEspera(item)}"
+                                     >
                             <p:column headerText="Curso" filterBy="#{item.idevento.nome}" filterMatchMode="contains">
                                 <p:outputLabel value="#{item.idevento.nome}"/>
                             </p:column>
@@ -125,15 +127,15 @@ and open the template in the editor.
                             </p:column>
                             <p:column headerText="Vagas Totais">      
                                 <p:outputLabel  value="#{item.idevento.vagasTotais}" rendered="#{dataEventoController.isEspera(item)}"/>
-                                <p:outputLabel value="Lista de espera" 
+                                <p:outputLabel value="Encerrado" 
                                                rendered="#{!dataEventoController.isEspera(item)}"
                                                title="Se você se inscrever será adicionado a lista de espera do evento."
                                                style="color: #D20005;"
                                                />
                             </p:column>
 
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>                       
-
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"                                      
+                                      />                       
                         </p:dataTable>
                     </h:panelGroup>
                     <br/>

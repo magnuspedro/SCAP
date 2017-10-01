@@ -12,10 +12,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
@@ -30,7 +29,6 @@ import javax.servlet.http.HttpSession;
 import jpa.DataEventoFacade;
 import jpa.EventoFacade;
 import org.primefaces.event.CellEditEvent;
-import org.primefaces.event.RowEditEvent;
 
 @ManagedBean(name = "chamadaController")
 @ViewScoped
@@ -56,6 +54,11 @@ public class ChamadaController implements Serializable {
     public ChamadaController() {
 
     }
+    
+    @PostConstruct
+    public void init(){
+        eventosInstrutor = (List<Evento>) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("lista");
+    }
 
     public Chamada getSelected() {
         if (current == null) {
@@ -76,7 +79,6 @@ public class ChamadaController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             i = ejbFacade.findByCPF(currentIns.getCpf()).get(0);
-            System.err.println(i.getCpf());
             if ((i.getCpf() == null ? currentIns.getCpf() != null : !i.getCpf().equals(currentIns.getCpf()))
                     || (i.getSenha() == null ? currentIns.getSenha() != null : !i.getSenha().equals(currentIns.getSenha()))) {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Usuario ou Senha incorretos"));
@@ -90,7 +92,8 @@ public class ChamadaController implements Serializable {
         }
 
         currentIns = i;
-        System.out.println(currentIns.getNome());
+        eventosInstrutor = eventoFacade.findbyInstrutor(i);
+        context.getExternalContext().getFlash().put("lista", eventosInstrutor);
         if (i.getAdministrador()) {
             return "/chamada/ChamadaEvento.xhtml";
         } else {
@@ -312,8 +315,6 @@ public class ChamadaController implements Serializable {
      * @return the eventosInstrutor
      */
     public List<Evento> getEventosInstrutor() {
-        eventosInstrutor = eventoFacade.findbyInstrutor(currentIns);
-        System.out.println(eventosInstrutor);
         return eventosInstrutor;
     }
 

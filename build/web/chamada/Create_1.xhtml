@@ -39,21 +39,22 @@ and open the template in the editor.
                                  editable="true" editMode="cell"
                                  paginator="true" rows="100"
                                  paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                                 rowIndexVar="rowIndex"
                                  >
                         <p:ajax event="cellEdit" 
                                 listener="#{chamadaController.onCellEdit}"
                                 >
                         </p:ajax>
-                        <p:column headerText="Nome" >
-                            <p:outputLabel value="#{item.idaluno.nome }" />
+                        <p:column headerText="#"  width="10">
+                            <p:outputLabel value="#{rowIndex + 1}" />
                         </p:column>
-                        <p:column headerText="RA" >
+                        <p:column headerText="RA" width="50">
                             <p:outputLabel value="#{item.idaluno.ra}" />
                         </p:column>
-                        <p:column headerText="CPF" >
-                            <p:outputLabel value="#{item.idaluno.cpf}" />
+                        <p:column headerText="Nome" >
+                            <p:outputLabel value="#{item.idaluno.nome}" style="text-transform: uppercase" />
                         </p:column>
-                        <p:column headerText="Faltas"  >
+                        <p:column headerText="Faltas" width="50" >
                             <p:cellEditor>
                                 <f:facet name="output">
                                     <h:outputText value="#{item.faltas}" />

@@ -32,7 +32,7 @@ public class EventoFacade extends AbstractFacade<Evento> {
     }
 
     public List<Evento> findbyInstrutor(Instrutor instrutor) {
-        return em.createNamedQuery("Evento.findByInstrutor").setParameter("idinstrutor", 1).getResultList();
+        return em.createNamedQuery("Evento.findByInstrutor").setParameter("idinstrutor", instrutor.getIdinstrutor()).getResultList();
     }
 
     public int vagasFechadas(Evento e) {

@@ -44,7 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Evento.findByVagasTotais", query = "SELECT e FROM Evento e WHERE e.vagasTotais = :vagasTotais")
     , @NamedQuery(name = "Evento.findByHoraInicio", query = "SELECT e FROM Evento e WHERE e.horaInicio = :horaInicio")
     , @NamedQuery(name = "Evento.findByHoraTermino", query = "SELECT e FROM Evento e WHERE e.horaTermino = :horaTermino")
-    , @NamedQuery(name = "Evento.findByInstrutor", query = "SELECT e FROM Evento e, EventosInstrutores ei, Instrutor i WHERE e = ei.idevento AND ei.idinstrutor = i AND i.idinstrutor = :idinstrutor")})
+    , @NamedQuery(name = "Evento.findByInstrutor", query = "SELECT e FROM Evento e, EventosInstrutores ei, Instrutor i WHERE e = ei.idevento AND ei.idinstrutor = i AND i.idinstrutor = :idinstrutor ORDER BY e.nome ASC")})
 public class Evento implements Serializable {
 
     @JoinColumn(name = "idlocal", referencedColumnName = "idlocal")

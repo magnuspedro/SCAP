@@ -45,6 +45,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "DataEvento.listChamada", query = "SELECT c FROM Chamada c INNER JOIN DataEvento d ON c.iddataEvento = d.iddataEvento WHERE c.iddataEvento = :iddataEvento")
     , @NamedQuery(name = "DataEvento.listAll", query = "SELECT d FROM DataEvento d INNER JOIN Evento e ON d.idevento.idevento = e.idevento ORDER by e.tipo ASC, e.nome ASC")
     , @NamedQuery(name = "DataEvento.findPalestra", query = "SELECT d FROM DataEvento d INNER JOIN Evento e ON d.idevento.idevento = e.idevento WHERE e.tipo = :tipo ORDER BY e.nome ASC")
+    , @NamedQuery(name = "DataEvento.allNotMinicurso", query = "SELECT d FROM DataEvento d INNER JOIN Evento e ON d.idevento.idevento = e.idevento WHERE e.tipo != 'Minicurso' ORDER BY e.nome ASC")
 
 //,@NamedQuery(name = "DataEvento.findByHoraEvento", query ="SELECT d FROM DataEvento d, Evento e, EventosInstrutores ei, Instrutor i WHERE d.idevento = e.idevento AND e.idevento = ei.idevento AND ei.idinstrutor = i.idinstrutor AND i.idinstrutor = :idinstrutor")
 /*,@NamedQuery(name = "Chamada.findByIddataEvento", query ="SELECT c FROM Chamada c INNER JOIN DataEvento de ON c.iddataEvento = de.idevento WHERE de.idevento = (SELECT de.iddataEvento FROM DataEvento de INNER JOIN Evento e ON de.idevento = e.idevento WHERE e.idevento = :idevento AND de.data = :data ")*/
