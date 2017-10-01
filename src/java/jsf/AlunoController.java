@@ -138,13 +138,11 @@ public class AlunoController implements Serializable {
                         }
                         if (!flag) {
                             if (!matricula.getPago()) {
-                                excluir.add(matricula);
+                                //excluir.add(matricula);
                             }
                         }
 
                     }
-                } else {
-                    excluir.addAll(atual);
                 }
             } else {
                 if (!eventos.isEmpty()) {
@@ -157,7 +155,7 @@ public class AlunoController implements Serializable {
                     }
                 }
             }
-            excluir.forEach(matriculaFacade::remove);
+            //excluir.forEach(matriculaFacade::remove);
             current.setMatriculaCollection(lm);
             getFacade().create(current);
             JsfUtil.addSuccessMessage("Cadastro de Participante e Minicursos realizado com sucesso.");

@@ -308,7 +308,7 @@ public class ChamadaController implements Serializable {
             }
         }
         JsfUtil.addSuccessMessage("Chamada realizada com sucesso!");
-        return "Create_1.xhtml";
+        return "login.xhtml";
     }
 
     /**
