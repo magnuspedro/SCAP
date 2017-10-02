@@ -249,6 +249,10 @@ public class DataEventoController implements Serializable {
         return ejbFacade.carregaPaletras();
     }
 
+    public List<DataEvento> getControle() {
+        return ejbFacade.controle();
+    }
+
     /**
      * @param chamadaPalestra the chamadaPalestra to set
      */

@@ -80,4 +80,8 @@ public class DataEventoFacade extends AbstractFacade<DataEvento> {
     public List<DataEvento> listAllNotMiniCurso(){
         return em.createNamedQuery("DataEvento.allNotMinicurso").getResultList();
     }
+    
+    public List<DataEvento> controle(){
+        return em.createNamedQuery("DataEvento.findTipo").setParameter("tipo", "Controle").getResultList();
+    }
 }
