@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -33,7 +34,6 @@ public class ChamadaEventoController implements Serializable {
     private Aluno aluno = new Aluno();
     private DataEvento dataEvento = new DataEvento();
 
-   
     private DataModel items = null;
     @EJB
     private jpa.DataEventoFacade ejbDataEventoFacade;
@@ -41,7 +41,7 @@ public class ChamadaEventoController implements Serializable {
     private jpa.ChamadaEventoFacade ejbFacade;
     private List<ChamadaEvento> chamada;
     @EJB
-    private jpa.AlunoFacade ejbFacadeAluno;    
+    private jpa.AlunoFacade ejbFacadeAluno;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -59,8 +59,8 @@ public class ChamadaEventoController implements Serializable {
     private ChamadaEventoFacade getFacade() {
         return ejbFacade;
     }
-    
-     public Aluno getAluno() {
+
+    public Aluno getAluno() {
         return aluno;
     }
 
@@ -203,20 +203,28 @@ public class ChamadaEventoController implements Serializable {
         recreateModel();
         return "Create_1";
     }
-    
+
     public void selectOneMenuListener(ValueChangeEvent event) {
-        dataEvento = (DataEvento) event.getNewValue();       
+        dataEvento = (DataEvento) event.getNewValue();
     }
-    
+
     public void pegaEvento(ValueChangeEvent event) {
         dataEvento = (DataEvento) event.getNewValue();
         setChamada(ejbDataEventoFacade.carregaChamadaPalestra(dataEvento));
     }
-    
-    public String findExactCPF(){
-        if(!aluno.getCpf().isEmpty()){
+
+    public String findExactCPF() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (!aluno.getCpf().isEmpty()) {
             String cpf = aluno.getCpf();
-            aluno = ejbFacadeAluno.findByCPF(cpf);
+            try {
+                aluno = ejbFacadeAluno.findByCPF(cpf);
+            } catch (Exception e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Aluno não castradro"));
+                return "ChamadaEvento";
+            }
+
             Date d = new Date();
             d.setTime(System.currentTimeMillis());
             System.out.println(d);
@@ -225,29 +233,39 @@ public class ChamadaEventoController implements Serializable {
             current.setIddataEvento(dataEvento);
             current.setIdaluno(aluno);
 //            System.err.println(ejbFacade.findSituacao(current));
-            if(ejbFacade.findSituacao(current) == null){
+            if (ejbFacade.findSituacao(current) == null) {
                 current.setSituacao(Boolean.TRUE);
-            }else{
+            } else {
                 current.setSituacao(!ejbFacade.findSituacao(current).getSituacao());
             }
-            
+
             create();
             aluno.setCpf("");
             setChamada(ejbDataEventoFacade.carregaChamadaPalestra(dataEvento));
             RequestContext.getCurrentInstance().reset("form1:ra");
             return "ChamadaEvento";
         }
-        
-        
+
         return "";
     }
-    
+
     public String findExactRA() {
-        if (!aluno.getRa().isEmpty()) { 
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (!aluno.getRa().isEmpty()) {
             String nRa = aluno.getRa();
-            if(aluno.getRa().substring(0,1).equals("0"))
+            if (aluno.getRa().substring(0, 1).equals("0")) {
                 nRa = aluno.getRa().substring(1);
-            aluno = ejbFacadeAluno.findIdByRa(nRa);
+            }
+            if (aluno.getRa().substring(0, 2).equals("00")) {
+                nRa = aluno.getRa().substring(2);
+            }
+            try {
+                aluno = ejbFacadeAluno.findIdByRa(nRa);
+            } catch (Exception e) {
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Aluno não castradro"));
+                return "ChamadaEvento";
+            }
+
             System.out.println(aluno.getCpf());
             Date d = new Date();
             d.setTime(System.currentTimeMillis());
@@ -257,20 +275,27 @@ public class ChamadaEventoController implements Serializable {
             current.setIddataEvento(dataEvento);
             current.setIdaluno(aluno);
 //            System.err.println(ejbFacade.findSituacao(current));
-            if(ejbFacade.findSituacao(current) == null){
+            if (ejbFacade.findSituacao(current) == null) {
                 current.setSituacao(Boolean.TRUE);
-            }else{
+            } else {
                 current.setSituacao(!ejbFacade.findSituacao(current).getSituacao());
             }
-            
             create();
+
             setChamada(ejbDataEventoFacade.carregaChamadaPalestra(dataEvento));
             return "ChamadaEvento";
         }
         return null;
     }
-    
-        /**
+
+    public Long totalalunos() {
+        if (dataEvento.getIddataEvento() != null) {
+            return ejbFacade.TotalPalestra(dataEvento.getIddataEvento());
+        }
+        return null;
+    }
+
+    /**
      * @return the chamada
      */
     public List<ChamadaEvento> getChamada() {
@@ -283,7 +308,6 @@ public class ChamadaEventoController implements Serializable {
     public void setChamada(List<ChamadaEvento> chamada) {
         this.chamada = chamada;
     }
-    
 
     public SelectItem[] getItemsAvailableSelectMany() {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);

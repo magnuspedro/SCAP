@@ -35,6 +35,10 @@ public class ChamadaEventoFacade extends AbstractFacade<ChamadaEvento> {
     public ChamadaEvento findChamadaEventoByRa(int id) {
         return (ChamadaEvento) em.createNamedQuery("ChamadaEvento.findByIdAluno").setParameter("idaluno", id).getSingleResult();
     }
+    
+    public Long TotalPalestra(int id){
+        return (Long) em.createNamedQuery("ChamadaEvento.CountTotal").setParameter("dataEvento", id).getSingleResult();
+    }
 
     public ChamadaEvento findSituacao(ChamadaEvento chamadaEvento) {
         List<ChamadaEvento> list = em.createNamedQuery("ChamadaEvento.findByAlunoandDataEvento")
@@ -45,5 +49,9 @@ public class ChamadaEventoFacade extends AbstractFacade<ChamadaEvento> {
             return null;
         }
         return list.get(0);
+    }
+
+    public boolean TotalPalestra(DataEvento dataEvento) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

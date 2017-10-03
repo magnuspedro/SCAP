@@ -24,7 +24,7 @@ and open the template in the editor.
                                              required="true" requiredMessage="Selecione um Evento">
                                 <f:selectItem itemLabel="Selecione" itemValue="" noSelectionOption="true" />
                                 <f:selectItems value="#{dataEventoController.notMinicurso}" itemValue="#{iddataEvento}"/>
-                                <f:ajax event="change" render="Formtabela:tabela" />
+                                <f:ajax event="change" render="Formtabela:tabela total" />
                             </p:selectOneMenu>
                             <br/>
                             <p:outputLabel value="#{bundle.CreateChamadaLabel_hora}" for="hora" />
@@ -37,13 +37,16 @@ and open the template in the editor.
                                         Primefaces.getElementById('ra').trigger('change');
                                         return false;
                                     }">
-                                <p:ajax event="change" listener="#{chamadaEventoController.findExactRA}" update="Formtabela:tabela ra"/>
+                                <p:ajax event="change" listener="#{chamadaEventoController.findExactRA}" update="Formtabela:tabela ra total"/>
                             </p:inputText>
                             <p:outputLabel id="forcpf" value="CPF" for="cpf" style="position: relative; top: -30px;"/>
                             <br/>
                             <p:inputMask id="cpf" value="#{chamadaEventoController.aluno.cpf}" mask="999.999.999-99" onfocus="this.value = ''" style="position: relative; top: -35px;"/>
-                            <p:remoteCommand name="rc" action="#{chamadaEventoController.findExactCPF}" update="Formtabela:tabela cpf" value="Registrar CPF" />
+                            <p:remoteCommand name="rc" action="#{chamadaEventoController.findExactCPF}" update="Formtabela:tabela cpf total" value="Registrar CPF" />
                             <p:link class="botaofalso" onclick="rc()" href="#" value="Registar CPF" style="position: relative; top: -30px;"/>
+                            <p:outputLabel value="Total de Alunos" for="total"/>
+                            <p:outputLabel value=""/>
+                            <p:outputLabel id="total" value="#{chamadaEventoController.totalalunos()}"/>
                         </p:panelGrid>
                     </p:fieldset>
                 </h:form>
