@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "ChamadaEvento.findByHora", query = "SELECT c FROM ChamadaEvento c WHERE c.hora = :hora")
     , @NamedQuery(name = "ChamadaEvento.findByIdAluno", query = "SELECT c FROM ChamadaEvento c WHERE c.idaluno.idaluno = :idaluno")
     , @NamedQuery(name = "ChamadaEvento.findBySituacao", query = "SELECT c FROM ChamadaEvento c WHERE c.situacao = :situacao")
-    , @NamedQuery(name = "ChamadaEvento.findByIddataEvento", query = "SELECT c FROM ChamadaEvento c WHERE c.iddataEvento = :iddataEvento")
+    , @NamedQuery(name = "ChamadaEvento.findByIddataEvento", query = "SELECT c FROM ChamadaEvento c WHERE c.iddataEvento = :iddataEvento ORDER BY c.idchamada DESC")
     ,@NamedQuery(name = "ChamadaEvento.findByAlunoandDataEvento", query = "SELECT c FROM ChamadaEvento c WHERE c.idaluno = :aluno AND c.iddataEvento = :dataEvento ORDER BY c.idchamada DESC")
 })
 public class ChamadaEvento implements Serializable {
